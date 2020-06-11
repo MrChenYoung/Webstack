@@ -87,6 +87,6 @@ EEE;
             "passwd"        =>  "QDAoTKf4iGADBGSjt4VXXElC7eanPD3gS9sn3DRZHTBjVpbm/ZQ7Y5a2KEYujU6cjXFJdMudNB06Y1UalS6Gd5ThiYd+EcwKcPsT1Xp5xHdDtJL0lWyirZhRwdOHPQ/P/Xzc0wArFP2hjccJAlucpc8FpN+oOvfAzojzL0/liYQ=",
             "pass_level"    => 4
         ];
-//        DatabaseTableManager::getSingleton()->insertData($tableName,"pass_desc",$data);
+        DatabaseTableManager::getSingleton()->insertData($tableName,"pass_desc",$data);
     }
 }
