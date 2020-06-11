@@ -19,16 +19,20 @@ function checkRsaKey(){
     // 保存到cookie的私钥键
     $privateKey = "rsaPrivateKey";
 
-    $privateKeyContent = CookieManager::getSingleton()->getCookie($privateKey);
-    $publickKeyContent = CookieManager::getSingleton()->getCookie($publickKey);
+    $privateKeyContent = CookieManager::getCookie($privateKey);
+    $publickKeyContent = CookieManager::getCookie($publickKey);
 
+    // 没有添加 跳转到添加页面
+//    $url = "http://".$_SERVER['HTTP_HOST']."/addRsaKey.php";
+//    header("Refresh:0;url=".$url);
+//    die;
     if (strlen($privateKeyContent) == 0 || strlen($publickKeyContent) == 0){
         // 没有添加 跳转到添加页面
         $url = "http://".$_SERVER['HTTP_HOST']."/addRsaKey.php";
         header("Refresh:0;url=".$url);
     }else {
         // 已经添加 检测登录状态
-//        checkLoginStatus();
+        checkLoginStatus();
     }
 }
 

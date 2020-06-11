@@ -5,6 +5,7 @@ namespace admin\controller\API;
 
 
 use framework\tools\DatabaseDataManager;
+use framework\tools\SessionManager;
 
 class API_PassManagerController extends API_BaseController
 {

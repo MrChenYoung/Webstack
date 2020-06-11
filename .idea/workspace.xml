@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/controller/API/API_PassManagerController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/API/API_PassManagerController.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/controller/CreateTablesController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/CreateTablesController.class.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/tpls_c/6b0e87454eda143f863c09a2cf68305a6e45e2db_0.file.index.html.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/tpls_c/6b0e87454eda143f863c09a2cf68305a6e45e2db_0.file.index.html.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/view/login/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/login/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/tools/CookieManager.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/framework/tools/CookieManager.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/common/js/cookie.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/common/js/cookie.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +79,7 @@
       <workItem from="1591539554905" duration="34269000" />
       <workItem from="1591631170950" duration="1783000" />
       <workItem from="1591633070915" duration="107401000" />
-      <workItem from="1591871479214" duration="20515000" />
+      <workItem from="1591871479214" duration="23773000" />
     </task>
     <servers />
   </component>

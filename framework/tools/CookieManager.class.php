@@ -2,17 +2,6 @@
 
 class CookieManager
 {
-    private static $instance;
-    private function __construct(){}
-    private function __clone(){}
-    public static function getSingleton(){
-        $calledClass = get_called_class();
-        if(!self::$instance instanceof $calledClass){
-            self::$instance = new $calledClass();
-        }
-        return self::$instance;
-    }
-
     //写cookies
     public static function setCookie($name,$value){
         // 30天过期
@@ -33,8 +22,8 @@ class CookieManager
     //删除cookies
     public static function delCookie($name){
         // 设置cookie过期时间为过去一小时触发浏览器删除cookie机制
-        setcookie($name,time()-3600);
+//        setcookie($name,time()-3600);
         // 另外一种方式
-//        setcookie($name,"");
+        setcookie($name,"");
     }
 }

@@ -4,6 +4,7 @@
 namespace admin\controller;
 
 use framework\core\Controller;
+use framework\tools\DatabaseDataManager;
 use framework\tools\DatabaseTableManager;
 
 class CreateTablesController extends Controller
@@ -80,5 +81,12 @@ EEE;
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='密码表';
 EEE;
         DatabaseTableManager::getSingleton()->createTable($tableName,$sql);
+        // 添加登录密码
+        $data = [
+            "pass_desc"     =>  "'登录密码'",
+            "passwd"        =>  "QDAoTKf4iGADBGSjt4VXXElC7eanPD3gS9sn3DRZHTBjVpbm/ZQ7Y5a2KEYujU6cjXFJdMudNB06Y1UalS6Gd5ThiYd+EcwKcPsT1Xp5xHdDtJL0lWyirZhRwdOHPQ/P/Xzc0wArFP2hjccJAlucpc8FpN+oOvfAzojzL0/liYQ=",
+            "pass_level"    => 4
+        ];
+//        DatabaseTableManager::getSingleton()->insertData($tableName,"pass_desc",$data);
     }
 }

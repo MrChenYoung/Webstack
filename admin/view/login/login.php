@@ -100,4 +100,22 @@
             }
         });
     });
+
+    function setCookie1(name, value, time='',path='') {
+        if(time && path){
+            var strsec = time * 1000;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + strsec * 1);
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path="+path;
+        }else if(time){
+            var strsec = time * 1000;
+            var exp = new Date();
+            exp.setTime(exp.getTime() + strsec * 1);
+            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+        }else if(path){
+            document.cookie = name + "=" + escape(value) + ";path="+path;
+        }else{
+            document.cookie = name + "=" + escape(value);
+        }
+    }
 </script>
