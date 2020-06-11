@@ -6,6 +6,7 @@ use PDO;
 use PDOException;
 
 require_once "./framework/dao/i_DAOPDO.interface.php";
+require_once "./framework/tools/StringTool.class.php";
 /**
  * Class DAOPDO PDO封装类
  * 封装PDO的操作

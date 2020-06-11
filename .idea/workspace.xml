@@ -2,31 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/init.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addRsaKey.php" beforeDir="false" afterPath="$PROJECT_DIR$/addRsaKey.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/CreateTablesController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/CreateTablesController.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/002c09f46cb31974db92e609bd6d5a7866f9756c_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/0c3b71fb08ac768bb9dc708dac87f156de34d5a5_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/12a9fc645c40ac051b7a4f59fe163e85c339f9c7_0.file.layout.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/2364317d2a7a40e9b336e445982f5b8f23baacf5_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/38779b07fabbf537992f850007aeae6d030629ae_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/54d28811a41b07a47f15086f870ac53989d175be_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/6b0e87454eda143f863c09a2cf68305a6e45e2db_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/76dd55f8a997ba70412de7772f70b3d1d8958792_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/77bcda58ec2643cc1fd989b6f15b11211eb95580_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tpls_c/8e0e447c6f40ba44c0c5087569c99c85b9efe007_0.file.index.html.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/account/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/account/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/category/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/category/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/db/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/db/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/iconDepository/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/iconDepository/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/passwd/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/passwd/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/platform/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/platform/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/core/Controller.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/framework/core/Controller.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/core/Framework.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/framework/core/Framework.class.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/framework/dao/DAOPDO.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/framework/dao/DAOPDO.class.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +74,7 @@
       <workItem from="1591539554905" duration="34269000" />
       <workItem from="1591631170950" duration="1783000" />
       <workItem from="1591633070915" duration="107401000" />
-      <workItem from="1591871479214" duration="33246000" />
+      <workItem from="1591871479214" duration="33526000" />
     </task>
     <servers />
   </component>
