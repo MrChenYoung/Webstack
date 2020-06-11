@@ -92,7 +92,7 @@
         // 监听密码输入 同时把输入的明文密码加密为密文
         $("#passwd_input").bind("input propertychange", function (event) {
             var userPass = $("#passwd_input").val();
-            
+
             if (realPass == userPass){
                 $("#user_pass_input").val("1");
             }else {

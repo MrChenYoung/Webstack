@@ -28,7 +28,7 @@ function checkRsaKey(){
         header("Refresh:0;url=".$url);
     }else {
         // 已经添加 检测登录状态
-        checkLoginStatus();
+//        checkLoginStatus();
     }
 }
 
