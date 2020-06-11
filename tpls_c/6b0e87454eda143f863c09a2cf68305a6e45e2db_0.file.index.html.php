@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2020-06-11 19:39:31
+/* Smarty version 3.1.30, created on 2020-06-11 22:20:13
   from "/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/RSAKey/index.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5ee2887347cef0_96673134',
+  'unifunc' => 'content_5ee2ae1d4355a2_10155727',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6b0e87454eda143f863c09a2cf68305a6e45e2db' => 
     array (
       0 => '/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/RSAKey/index.html',
-      1 => 1591904347,
+      1 => 1591904499,
       2 => 'file',
     ),
   ),
@@ -21,28 +21,28 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:layout.html' => 1,
   ),
 ),false)) {
-function content_5ee2887347cef0_96673134 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee2ae1d4355a2_10155727 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_10403239595ee2887347a0f5_59904979', "myStyles");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_15893731025ee2ae1d433b19_45027402', "myStyles");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1414556365ee2887347b601_85106893', "scriptCode");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_11678706665ee2ae1d4346a3_65224139', "scriptCode");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_21205937515ee2887347c7a9_82862286', "content");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17685673345ee2ae1d435106_83221159', "content");
 ?>
 
 <?php $_smarty_tpl->inheritance->endChild();
 $_smarty_tpl->_subTemplateRender("file:layout.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 2, false);
 }
 /* {block "myStyles"} */
-class Block_10403239595ee2887347a0f5_59904979 extends Smarty_Internal_Block
+class Block_15893731025ee2ae1d433b19_45027402 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -83,7 +83,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "myStyles"} */
 /* {block "scriptCode"} */
-class Block_1414556365ee2887347b601_85106893 extends Smarty_Internal_Block
+class Block_11678706665ee2ae1d4346a3_65224139 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -162,16 +162,6 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
     function toAddRSAKey() {
         return false;
     }
-    
-    function clearCookie() {
-        delCookie("rsaPublicKey");
-        delCookie("rsaPrivateKey");
-        var url = baseUrl + "/admin?c=API_PassManager&a=clearCookie";
-        get(url,function () {
-            console.log("cookie111:" + document.cookie);
-        });
-
-    }
 
 <?php echo '</script'; ?>
 >
@@ -180,7 +170,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "scriptCode"} */
 /* {block "content"} */
-class Block_21205937515ee2887347c7a9_82862286 extends Smarty_Internal_Block
+class Block_17685673345ee2ae1d435106_83221159 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -212,7 +202,6 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
             <button onclick="addPrivateKey()" type="button" class="layui-btn layui-btn-primary">添加</button>
         </div>
     </form>
-    <button style="margin-top: 50px;" onclick="clearCookie()" type="button" class="layui-btn layui-btn-primary">清空cookie</button>
     <input type="file" id="key_select_input" style="display:none">
 </div>
 <?php

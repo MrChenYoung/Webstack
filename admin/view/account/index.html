@@ -216,7 +216,7 @@
 
     // 获取账号列表
     function loadAccountList() {
-        var url = baseUrl + "/admin?c=API_Account&a=loadAccountList";
+        var url = baseUrl + "?m=admin&c=API_Account&a=loadAccountList";
         console.log("获取账户列表:" + url);
         get(url,function (data) {
             // 创建分类列表
@@ -226,7 +226,7 @@
 
     // 请求平台列表
     function loadPlatList() {
-        var url = baseUrl + "/admin?c=API_Platform&a=loadPlatformList";
+        var url = baseUrl + "?m=admin&c=API_Platform&a=loadPlatformList";
         get(url, function (data) {
             layui.use('form', function(){
                 var form = layui.form;
@@ -248,7 +248,7 @@
 
     // 请求密码列表 返回机密以后的密码
     function loadPassList(success) {
-        var url = baseUrl + "/admin?c=API_PassManager&a=loadPassList";
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPassList";
         console.log("请求密码列表:" + url);
         get(url, function (data) {
             layui.use('form', function(){
@@ -318,7 +318,7 @@
         if (input.attr("type") == "text"){
             // 隐藏密码
             // 请求指定账号数据
-            var url = baseUrl + "/admin?c=API_Account&a=loadAccount&id=" + accId;
+            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId;
             get(url,function (data) {
                 var accData = data.data;
                 input.attr("type","password");
@@ -386,7 +386,7 @@
         var url = "";
         if (isEdit){
             // 修改
-            url = baseUrl + "/admin?c=API_Account&a=editAccount"
+            url = baseUrl + "?m=admin&c=API_Account&a=editAccount"
                 + "&id=" + editAccountId
                 + "&platId=" + selectedPlatId
                 + "&desc=" + addDesc
@@ -396,7 +396,7 @@
                 + "&remark=" + addRemark;
         }else {
             // 添加
-            url = baseUrl + "/admin?c=API_Account&a=addAccount"
+            url = baseUrl + "?m=admin&c=API_Account&a=addAccount"
                 + "&platId=" + selectedPlatId
                 + "&desc=" + addDesc
                 + "&user=" + addUserName
@@ -424,7 +424,7 @@
         var $this = $(obj);
         var accId = $this.attr("accId");
         var platId = $this.attr("platId");
-        var url = baseUrl + "/admin?c=API_Account&a=deleteAccount&id=" + accId + "&platId=" + platId;
+        var url = baseUrl + "?m=admin&c=API_Account&a=deleteAccount&id=" + accId + "&platId=" + platId;
         console.log("删除：" + url);
         get(url,function () {
             // 刷新列表
@@ -442,7 +442,7 @@
         // 加载密码列表
         loadPassList(function () {
             // 请求指定账号数据
-            var url = baseUrl + "/admin?c=API_Account&a=loadAccount&id=" + accId;
+            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId;
             get(url,function (data) {
                 var accData = data.data;
                 selectedPlatId = accData["plat_id"];
@@ -470,7 +470,7 @@
         // 加载密码列表
         loadPassList(function () {
             // 请求指定账号数据
-            var url = baseUrl + "/admin?c=API_Account&a=loadAccount&id=" + accId;
+            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId;
             get(url,function (data) {
                 var accData = data.data;
                 selectedPlatId = accData["plat_id"];
@@ -512,10 +512,6 @@
 <{/block}>
 <{block name="content"}>
 <div class="aw-content-wrap">
-    <form id="form" action="?m=admin&c=ServerInfo&a=loadTempleteComplete" method="post" target="exec_target">
-    </form>
-    <iframe hidden id="exec_target" name="exec_target"></iframe>
-
     <div class="mod">
         <div class="layui-form" style="text-align: center;">
             <table id="acc_table" class="layui-table">

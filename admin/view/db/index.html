@@ -61,7 +61,7 @@
 
     // 获取备份历史文件
     function loadDbBackupLists() {
-        var url = baseUrl + "/admin?c=API_Database&a=loadDbBackupHistory";
+        var url = baseUrl + "?m=admin&c=API_Database&a=loadDbBackupHistory";
         get(url,function (data) {
             // 创建备份历史列表
             createBackupListDom(data.data);
@@ -89,7 +89,7 @@
     function deleteBackup(obj) {
         var $this = $(obj);
         var backName = $this.attr("backName");
-        var url = baseUrl + "/admin?c=API_Database&a=deleteBackup&fileName=" + backName;
+        var url = baseUrl + "?m=admin&c=API_Database&a=deleteBackup&fileName=" + backName;
         get(url,function () {
             // 刷新列表
             loadDbBackupLists();
@@ -102,7 +102,7 @@
         var backName = $this.attr("backName");
 
         // 请求指定分类数据
-        var url = baseUrl + "/admin?c=API_Database&a=importBackup&fileName=" + backName;
+        var url = baseUrl + "?m=admin&c=API_Database&a=importBackup&fileName=" + backName;
         get(url,function () {
             // 导入完成
         })
@@ -110,7 +110,7 @@
 
     // 备份数据库
     function backupDB() {
-        var url = baseUrl + "/admin?c=API_Database&a=backupDB";
+        var url = baseUrl + "?m=admin&c=API_Database&a=backupDB";
         get(url,function () {
             // 备份完成 刷新备份历史列表
             loadDbBackupLists();

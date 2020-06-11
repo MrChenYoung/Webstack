@@ -176,7 +176,7 @@
             var privateKeyContent = getCookie(privateKey);
 
             if (publicKeyContent != null && publicKeyContent.length > 0 && privateKeyContent != null && privateKeyContent.length > 0){
-                var url = $("#web_site").val() + "/admin/index.php";
+                var url = $("#web_site").val() + "/index.php";
                 window.location = url;
             }
         }else {

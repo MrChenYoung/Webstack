@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2020-06-11 09:50:39
+/* Smarty version 3.1.30, created on 2020-06-11 22:20:08
   from "/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/passwd/index.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5ee1fe6fe66ec9_38557797',
+  'unifunc' => 'content_5ee2ae189e22d8_27406755',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '77bcda58ec2643cc1fd989b6f15b11211eb95580' => 
     array (
       0 => '/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/passwd/index.html',
-      1 => 1591869016,
+      1 => 1591913820,
       2 => 'file',
     ),
   ),
@@ -21,28 +21,28 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:layout.html' => 1,
   ),
 ),false)) {
-function content_5ee1fe6fe66ec9_38557797 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee2ae189e22d8_27406755 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20156454935ee1fe6fe63de2_60302833', "myStyles");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20295682335ee2ae189de0c3_42019279', "myStyles");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20810211585ee1fe6fe652d0_53844262', "scriptCode");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_4732215375ee2ae189e02d7_23943774', "scriptCode");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_16893136525ee1fe6fe666e7_47957029', "content");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_18640737185ee2ae189e1a48_04807049', "content");
 ?>
 
 <?php $_smarty_tpl->inheritance->endChild();
 $_smarty_tpl->_subTemplateRender("file:layout.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 2, false);
 }
 /* {block "myStyles"} */
-class Block_20156454935ee1fe6fe63de2_60302833 extends Smarty_Internal_Block
+class Block_20295682335ee2ae189de0c3_42019279 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -191,7 +191,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "myStyles"} */
 /* {block "scriptCode"} */
-class Block_20810211585ee1fe6fe652d0_53844262 extends Smarty_Internal_Block
+class Block_4732215375ee2ae189e02d7_23943774 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -237,7 +237,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 
     // 获取账号列表
     function loadPassList() {
-        var url = baseUrl + "/admin?c=API_PassManager&a=loadPassList";
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPassList";
         get(url,function (data) {
             // 创建密码列表
             createPassDom(data.data);
@@ -299,7 +299,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         if (input.attr("type") == "text"){
             // 隐藏密码模式
             // 请求指定账号数据
-            var url = baseUrl + "/admin?c=API_PassManager&a=loadPasswd&id=" + passId;
+            var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId;
             get(url,function (data) {
                 var accData = data.data;
                 input.attr("type","password");
@@ -387,7 +387,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
     function deletePass(obj) {
         var $this = $(obj);
         var passId = $this.attr("passId");
-        var url = baseUrl + "/admin?c=API_PassManager&a=deletePass&id=" + passId;
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=deletePass&id=" + passId;
         get(url,function () {
             // 刷新列表
             loadPassList();
@@ -401,7 +401,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         var passId = $this.attr("passId");
 
         // 请求指定账号数据
-        var url = baseUrl + "/admin?c=API_PassManager&a=loadPasswd&id=" + passId;
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId;
         get(url,function (data) {
             var accData = data.data;
 
@@ -447,7 +447,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "scriptCode"} */
 /* {block "content"} */
-class Block_16893136525ee1fe6fe666e7_47957029 extends Smarty_Internal_Block
+class Block_18640737185ee2ae189e1a48_04807049 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>

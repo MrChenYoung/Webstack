@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2020-06-11 13:22:08
+/* Smarty version 3.1.30, created on 2020-06-11 22:20:10
   from "/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/db/index.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5ee230002a18d7_34495095',
+  'unifunc' => 'content_5ee2ae1aebc6c6_30278076',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '76dd55f8a997ba70412de7772f70b3d1d8958792' => 
     array (
       0 => '/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/db/index.html',
-      1 => 1591881726,
+      1 => 1591913739,
       2 => 'file',
     ),
   ),
@@ -21,28 +21,28 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:layout.html' => 1,
   ),
 ),false)) {
-function content_5ee230002a18d7_34495095 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee2ae1aebc6c6_30278076 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_10316767125ee230002983e0_60195403', "myStyles");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_11714551505ee2ae1aeaf178_67336111', "myStyles");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_7155135675ee2300029c3b8_92902733', "scriptCode");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1408472975ee2ae1aeb0e34_02410855', "scriptCode");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_6058426005ee230002a0ce9_44338984', "content");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_6766972645ee2ae1aebc156_27479384', "content");
 ?>
 
 <?php $_smarty_tpl->inheritance->endChild();
 $_smarty_tpl->_subTemplateRender("file:layout.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 2, false);
 }
 /* {block "myStyles"} */
-class Block_10316767125ee230002983e0_60195403 extends Smarty_Internal_Block
+class Block_11714551505ee2ae1aeaf178_67336111 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -85,7 +85,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "myStyles"} */
 /* {block "scriptCode"} */
-class Block_7155135675ee2300029c3b8_92902733 extends Smarty_Internal_Block
+class Block_1408472975ee2ae1aeb0e34_02410855 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -117,7 +117,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 
     // 获取备份历史文件
     function loadDbBackupLists() {
-        var url = baseUrl + "/admin?c=API_Database&a=loadDbBackupHistory";
+        var url = baseUrl + "?m=admin&c=API_Database&a=loadDbBackupHistory";
         get(url,function (data) {
             // 创建备份历史列表
             createBackupListDom(data.data);
@@ -145,7 +145,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
     function deleteBackup(obj) {
         var $this = $(obj);
         var backName = $this.attr("backName");
-        var url = baseUrl + "/admin?c=API_Database&a=deleteBackup&fileName=" + backName;
+        var url = baseUrl + "?m=admin&c=API_Database&a=deleteBackup&fileName=" + backName;
         get(url,function () {
             // 刷新列表
             loadDbBackupLists();
@@ -158,7 +158,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         var backName = $this.attr("backName");
 
         // 请求指定分类数据
-        var url = baseUrl + "/admin?c=API_Database&a=importBackup&fileName=" + backName;
+        var url = baseUrl + "?m=admin&c=API_Database&a=importBackup&fileName=" + backName;
         get(url,function () {
             // 导入完成
         })
@@ -166,7 +166,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 
     // 备份数据库
     function backupDB() {
-        var url = baseUrl + "/admin?c=API_Database&a=backupDB";
+        var url = baseUrl + "?m=admin&c=API_Database&a=backupDB";
         get(url,function () {
             // 备份完成 刷新备份历史列表
             loadDbBackupLists();
@@ -184,7 +184,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "scriptCode"} */
 /* {block "content"} */
-class Block_6058426005ee230002a0ce9_44338984 extends Smarty_Internal_Block
+class Block_6766972645ee2ae1aebc156_27479384 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>

@@ -3,6 +3,9 @@
  * 根据用户的需求，将用户分配到对应的控制器的某个方法中
  */
 
+// 初始化
+require_once "init.php";
+
 // 如果是请求API 直接进入主页终止后续代码执行
 if (isset($_GET["API"])){
     // 请求API进入的
@@ -11,7 +14,7 @@ if (isset($_GET["API"])){
 }
 
 // 检测是否已经添加rsa key
-require_once "../framework/tools/CookieManager.class.php";
+require_once "./framework/tools/CookieManager.class.php";
 checkRsaKey();
 function checkRsaKey(){
     // 保存到cookie的公钥键
@@ -23,9 +26,6 @@ function checkRsaKey(){
     $publickKeyContent = CookieManager::getCookie($publickKey);
 
     // 没有添加 跳转到添加页面
-//    $url = "http://".$_SERVER['HTTP_HOST']."/addRsaKey.php";
-//    header("Refresh:0;url=".$url);
-//    die;
     if (strlen($privateKeyContent) == 0 || strlen($publickKeyContent) == 0){
         // 没有添加 跳转到添加页面
         $url = "http://".$_SERVER['HTTP_HOST']."/addRsaKey.php";
@@ -38,7 +38,7 @@ function checkRsaKey(){
 
 // 检测登录状态
 function checkLoginStatus(){
-    require_once '../framework/tools/SessionManager.class.php';
+    require_once './framework/tools/SessionManager.class.php';
     $session = \framework\tools\SessionManager::getSingleTon();
 
     // 获取session里的isLogin标识
@@ -75,8 +75,8 @@ function checkLoginStatus(){
 
 // 进入后台页面
 function toHome(){
-    require_once '../framework/core/Framework.class.php';
-    new \framework\core\Framework("admin");
+    require_once './framework/core/Framework.class.php';
+    new \framework\core\Framework();
 }
 
 // 进入登录页
@@ -84,15 +84,7 @@ function toLogin($loginerr=false,$errMsg=""){
     $pass = "";
     if (strlen($errMsg) == 0){
         // 查询登录密码
-        $config = require_once "./config/config.php";
-        $option = [
-            "host"      =>  $config["host"],
-            "user"      =>  $config["user"],
-            "pass"      =>  $config["pass"],
-            "dbname"    =>  $config["dbname"],
-            "port"      =>  $config["port"],
-            "charset"   =>  $config["charset"]
-        ];
+        $option = $GLOBALS["db_info"];
         $mysqli = new \mysqli($option["host"],$option["user"],$option["pass"],$option["dbname"],$option["port"]);
         $sql = <<<EEE
 SELECT passwd FROM acc_passwd WHERE `pass_desc`='登录密码';

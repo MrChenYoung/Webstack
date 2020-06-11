@@ -140,7 +140,7 @@
 
     // 获取分类列表
     function loadCategoryList() {
-        var url = baseUrl + "/admin?c=API_Category&a=loadCategotyList";
+        var url = baseUrl + "?m=admin&c=API_Category&a=loadCategotyList";
         console.log("分类:" + url);
         get(url,function (data) {
             // 创建分类列表
@@ -150,7 +150,7 @@
 
     // 请求icon
     function loadIcons() {
-        var url = baseUrl + "/admin/?c=API_Icon&a=getAliIconfonts&API=";
+        var url = baseUrl + "?m=admin&c=API_Icon&a=getAliIconfonts&API=";
         get(url, function (data) {
             layui.use('form', function(){
                 var form = layui.form;
@@ -232,10 +232,10 @@
         var url = "";
         if (isEdit){
             // 修改
-            url = baseUrl + "/admin?c=API_Category&a=editCategory&icon=" + selectedIcon + "&catName=" + addCatName + "&id=" + editCatId;
+            url = baseUrl + "?m=admin&c=API_Category&a=editCategory&icon=" + selectedIcon + "&catName=" + addCatName + "&id=" + editCatId;
         }else {
             // 添加
-            url = baseUrl + "/admin?c=API_Category&a=addCategory&icon=" + selectedIcon + "&catName=" + addCatName;
+            url = baseUrl + "?m=admin&c=API_Category&a=addCategory&icon=" + selectedIcon + "&catName=" + addCatName;
         }
 
         get(url,function () {
@@ -255,7 +255,7 @@
     function deleteCat(obj) {
         var $this = $(obj);
         var catId = $this.attr("catId");
-        var url = baseUrl + "/admin?c=API_Category&a=deleteCategory&id=" + catId;
+        var url = baseUrl + "?m=admin&c=API_Category&a=deleteCategory&id=" + catId;
         get(url,function () {
             // 刷新列表
             loadCategoryList();
@@ -270,7 +270,7 @@
         editCatId = catId;
 
         // 请求指定分类数据
-        var url = baseUrl + "/admin?c=API_Category&a=loadCategory&id=" + catId;
+        var url = baseUrl + "?m=admin&c=API_Category&a=loadCategory&id=" + catId;
         get(url,function (data) {
             var catData = data.data;
             selectedIcon = catData["cat_icon"];
@@ -296,10 +296,6 @@
 <{/block}>
 <{block name="content"}>
 <div class="aw-content-wrap">
-    <form id="form" action="?m=admin&c=ServerInfo&a=loadTempleteComplete" method="post" target="exec_target">
-    </form>
-    <iframe hidden id="exec_target" name="exec_target"></iframe>
-
     <div class="mod">
         <div class="layui-form" style="text-align: center;">
             <table class="layui-table">

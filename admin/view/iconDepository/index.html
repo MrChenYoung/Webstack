@@ -110,7 +110,7 @@
     function loadIcons() {
         var kwds = $("#search_icon").val();
         kwds = kwds != undefined ? kwds : "";
-        var url = baseUrl + "/admin/?c=API_Icon&a=getIconDepository&API=&keyWords=" + kwds;
+        var url = baseUrl + "?m=admin&c=API_Icon&a=getIconDepository&API=&keyWords=" + kwds;
         console.log("请求icon:" + url);
         get(url, function (data) {
             createIconDom(data.data);

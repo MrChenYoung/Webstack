@@ -1,9 +1,11 @@
 <?php
 namespace framework\dao;
 use framework\dao\i_DAOPDO;
+use framework\tools\StringTool;
 use PDO;
 use PDOException;
 
+require_once "./framework/dao/i_DAOPDO.interface.php";
 /**
  * Class DAOPDO PDO封装类
  * 封装PDO的操作
@@ -35,7 +37,6 @@ class DAOPDO implements i_DAOPDO
      * 登录并连接到数据库
      */
     private function loginDb($option){
-        die("登录数据库");
         $this -> host = isset($option['host'])?$option['host']:'';
         $this -> user = isset($option['user'])?$option['user']:'';
         $this -> pass = isset($option['pass'])?$option['pass']:'';
@@ -54,7 +55,6 @@ class DAOPDO implements i_DAOPDO
             $connectRes = $this->connectDb();
             if ($connectRes["success"]){
                 // 登录成功
-                die("登录数据库成功");
             }else {
                 die("链接数据库失败,错误信息:".$connectRes["message"]);
             }
@@ -89,6 +89,54 @@ class DAOPDO implements i_DAOPDO
         if (!$result) {
             die('数据库创建失败');
         }
+    }
+
+    // 创建表
+    public function createTable($tableName,$sql){
+        if (!$this->tableExist($tableName)){
+            $this->fetchAll($sql);
+        }
+    }
+
+    /**
+     * 添加一条记录到表
+     * @param $tbName               表名
+     * @param $standardFiledName    判断标准字段，如果$data内该字段对应的value在表中不存在，则添加，否则无操作
+     * @param array $data           要添加的一条记录键值对
+     * @return bool                 添加是否成功
+     */
+    public function insertData($tbName,$standardFiledName,$data=[]){
+        $success = false;
+        if (!$data) return $success;
+
+        // 查询表中是否有该记录
+        $value = $data[$standardFiledName];
+        $querySql = <<<EEE
+SELECT * FROM $tbName WHERE $standardFiledName=$value
+EEE;
+        $res = $this -> FetchAll($querySql);
+
+        if (!$res){
+            // 没有该条数据 添加
+            $fileds = [];
+            $values = [];
+            foreach ($data as $filed => $value){
+                $fileds[] = $filed;
+                $values[] = StringTool::singleQuotesInclude($value);
+            }
+
+            $fileStr = implode(",",$fileds);
+            $valueStr = implode(",",$values);
+
+            $insertSql = <<<EEE
+                INSERT INTO $tbName ($fileStr) VALUES($valueStr);
+EEE;
+            // 添加数据
+            $this -> FetchAll($insertSql);
+            $success = true;
+        }
+
+        return $success;
     }
 
     // 判断数据表是否存在

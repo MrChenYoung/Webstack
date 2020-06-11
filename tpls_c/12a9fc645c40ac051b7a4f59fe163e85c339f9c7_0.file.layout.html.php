@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2020-06-11 13:17:37
+/* Smarty version 3.1.30, created on 2020-06-11 22:11:48
   from "/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/layout.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5ee22ef1c0ef61_82492967',
+  'unifunc' => 'content_5ee2ac24c65952_02436003',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '12a9fc645c40ac051b7a4f59fe163e85c339f9c7' => 
     array (
       0 => '/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/layout.html',
-      1 => 1591881453,
+      1 => 1591913502,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5ee22ef1c0ef61_82492967 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee2ac24c65952_02436003 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, false);
 ?>
@@ -40,7 +40,7 @@ $_smarty_tpl->inheritance->init($_smarty_tpl, false);
     <META HTTP-EQUIV="expires" CONTENT="0">
 
     <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_4873495465ee22ef1c006e8_44666768', "title");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_7984005245ee2ac24bbdd14_09967876', "title");
 ?>
 
 
@@ -53,7 +53,7 @@ common/layui/css/layui.css">
     <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1877015_xvyhtha6n5q.css">
 
     <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_8504430185ee22ef1c03f82_96990110', "myStyles");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17329446265ee2ac24bbf6e0_74014630', "myStyles");
 ?>
 
     <link rel="stylesheet" href="<?php echo PUBLIC_PATH;?>
@@ -89,37 +89,37 @@ admin/css/common.css">
         <ul class="mod-bar">
             <input type="hidden" val="0" id="hide_values">
             <li>
-                <a id="category_manager" class=" icon icon-format" href="?c=CategoryManager&a=index">
+                <a id="category_manager" class=" icon icon-format" href="?m=admin&c=CategoryManager&a=index">
                     <span>分类管理</span>
                 </a>
             </li>
             <li>
-                <a id="platform_manager" class=" icon icon-score" href="?c=PlatformManager&a=index">
+                <a id="platform_manager" class=" icon icon-score" href="?m=admin&c=PlatformManager&a=index">
                     <span>平台管理</span>
                 </a>
             </li>
             <li>
-                <a id="account_manager" class=" icon icon-users" href="?c=AccountManager&a=index">
+                <a id="account_manager" class=" icon icon-users" href="?m=admin&c=AccountManager&a=index">
                     <span>账号管理</span>
                 </a>
             </li>
             <li>
-                <a id="pass_manager" class=" icon icon-protect" href="?c=PasswdManager&a=index">
+                <a id="pass_manager" class=" icon icon-protect" href="?m=admin&c=PasswdManager&a=index">
                     <span>密码管理</span>
                 </a>
             </li>
             <li>
-                <a id="icon_depository" class="icon icon-list" href="?c=IconDepository&a=index">
+                <a id="icon_depository" class="icon icon-list" href="?m=admin&c=IconDepository&a=index">
                     <span>图标库</span>
                 </a>
             </li>
             <li>
-                <a id="db_manager" class="iconfont icon-cc-database" href="?c=DbManager&a=index">
+                <a id="db_manager" class="iconfont icon-cc-database" href="?m=admin&c=DbManager&a=index">
                     <span>数据库管理</span>
                 </a>
             </li>
             <li>
-                <a id="rsa_key_manager" class="icon icon-verify" href="?c=RSAKeyManager&a=index">
+                <a id="rsa_key_manager" class="icon icon-verify" href="?m=admin&c=RSAKeyManager&a=index">
                     <span>RSA密钥管理</span>
                 </a>
             </li>
@@ -144,7 +144,7 @@ add.png">
 </button>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_11278650225ee22ef1c0b242_53300284', "content");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20300466375ee2ac24bc4654_13107991', "content");
 ?>
 
 </body>
@@ -229,7 +229,7 @@ common/js/cookie.js"><?php echo '</script'; ?>
 <?php echo '</script'; ?>
 >
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17658847495ee22ef1c0e549_80460413', "scriptCode");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_13717035975ee2ac24bc6989_69046172', "scriptCode");
 ?>
 
 
@@ -237,7 +237,7 @@ $_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17658847495ee22ef1
 
 <?php }
 /* {block "title"} */
-class Block_4873495465ee22ef1c006e8_44666768 extends Smarty_Internal_Block
+class Block_7984005245ee2ac24bbdd14_09967876 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -248,7 +248,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "title"} */
 /* {block "myStyles"} */
-class Block_8504430185ee22ef1c03f82_96990110 extends Smarty_Internal_Block
+class Block_17329446265ee2ac24bbf6e0_74014630 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -257,14 +257,14 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "myStyles"} */
 /* {block "content"} */
-class Block_11278650225ee22ef1c0b242_53300284 extends Smarty_Internal_Block
+class Block_20300466375ee2ac24bc4654_13107991 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 }
 /* {/block "content"} */
 /* {block "scriptCode"} */
-class Block_17658847495ee22ef1c0e549_80460413 extends Smarty_Internal_Block
+class Block_13717035975ee2ac24bc6989_69046172 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }

@@ -181,7 +181,7 @@
 
     // 获取账号列表
     function loadPassList() {
-        var url = baseUrl + "/admin?c=API_PassManager&a=loadPassList";
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPassList";
         get(url,function (data) {
             // 创建密码列表
             createPassDom(data.data);
@@ -243,7 +243,7 @@
         if (input.attr("type") == "text"){
             // 隐藏密码模式
             // 请求指定账号数据
-            var url = baseUrl + "/admin?c=API_PassManager&a=loadPasswd&id=" + passId;
+            var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId;
             get(url,function (data) {
                 var accData = data.data;
                 input.attr("type","password");
@@ -331,7 +331,7 @@
     function deletePass(obj) {
         var $this = $(obj);
         var passId = $this.attr("passId");
-        var url = baseUrl + "/admin?c=API_PassManager&a=deletePass&id=" + passId;
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=deletePass&id=" + passId;
         get(url,function () {
             // 刷新列表
             loadPassList();
@@ -345,7 +345,7 @@
         var passId = $this.attr("passId");
 
         // 请求指定账号数据
-        var url = baseUrl + "/admin?c=API_PassManager&a=loadPasswd&id=" + passId;
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId;
         get(url,function (data) {
             var accData = data.data;
 

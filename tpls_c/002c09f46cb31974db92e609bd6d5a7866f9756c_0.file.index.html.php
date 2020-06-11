@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2020-06-11 10:08:12
+/* Smarty version 3.1.30, created on 2020-06-11 22:19:58
   from "/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/account/index.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5ee2028c297129_41197955',
+  'unifunc' => 'content_5ee2ae0eb993a5_72341196',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '002c09f46cb31974db92e609bd6d5a7866f9756c' => 
     array (
       0 => '/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/account/index.html',
-      1 => 1591869838,
+      1 => 1591913993,
       2 => 'file',
     ),
   ),
@@ -21,28 +21,28 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:layout.html' => 1,
   ),
 ),false)) {
-function content_5ee2028c297129_41197955 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee2ae0eb993a5_72341196 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_614714075ee2028c2934a0_22378073', "myStyles");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1584609265ee2ae0eb94e78_21543441', "myStyles");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_5959679035ee2028c294425_26459427', "scriptCode");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_3892090985ee2ae0eb969d4_38973818', "scriptCode");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_6593837475ee2028c296403_92498689', "content");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_307443015ee2ae0eb98bc3_92279948', "content");
 ?>
 
 <?php $_smarty_tpl->inheritance->endChild();
 $_smarty_tpl->_subTemplateRender("file:layout.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 2, false);
 }
 /* {block "myStyles"} */
-class Block_614714075ee2028c2934a0_22378073 extends Smarty_Internal_Block
+class Block_1584609265ee2ae0eb94e78_21543441 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -191,7 +191,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "myStyles"} */
 /* {block "scriptCode"} */
-class Block_5959679035ee2028c294425_26459427 extends Smarty_Internal_Block
+class Block_3892090985ee2ae0eb969d4_38973818 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -272,7 +272,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 
     // 获取账号列表
     function loadAccountList() {
-        var url = baseUrl + "/admin?c=API_Account&a=loadAccountList";
+        var url = baseUrl + "?m=admin&c=API_Account&a=loadAccountList";
         console.log("获取账户列表:" + url);
         get(url,function (data) {
             // 创建分类列表
@@ -282,7 +282,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 
     // 请求平台列表
     function loadPlatList() {
-        var url = baseUrl + "/admin?c=API_Platform&a=loadPlatformList";
+        var url = baseUrl + "?m=admin&c=API_Platform&a=loadPlatformList";
         get(url, function (data) {
             layui.use('form', function(){
                 var form = layui.form;
@@ -304,7 +304,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 
     // 请求密码列表 返回机密以后的密码
     function loadPassList(success) {
-        var url = baseUrl + "/admin?c=API_PassManager&a=loadPassList";
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPassList";
         console.log("请求密码列表:" + url);
         get(url, function (data) {
             layui.use('form', function(){
@@ -374,7 +374,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         if (input.attr("type") == "text"){
             // 隐藏密码
             // 请求指定账号数据
-            var url = baseUrl + "/admin?c=API_Account&a=loadAccount&id=" + accId;
+            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId;
             get(url,function (data) {
                 var accData = data.data;
                 input.attr("type","password");
@@ -442,7 +442,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         var url = "";
         if (isEdit){
             // 修改
-            url = baseUrl + "/admin?c=API_Account&a=editAccount"
+            url = baseUrl + "?m=admin&c=API_Account&a=editAccount"
                 + "&id=" + editAccountId
                 + "&platId=" + selectedPlatId
                 + "&desc=" + addDesc
@@ -452,7 +452,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
                 + "&remark=" + addRemark;
         }else {
             // 添加
-            url = baseUrl + "/admin?c=API_Account&a=addAccount"
+            url = baseUrl + "?m=admin&c=API_Account&a=addAccount"
                 + "&platId=" + selectedPlatId
                 + "&desc=" + addDesc
                 + "&user=" + addUserName
@@ -480,7 +480,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         var $this = $(obj);
         var accId = $this.attr("accId");
         var platId = $this.attr("platId");
-        var url = baseUrl + "/admin?c=API_Account&a=deleteAccount&id=" + accId + "&platId=" + platId;
+        var url = baseUrl + "?m=admin&c=API_Account&a=deleteAccount&id=" + accId + "&platId=" + platId;
         console.log("删除：" + url);
         get(url,function () {
             // 刷新列表
@@ -498,7 +498,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         // 加载密码列表
         loadPassList(function () {
             // 请求指定账号数据
-            var url = baseUrl + "/admin?c=API_Account&a=loadAccount&id=" + accId;
+            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId;
             get(url,function (data) {
                 var accData = data.data;
                 selectedPlatId = accData["plat_id"];
@@ -526,7 +526,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         // 加载密码列表
         loadPassList(function () {
             // 请求指定账号数据
-            var url = baseUrl + "/admin?c=API_Account&a=loadAccount&id=" + accId;
+            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId;
             get(url,function (data) {
                 var accData = data.data;
                 selectedPlatId = accData["plat_id"];
@@ -571,16 +571,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "scriptCode"} */
 /* {block "content"} */
-class Block_6593837475ee2028c296403_92498689 extends Smarty_Internal_Block
+class Block_307443015ee2ae0eb98bc3_92279948 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
 <div class="aw-content-wrap">
-    <form id="form" action="?m=admin&c=ServerInfo&a=loadTempleteComplete" method="post" target="exec_target">
-    </form>
-    <iframe hidden id="exec_target" name="exec_target"></iframe>
-
     <div class="mod">
         <div class="layui-form" style="text-align: center;">
             <table id="acc_table" class="layui-table">

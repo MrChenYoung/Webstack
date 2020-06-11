@@ -2,21 +2,38 @@
 
 
 namespace admin\controller;
+use framework\dao;
 
-use framework\core\Controller;
-use framework\tools\DatabaseTableManager;
-
-class CreateTablesController extends Controller
+require_once "./framework/dao/DAOPDO.class.php";
+class CreateTablesController
 {
+    private $dao;
     public function __construct()
     {
-        parent::__construct();
+        $this->initDabaseInfo();
+        $this->dao = dao\DAOPDO::getSingleton();
 
         // 初始化数据表
         $this->initCategoryTable();
         $this->initPlatformTable();
         $this->initAccountTable();
         $this->initPassWDTable();
+    }
+
+    // 初始化数据库信息
+    private function initDabaseInfo(){
+        // 获取数据库链接信息
+        $path = getcwd()."/config/config.php";
+        $config = require_once $path;
+        $GLOBALS['config'] = $config;
+
+        $option['host'] = $config['host'];
+        $option['user'] = $config['user'];
+        $option['pass'] = $config['pass'];
+        $option['dbname'] = $config['dbname'];
+        $option['port'] = $config['port'];
+        $option['charset'] = $config["charset"];
+        $GLOBALS["db_info"] = $option;
     }
 
     // 创建分类表
@@ -31,7 +48,7 @@ class CreateTablesController extends Controller
                         platform_list varchar(300)  DEFAULT '' COMMENT '平台列表'
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='分类表';
 EEE;
-        DatabaseTableManager::getSingleton()->createTable($tableName,$sql);
+        $this->dao->createTable($tableName,$sql);
     }
 
     // 创建平台表
@@ -46,7 +63,7 @@ EEE;
                         cat_id int  DEFAULT 0 COMMENT '所属分类'
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='平台表';
 EEE;
-        DatabaseTableManager::getSingleton()->createTable($tableName,$sql);
+        $this->dao->createTable($tableName,$sql);
     }
 
     // 创建账号表
@@ -64,7 +81,7 @@ EEE;
                         remark varchar(500) DEFAULT '' COMMENT '备注'
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='账号表';
 EEE;
-        DatabaseTableManager::getSingleton()->createTable($tableName,$sql);
+        $this->dao->createTable($tableName,$sql);
     }
 
     // 创建密码表
@@ -79,13 +96,13 @@ EEE;
                         pass_level int DEFAULT 0 COMMENT '密码安全级别'
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='密码表';
 EEE;
-        DatabaseTableManager::getSingleton()->createTable($tableName,$sql);
+        $this->dao->createTable($tableName,$sql);
         // 添加登录密码
         $data = [
             "pass_desc"     =>  "'登录密码'",
             "passwd"        =>  "QDAoTKf4iGADBGSjt4VXXElC7eanPD3gS9sn3DRZHTBjVpbm/ZQ7Y5a2KEYujU6cjXFJdMudNB06Y1UalS6Gd5ThiYd+EcwKcPsT1Xp5xHdDtJL0lWyirZhRwdOHPQ/P/Xzc0wArFP2hjccJAlucpc8FpN+oOvfAzojzL0/liYQ=",
             "pass_level"    => 4
         ];
-        DatabaseTableManager::getSingleton()->insertData($tableName,"pass_desc",$data);
+        $this->dao->insertData($tableName,"pass_desc",$data);
     }
 }

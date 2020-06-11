@@ -37,7 +37,7 @@
                 <h1 style="font-family: HUPOFont;font-size: 50px; color: #FFFFFF">账号管家</h1>
             </div>
 
-            <form method="post" action="<?php echo $webSite.'/admin/index.php'?>" id="login_submit">
+            <form method="post" action="<?php echo $webSite.'/index.php'?>" id="login_submit">
                 <?php if ($_GET["loginerr"]) {
                     $disp='display';
                 }else{

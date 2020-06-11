@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2020-06-10 15:29:04
-  from "/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/category/index.html" */
+/* Smarty version 3.1.30, created on 2020-06-11 22:18:12
+  from "/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/platform/index.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_5ee0fc4078a291_36297759',
+  'unifunc' => 'content_5ee2ada49d2343_93231778',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '54d28811a41b07a47f15086f870ac53989d175be' => 
+    '0c3b71fb08ac768bb9dc708dac87f156de34d5a5' => 
     array (
-      0 => '/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/category/index.html',
-      1 => 1591802943,
+      0 => '/Users/mrchen/Desktop/www/PhpProjects/AccountManager/admin/view/platform/index.html',
+      1 => 1591913874,
       2 => 'file',
     ),
   ),
@@ -21,28 +21,28 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:layout.html' => 1,
   ),
 ),false)) {
-function content_5ee0fc4078a291_36297759 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5ee2ada49d2343_93231778 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_20557524495ee0fc40787be8_35784197', "myStyles");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_9712158895ee2ada49cc562_14256494', "myStyles");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_10976076545ee0fc40789059_17194559', "scriptCode");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_10509354105ee2ada49d0098_96356997', "scriptCode");
 ?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_17269142875ee0fc40789ca3_72431629', "content");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1783394305ee2ada49d1897_75333526', "content");
 ?>
 
 <?php $_smarty_tpl->inheritance->endChild();
 $_smarty_tpl->_subTemplateRender("file:layout.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 2, false);
 }
 /* {block "myStyles"} */
-class Block_20557524495ee0fc40787be8_35784197 extends Smarty_Internal_Block
+class Block_9712158895ee2ada49cc562_14256494 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
@@ -72,7 +72,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 
     .add-category-container {
         width: 800px;
-        height: 400px;
+        height: 300px;
         background-color: #FFF;
         margin: 150px auto;
         padding: 10px;
@@ -116,7 +116,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         height: 20px;
         float: left;
         cursor: pointer;
-        color: #bfbfbf;
+        color: #e6e6e6;
         margin: 5px;
     }
 
@@ -139,7 +139,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         background-color: #393D49;
     }
 
-    .plat_list_ul {
+    .acc_list_ul {
         width: 800px;
         height: 30px;
         display: flex;
@@ -147,7 +147,7 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         justify-content: center;
     }
 
-    .plat_list_ul li {
+    .acc_list_ul li {
         font-size: 12px;
         height: 20px;
         float: left;
@@ -162,125 +162,116 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "myStyles"} */
 /* {block "scriptCode"} */
-class Block_10976076545ee0fc40789059_17194559 extends Smarty_Internal_Block
+class Block_10509354105ee2ada49d0098_96356997 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
 <?php echo '<script'; ?>
 >
-    // 添加分类选择的icon
-    var selectedIcon = '';
-    // 添加分类的分类名
-    var addCatName = '';
+    // 添加平台选择的catid
+    var selectedCatId = '';
+    // 添加平台的平台名
+    var addPlatformName = '';
     // 是否是修改分类
     var isEdit = false;
-    // 修改分类的id
-    var editCatId = "";
+    // 修改平台id
+    var editPlatId = "";
 
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
-        $("#category_manager").addClass("active");
+        $("#platform_manager").addClass("active");
 
-        // 监听添加分类输入分类名
-        var addCatInput = $("#add_cat_name");
-        addCatInput.bind("input propertychange", function (event) {
-            addCatName = addCatInput.val();
+        // 监听添加平台输入平台名
+        var addPlatInput = $("#add_plat_name");
+        addPlatInput.bind("input propertychange", function (event) {
+            addPlatformName = addPlatInput.val();
         });
 
-        // 请求分类列表
-        loadCategoryList();
-        // 请求icon
-        loadIcons();
+        // 监听分类选择
+        layui.use('form',function () {
+            var form = layui.form;
+            form.on('select(cat-list)', function(data){
+                // 选择的catid
+                var catid = data.value;
+                selectedCatId = catid;
+                console.log("catid选择:" + catid);
+            });
+        });
+
+        // 请求平台列表
+        loadPlatformList();
     });
 
-    // 获取分类列表
-    function loadCategoryList() {
-        var url = baseUrl + "/admin?c=API_Category&a=loadCategotyList";
-        console.log("分类:" + url);
+    // 获取平台列表
+    function loadPlatformList() {
+        var url = baseUrl + "?m=admin&c=API_Platform&a=loadPlatformList";
         get(url,function (data) {
             // 创建分类列表
-            createCategoryDom(data.data);
+            createPlatformDom(data.data);
         },false);
     }
 
-    // 请求icon
-    function loadIcons() {
-        var url = baseUrl + "/admin/?c=API_Icon&a=getAliIconfonts&API=";
+    // 请求分类列表
+    function loadCatList() {
+        var url = baseUrl + "?m=admin&c=API_Category&a=loadCategotyList";
         get(url, function (data) {
             layui.use('form', function(){
                 var form = layui.form;
-                var icons = data.data;
-                // 创建要选择的icon
-                var dom = "";
-                for (var i = 0; i < icons.length; i++){
-                    var icon = icons[i];
-                    dom += '<li><i icon="'+ icon +'" onclick="confirmIcon(this)" class="iconfont icon-'+ icon +'"></i></li>';
+                var catData = data.data;
+                // 创建要选择的分类列表
+                var dom = '<option value="">请选择分类</option>';
+                for (var i = 0; i < catData.length; i++){
+                    var cat = catData[i];
+                    dom += '<option value="'+ cat["id"] +'" >'+ cat["cat_title"] +'</option>';
                 }
-                $(".icons-box ul").html(dom);
+                $("#cat_select").html(dom);
+                $("#cat_select").val(selectedCatId);
                 form.render();
+                // 显示添加界面
+                showEditCatCover();
             });
         })
     }
 
-    // 添加分类
+    // 添加平台
     function addData() {
         isEdit = false;
-        selectedIcon = "";
-        addCatName = "";
-        showEditCatCover();
+        selectedCatId = "";
+        addPlatformName = "";
+        loadCatList();
     }
 
-    // 创建分类列表
-    function createCategoryDom(data) {
+    // 创建平台列表
+    function createPlatformDom(data) {
         var dom = "";
         for(var i = 0; i < data.length; i++){
-            var category = data[i];
-            dom += '<tr><td><i class="iconfont icon-'+ category["cat_icon"] +'"></i></td>';
-            dom += '<td>' + category["cat_title"] + '</td>';
-            dom += '<td><ul class="plat_list_ul">';
-
-            var platList = category["platform_list"];
-            for (var j = 0; j < platList.length; j++){
-                var plat = platList[j];
-                dom += '<li>'+ plat +'</li>';
+            var platform = data[i];
+            dom += '<tr><td>'+ platform["plat_name"] +'</td>';
+            dom += '<td><ul class="acc_list_ul">';
+            var accList = platform["acc_list"];
+            for (var j = 0; j < accList.length; j++){
+                var acc = accList[j];
+                dom += '<li>'+ acc +'</li>';
             }
             dom += '</ul></td>';
-            dom += '<td><i onclick="editCategory(this)" catId="'+ category["id"] +'" style="cursor: pointer" class="icon icon-edit"></i>';
-            dom += '<i catId="'+ category["id"] +'" onclick="deleteCat(this)" style="cursor: pointer" class="icon icon-trash"></i></td>';
+            dom += '<td>' + platform["cat_title"] + '</td>';
+            dom += '<td><i onclick="editPlatform(this)" platId="'+ platform["id"] +'" style="cursor: pointer" class="icon icon-edit"></i>';
+            dom += '<i catId="'+ platform["cat_id"] +'" platId="'+ platform["id"] +'" onclick="deletePlatform(this)" style="cursor: pointer" class="icon icon-trash"></i></td></tr>';
         }
 
         // 添加分类一行
         $("tbody").html(dom);
     }
 
-    // 确定选择的icon
-    function confirmIcon(obj) {
-        var $this = $(obj);
-        var iconName = $this.attr("icon");
-        selectIcon(iconName);
-    }
-
-    // 选择图标
-    function selectIcon(iconName) {
-        if (iconName.length > 0){
-            var btnContent = '已选择 <i class="iconfont icon-'+ iconName +'"></i>';
-            $(".layui-input-inline button").html(btnContent);
-            $(".layui-input-inline button i").css("color","#393D49");
-            selectedIcon = iconName;
-        }else {
-            $(".layui-input-inline button").html("请选择");
-        }
-    }
-    
-    // 确定添加分类
+    // 确定添加/修改平台
     function confirm() {
-        if (selectedIcon.length == 0){
-            toast("请选择图标");
+        if (selectedCatId.length == 0){
+            toast("请选择分类");
             return;
         }
-        if (addCatName.length == 0){
-            toast("请输入分类名");
+        if (addPlatformName.length == 0){
+            toast("请输入平台名称");
             return;
         }
 
@@ -288,59 +279,61 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
         var url = "";
         if (isEdit){
             // 修改
-            url = baseUrl + "/admin?c=API_Category&a=editCategory&icon=" + selectedIcon + "&catName=" + addCatName + "&id=" + editCatId;
+            url = baseUrl + "?m=admin&c=API_Platform&a=editPlatform&id=" + editPlatId + "&catId=" + selectedCatId + "&platName=" + addPlatformName;
         }else {
             // 添加
-            url = baseUrl + "/admin?c=API_Category&a=addCategory&icon=" + selectedIcon + "&catName=" + addCatName;
+            url = baseUrl + "?m=admin&c=API_Platform&a=addPlatform&catId=" + selectedCatId + "&platName=" + addPlatformName;
         }
 
         get(url,function () {
             // 浮层消失
             hideEditCatCover();
             // 刷新分类列表
-            loadCategoryList();
+            loadPlatformList();
         },true,true);
     }
 
-    // 取消添加分类
+    // 取消添加平台
     function cancel() {
         hideEditCatCover();
     }
 
-    // 删除分类
-    function deleteCat(obj) {
+    // 删除平台
+    function deletePlatform(obj) {
         var $this = $(obj);
+        var platId = $this.attr("platId");
         var catId = $this.attr("catId");
-        var url = baseUrl + "/admin?c=API_Category&a=deleteCategory&id=" + catId;
+        var url = baseUrl + "?m=admin&c=API_Platform&a=deletePlatform&id=" + platId + "&catId=" + catId;
         get(url,function () {
             // 刷新列表
-            loadCategoryList();
+            loadPlatformList();
         },true,true);
     }
     
-    // 编辑分类
-    function editCategory(obj) {
+    // 编辑平台
+    function editPlatform(obj) {
         isEdit = true;
         var $this = $(obj);
-        var catId = $this.attr("catId");
-        editCatId = catId;
+        var platId = $this.attr("platId");
+        editPlatId = platId;
 
-        // 请求指定分类数据
-        var url = baseUrl + "/admin?c=API_Category&a=loadCategory&id=" + catId;
+        // 请求指定平台数据
+        var url = baseUrl + "?m=admin&c=API_Platform&a=loadPlatform&id=" + platId;
+
         get(url,function (data) {
-            var catData = data.data;
-            selectedIcon = catData["cat_icon"];
-            addCatName = catData["cat_title"];
-            showEditCatCover();
+            var platData = data.data;
+            selectedCatId = platData["cat_id"];
+            addPlatformName = platData["plat_name"];
+            // 加载分类
+            loadCatList();
         })
     }
     
-    // 显示添加/修改分类浮层
+    // 显示添加/修改平台浮层
     function showEditCatCover() {
         $(".add-category-box").css("display","block");
-        selectIcon(selectedIcon);
-
-        $("#add_cat_name").val(addCatName);
+        // 默认设置的平台名称
+        $("#add_plat_name").val(addPlatformName);
     }
 
     // 隐藏添加/修改分类浮层
@@ -355,30 +348,26 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "scriptCode"} */
 /* {block "content"} */
-class Block_17269142875ee0fc40789ca3_72431629 extends Smarty_Internal_Block
+class Block_1783394305ee2ada49d1897_75333526 extends Smarty_Internal_Block
 {
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 ?>
 
 <div class="aw-content-wrap">
-    <form id="form" action="?m=admin&c=ServerInfo&a=loadTempleteComplete" method="post" target="exec_target">
-    </form>
-    <iframe hidden id="exec_target" name="exec_target"></iframe>
-
     <div class="mod">
         <div class="layui-form" style="text-align: center;">
             <table class="layui-table">
                 <colgroup>
                     <col width="150">
-                    <col width="150">
                     <col>
+                    <col width="150">
                     <col width="200">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>分类图标</th>
-                    <th>分类名</th>
-                    <th>平台</th>
+                    <th>平台名称</th>
+                    <th>账号</th>
+                    <th>所属分类</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -393,23 +382,20 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 <div class="add-category-box">
     <div class="add-category-container">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>添加分类</legend>
+            <legend>添加平台</legend>
         </fieldset>
         <form class="layui-form layui-form-pane" action="">
             <div class="layui-form-item">
-                <label class="layui-form-label">图标</label>
+                <label class="layui-form-label">所属分类</label>
                 <div class="layui-input-inline">
-                    <button disabled="disabled" type="button" class="layui-btn layui-btn-primary">请选择</button>
+                    <select id="cat_select" lay-filter="cat-list">
+                    </select>
                 </div>
             </div>
-            <div class="icons-box">
-                <ul>
-                </ul>
-            </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">分类名称</label>
+                <label class="layui-form-label">平台名称</label>
                 <div class="layui-input-inline cat-name">
-                    <input id="add_cat_name" type="text" name="username" lay-verify="required" placeholder="请输入分类名称" autocomplete="off" class="layui-input">
+                    <input id="add_plat_name" type="text" name="username" lay-verify="required" placeholder="请输入平台名称" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </form>

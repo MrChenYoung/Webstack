@@ -149,7 +149,7 @@
 
     // 获取平台列表
     function loadPlatformList() {
-        var url = baseUrl + "/admin?c=API_Platform&a=loadPlatformList";
+        var url = baseUrl + "?m=admin&c=API_Platform&a=loadPlatformList";
         get(url,function (data) {
             // 创建分类列表
             createPlatformDom(data.data);
@@ -158,7 +158,7 @@
 
     // 请求分类列表
     function loadCatList() {
-        var url = baseUrl + "/admin?c=API_Category&a=loadCategotyList";
+        var url = baseUrl + "?m=admin&c=API_Category&a=loadCategotyList";
         get(url, function (data) {
             layui.use('form', function(){
                 var form = layui.form;
@@ -223,10 +223,10 @@
         var url = "";
         if (isEdit){
             // 修改
-            url = baseUrl + "/admin?c=API_Platform&a=editPlatform&id=" + editPlatId + "&catId=" + selectedCatId + "&platName=" + addPlatformName;
+            url = baseUrl + "?m=admin&c=API_Platform&a=editPlatform&id=" + editPlatId + "&catId=" + selectedCatId + "&platName=" + addPlatformName;
         }else {
             // 添加
-            url = baseUrl + "/admin?c=API_Platform&a=addPlatform&catId=" + selectedCatId + "&platName=" + addPlatformName;
+            url = baseUrl + "?m=admin&c=API_Platform&a=addPlatform&catId=" + selectedCatId + "&platName=" + addPlatformName;
         }
 
         get(url,function () {
@@ -247,7 +247,7 @@
         var $this = $(obj);
         var platId = $this.attr("platId");
         var catId = $this.attr("catId");
-        var url = baseUrl + "/admin?c=API_Platform&a=deletePlatform&id=" + platId + "&catId=" + catId;
+        var url = baseUrl + "?m=admin&c=API_Platform&a=deletePlatform&id=" + platId + "&catId=" + catId;
         get(url,function () {
             // 刷新列表
             loadPlatformList();
@@ -262,7 +262,7 @@
         editPlatId = platId;
 
         // 请求指定平台数据
-        var url = baseUrl + "/admin?c=API_Platform&a=loadPlatform&id=" + platId;
+        var url = baseUrl + "?m=admin&c=API_Platform&a=loadPlatform&id=" + platId;
 
         get(url,function (data) {
             var platData = data.data;
@@ -289,10 +289,6 @@
 <{/block}>
 <{block name="content"}>
 <div class="aw-content-wrap">
-    <form id="form" action="?m=admin&c=ServerInfo&a=loadTempleteComplete" method="post" target="exec_target">
-    </form>
-    <iframe hidden id="exec_target" name="exec_target"></iframe>
-
     <div class="mod">
         <div class="layui-form" style="text-align: center;">
             <table class="layui-table">

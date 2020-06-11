@@ -26,13 +26,8 @@ class Controller
         $this -> smarty = new Smarty();
         $this -> smarty -> left_delimiter = '<{';
         $this -> smarty -> right_delimiter = '}>';
-        $pre = $GLOBALS["module"] == "admin" ? ADMIN : HOME;
-        $this -> smarty -> setTemplateDir($pre.'view/');
-        $this -> smarty -> setCompileDir($pre.'tpls_c/');
-
-        // rsa加密解密
-        $privateKeyPath = "/Users/mrchen/.ssh/private_key.pem";
-        $publicKeyPath = ADMIN."rsaPubKey/rsa_public_key.pem";
+        $this -> smarty -> setTemplateDir(ROOT.MODULE.'/view/');
+        $this -> smarty -> setCompileDir(ROOT.'tpls_c/');
 
         // 本站站点
         $this -> website = "http://".$_SERVER['HTTP_HOST'];
