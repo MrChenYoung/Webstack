@@ -120,7 +120,7 @@ EEE;
     }
     $errMsg = urlencode($errMsg);
     $url = "http://".$_SERVER['HTTP_HOST']."/admin/view/login/login.php?loginerr=".$loginerr."&errMsg=".$errMsg."&pass=".$pass;
-    header("Refresh:0;url=".$url);
+//    header("Refresh:0;url=".$url);
 }
 
 
