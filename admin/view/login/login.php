@@ -26,10 +26,20 @@
         #cotent{
             overflow-y: hidden;
         }
+
+        .bg_img {
+            position:absolute;
+            left:0;
+            top:0;
+            z-index:-1;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 
 <body>
+    <img src="<?php echo $webSite?>/public/common/img/login_bg1.jpg" class="bg_img" />
     <input id="encrypt_pass" type="hidden" value="<?php echo $_GET["pass"]?>"/>
     <div id="cotent" class="aw-login">
         <div class="mod center-block" style="padding-top: 60px;">
