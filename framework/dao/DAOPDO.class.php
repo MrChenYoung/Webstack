@@ -53,6 +53,7 @@ class DAOPDO implements i_DAOPDO
             $connectRes = $this->connectDb();
             if ($connectRes["success"]){
                 // 登录成功
+                die("登录数据库成功");
             }else {
                 die("链接数据库失败,错误信息:".$connectRes["message"]);
             }

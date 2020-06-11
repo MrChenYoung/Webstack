@@ -4,7 +4,6 @@
 namespace admin\controller;
 
 use framework\core\Controller;
-use framework\tools\DatabaseDataManager;
 use framework\tools\DatabaseTableManager;
 
 class CreateTablesController extends Controller
