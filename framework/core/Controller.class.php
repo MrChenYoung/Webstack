@@ -1,11 +1,8 @@
 <?php
 namespace framework\core;
-use admin\controller\API\Online\API_GetOnlineMoviesController;
 use framework\tools\Page;
-use framework\tools\RsaUtils;
 use framework\tools\ServerInfoManager;
 use framework\tools\SessionManager;
-use framework\tools\StringTool;
 use \Smarty;
 
 class Controller
