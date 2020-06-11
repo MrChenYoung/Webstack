@@ -1,0 +1,11 @@
+{
+  "name": "accountmanager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "publish": "git add -A && git commit -m 'new' && git push vps master && git push origin master"
+  },
+  "author": "",
+  "license": "ISC"
+}
