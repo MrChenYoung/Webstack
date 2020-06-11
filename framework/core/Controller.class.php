@@ -80,8 +80,7 @@ class Controller
 
         return $pageHTML;
     }
-
-
+    
     /**
      * 加载模板
      */
