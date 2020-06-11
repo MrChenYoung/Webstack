@@ -24,7 +24,7 @@ class Controller
         $this -> smarty -> left_delimiter = '<{';
         $this -> smarty -> right_delimiter = '}>';
         $this -> smarty -> setTemplateDir(ROOT.MODULE.'/view/');
-        $this -> smarty -> setCompileDir(ROOT.'tpls_c/');
+        $this -> smarty -> setCompileDir(ROOT.'public/tpls_c/');
 
         // 本站站点
         $this -> website = "http://".$_SERVER['HTTP_HOST'];
