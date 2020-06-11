@@ -35,6 +35,7 @@ class DAOPDO implements i_DAOPDO
      * 登录并连接到数据库
      */
     private function loginDb($option){
+        die("登录数据库");
         $this -> host = isset($option['host'])?$option['host']:'';
         $this -> user = isset($option['user'])?$option['user']:'';
         $this -> pass = isset($option['pass'])?$option['pass']:'';
