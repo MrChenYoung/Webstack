@@ -17,7 +17,7 @@ if (isset($_FILES['file'])) {
 
     // 要跳转的目标主机
     $localHost = "http://".$_SERVER['HTTP_HOST'];
-    $url = $localHost."/admin?c=DbManager&a=index&msg=";
+    $url = $localHost."?m=admin&c=DbManager&a=index&msg=";
 
     $msg = "";
     // 限制文件必须是sql
@@ -40,4 +40,4 @@ if (isset($_FILES['file'])) {
 }
 
 $url .= base64_encode($msg);
-header("Refresh:0;url=$url");
+//header("Refresh:0;url=$url");

@@ -121,6 +121,19 @@
     function uploadBackupDB() {
         $("#file_select_input").click();
     }
+
+    // 下载备份
+    function downloadBackup(obj) {
+        var $this = $(obj);
+        var backName = $this.attr("backName");
+        var url = baseUrl + "/admin/resource/dbBackup/" + backName;
+
+        var $eleForm = $("<form method='get'></form>");
+        $eleForm.attr("action",url);
+        $(document.body).append($eleForm);
+        //提交表单，实现下载
+        $eleForm.submit();
+    }
 </script>
 <{/block}>
 <{block name="content"}>
