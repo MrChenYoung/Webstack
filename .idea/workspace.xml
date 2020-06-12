@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/controller/UploadDBBack.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/UploadDBBack.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/dbBackup/20200612070446_all_v1.sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +74,7 @@
       <workItem from="1591631170950" duration="1783000" />
       <workItem from="1591633070915" duration="107401000" />
       <workItem from="1591871479214" duration="35444000" />
-      <workItem from="1591945607164" duration="888000" />
+      <workItem from="1591945607164" duration="1072000" />
     </task>
     <servers />
   </component>

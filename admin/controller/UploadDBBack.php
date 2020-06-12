@@ -41,4 +41,4 @@ if (isset($_FILES['file'])) {
 
 
 $url .= base64_encode($msg);
-//header("Refresh:0;url=$url");
+header("Refresh:0;url=$url");
