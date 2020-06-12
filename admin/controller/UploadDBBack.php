@@ -39,5 +39,6 @@ if (isset($_FILES['file'])) {
     $msg = "上传发生错误";
 }
 
+
 $url .= base64_encode($msg);
 //header("Refresh:0;url=$url");
