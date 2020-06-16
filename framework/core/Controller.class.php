@@ -23,8 +23,8 @@ class Controller
         $this -> smarty = new Smarty();
         $this -> smarty -> left_delimiter = '<{';
         $this -> smarty -> right_delimiter = '}>';
-        $tplsDir = ROOT.'public/tpls_c/';
-        if (!file($tplsDir)){
+        $tplsDir = ROOT.'public/tpls_c';
+        if (!file_exists($tplsDir)){
             mkdir($tplsDir);
             chmod($tplsDir,0700);
         }
