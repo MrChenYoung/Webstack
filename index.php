@@ -13,6 +13,12 @@ if (isset($_GET["API"])){
     return;
 }
 
+// 点击后台的注销按钮
+if (isset($_GET["login"])){
+    toLogin();
+    return;
+}
+
 // 检测是否已经添加rsa key
 require_once "./framework/tools/CookieManager.class.php";
 checkRsaKey();
@@ -28,11 +34,18 @@ function checkRsaKey(){
     // 没有添加 跳转到添加页面
     if (strlen($privateKeyContent) == 0 || strlen($publickKeyContent) == 0){
         // 没有添加 跳转到添加页面
-        $url = "http://".$_SERVER['HTTP_HOST']."/addRsaKey.php";
+        $url = "http://".$_SERVER['HTTP_HOST']."/addRsaKey.php&page";
         header("Refresh:0;url=".$url);
     }else {
-        // 已经添加 检测登录状态
-        checkLoginStatus();
+        // 已经添加
+        $modoule = isset($_GET["m"]) ? $_GET["m"] : "home";
+        if ($modoule == "admin"){
+            // 检测登录状态
+            checkLoginStatus();
+        }else {
+            // 进入前台首页
+            toHome();
+        }
     }
 }
 
@@ -47,7 +60,11 @@ function checkLoginStatus(){
     if ($session -> issetSession("isLogin")){
         // session已经记录登录状态
         if ($isLogin){
-            toHome();
+            // 进入后台页面
+            $modoule = isset($_GET["m"]) ? $_GET["m"] : "admin";
+            $controller = isset($_GET["c"]) ? $_GET["c"] : "CategoryManager";
+            $action = isset($_GET["a"]) ? $_GET["a"] : "index";
+            toHome($modoule,$controller,$action);
         }else {
             // 点击首页退出登录页面进来的
             toLogin();
@@ -74,10 +91,10 @@ function checkLoginStatus(){
 }
 
 
-// 进入后台页面
-function toHome(){
+// 进入主页面
+function toHome($m='',$c='',$a=''){
     require_once './framework/core/Framework.class.php';
-    new \framework\core\Framework();
+    new \framework\core\Framework($m,$c,$a);
 }
 
 // 进入登录页
@@ -115,8 +132,4 @@ EEE;
     $url = "http://".$_SERVER['HTTP_HOST']."/admin/view/login/login.php?loginerr=".$loginerr."&errMsg=".$errMsg."&pass=".$pass;
     header("Refresh:0;url=".$url);
 }
-
-
-
-
 

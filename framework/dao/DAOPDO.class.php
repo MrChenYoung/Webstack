@@ -140,6 +140,31 @@ EEE;
         return $success;
     }
 
+    /**
+     * 给表添加字段
+     * @param $tbName 表名
+     * @param mixed ...$fields 要添加的字段
+     * @return bool            添加是否成功
+     */
+    public function addField($tbName,...$fields){
+        $success = false;
+        foreach ($fields as $field){
+            // 字段不存在 添加
+            if (array_key_exists("name",$field) && array_key_exists("type",$field) && !$this -> fieldExist($tbName,$field["name"])){
+                $fieldName = array_key_exists("name",$field) ? $field["name"] : null;
+                $fieldType = array_key_exists("type",$field) ? $field["type"] : null;
+                $fieldComment = array_key_exists("comment",$field) ? "COMMENT ".$field["comment"] : null;
+                $filedDefault = array_key_exists("default",$field) ? "DEFAULT ".$field["default"] : null;
+                $sql = "ALTER TABLE $tbName ADD $fieldName  $fieldType $filedDefault  $fieldComment";
+
+                $this -> fetchAll($sql);
+                $success = true;
+            }
+        }
+
+        return $success;
+    }
+
     // 判断数据表是否存在
     public function tableExist($tbName){
         // 判断表是否存在
@@ -151,6 +176,24 @@ EEE;
             return true;
         }else {
             // 表不存在
+            return false;
+        }
+    }
+
+    /**
+     * 检查表中是否有指定字段
+     * @param $tbName 表名
+     * @param $fieldName 字段名
+     * @return bool 是否存在
+     */
+    public function fieldExist($tbName,$fieldName){
+        $sql = "Describe $tbName $fieldName";
+        $res = $this-> fetchAll($sql);
+        if ($res){
+            // 字段存在
+            return true;
+        }else {
+            // 字段不存在
             return false;
         }
     }

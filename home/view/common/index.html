@@ -1,0 +1,391 @@
+<{extends file="layout.html"}>
+<{block name="myStyles"}>
+<style type="text/css">
+    .card-content {
+        width: 20%;
+    }
+
+    .text-content {
+        top: 20px;
+        left: 20px;
+    }
+
+    .card-title {
+        margin-bottom: 10px;
+    }
+
+    .card-title span {
+        display: inline-block;
+        width: 30px;
+        height: 15px;
+        line-height: 15px;
+        color: #FFF;
+        text-align: center;
+        border-radius: 3px;
+    }
+
+    .card-title span:hover {
+        color: #FFF;
+    }
+
+    .safe-level-low {
+        color: #FFF;
+        background: #FF0000;
+    }
+
+    .safe-level-mid {
+        color: #FFF;
+        background: #FFA500;
+    }
+
+    .safe-level-high {
+        color: #FFF;
+        background: #FFD700;
+    }
+
+    .safe-level-best {
+        color: #FFF;
+        background: #008000;
+    }
+
+</style>
+<{/block}>
+<{block name="scriptCode"}>
+<script>
+    $(document).ready(function () {
+        // 设置边栏服务器信息选中状态
+        var catId = $("#cat_id").val();
+        $("#cat_" + catId).addClass("active");
+
+        // 请求备用密码数据
+        loadPassLists();
+    });
+
+    // 请求备用密码数据
+    function loadPassLists() {
+        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPassList&API=";
+        console.log("请求密码数据:" + url);
+        get(url, function (data) {
+            // 创建密码数据卡片
+            createPassCards(data.data);
+            console.log("密码s数据:" + JSON.stringify(data.data));
+        },false);
+    }
+
+    // 创建密码数据卡片
+    function createPassCards(passLists) {
+        var dom = "";
+        dom += '<div class="platform-container">';
+        dom += '<h4 class="text-gray" style="display: inline-block;">';
+        dom += '<i class="iconfont icon-tag" id=""></i>备用密码</h4>';
+        dom += '<div class="row">';
+        for (var i = 0; i < passLists.length; i++) {
+            var passData = passLists[i];
+            var passId = passData["id"];
+            var passDesc = passData["pass_desc"];
+            var passwd = passData["passwd"];
+            var passLevel = parseInt(passData["pass_level"]);
+            var safeLevelClass = getSafeLevelClass(passLevel);
+            var safeTitle = getSafeTitle(passLevel);
+
+            dom += '<div class="card-content">';
+            dom += '<a href="javascript:;" class="card-link" >';
+            dom += '<div class="text-content"><div class="card-title">';
+            dom += '<strong>' + passDesc + '</strong><span id="safe_level" class="'+ safeLevelClass +'" title="安全等级">'+ safeTitle +'</span></div>';
+            dom += '<input id="acc_pass_' + passId + '" style="width: 73%" type="password" class="user-pass" value="' + passwd + '" readonly="readonly">';
+            dom += '<i title="查看密码" passId="' + passId + '" pass="' + passwd + '" onclick="checkPasswd(this)" class="iconfont icon-Xtubiao-chakan"></i>';
+            dom += '<i title="复制密码" passId="' + passId + '" pass="' + passwd + '"  onclick="copyPasswd(this)" class="icon icon-reply"></i>';
+            dom += '<input class="real-pass" type="text" id="real_pass_' + passId + '">';
+            dom += '</div></a></div>';
+        }
+        dom += '</div></div>';
+
+        $(".cards-container").html(dom);
+    }
+    
+    // 获取安全的等级显示样式
+    function getSafeLevelClass(level) {
+        var safeClass = '';
+        switch (level) {
+            case 1:
+                // 安全级别低
+                safeClass = "safe-level-low";
+                break;
+            case 2:
+                // 安全等级中
+                safeClass = "safe-level-mid";
+                break;
+            case 3:
+                // 安全等级高
+                safeClass = "safe-level-high";
+                break;
+            case 4:
+                // 安全等级最高
+                safeClass = "safe-level-best";
+                break;
+            default:
+                break;
+        }
+        return safeClass;
+    }
+
+    // 获取safetitle
+    function getSafeTitle(level) {
+        var safeTitle = '';
+        switch (level) {
+            case 1:
+                // 安全级别低
+                safeTitle = "低";
+                break;
+            case 2:
+                // 安全等级中
+                safeTitle = "中";
+                break;
+            case 3:
+                // 安全等级高
+                safeTitle = "高";
+                break;
+            case 4:
+                // 安全等级最高
+                safeTitle = "最高";
+                break;
+            default:
+                break;
+        }
+        return safeTitle;
+    }
+
+    // 查看密码
+    function checkPasswd(obj) {
+        var $this = $(obj);
+        var passId = $this.attr("passId");
+        var passwd = $this.attr("pass");
+        var passInput = $("#acc_pass_" + passId);
+        if (passInput.attr('type') == "text"){
+            // 已经显示密码,隐藏密码
+
+            // 请求密码密文
+            var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId + "&API=";
+            get(url,function (data) {
+                var passData = data.data;
+                passInput.attr("type","password");
+                passInput.val(passData["passwd"]);
+                $this.attr("class","iconfont icon-Xtubiao-chakan");
+            },false);
+        }else {
+            // 显示密码
+            passInput.attr("type","text");
+
+            // 解密密码
+            var decryptPass = RSADecryptPass(passwd);
+            passInput.attr("type","text");
+            passInput.val(decryptPass);
+            $this.attr("class","iconfont icon-Xtubiao-guanbichakan");
+        }
+    }
+
+    // 拷贝密码
+    function copyPasswd(obj) {
+        var $this = $(obj);
+        var passId = $this.attr("passId");
+        var passwd = $this.attr("pass");
+        var passInput = $("#acc_pass_" + passId);
+        var input = $("#real_pass_"+passId);
+
+        // 解密
+        var decryptPass = RSADecryptPass(passwd);
+        input.val(decryptPass);
+        // 复制密码
+        copyInputContent(input,"密码已复制");
+    }
+</script>
+<{/block}>
+<{block name="content"}>
+<div class="aw-content-wrap">
+    <input type="hidden" value="<{$data.catId}>" id="cat_id">
+    <div class="cards-container">
+        <div class="platform-container">
+            <h4 class="text-gray" style="display: inline-block;"><i class="iconfont icon-tag" id=""></i>
+                谷歌
+            </h4>
+            <div class="row">
+                <div class="card-content">
+                    <a href="https://www.google.com" target="_blank" class="card-link">
+                        <div class="text-content">
+                            <div class="card-title">
+                                <strong>GSuite账号</strong>
+                                <span title="安全等级">高</span>
+                            </div>
+                            <input id="acc_pass_1"
+                                   style="width: 73%"
+                                   type="password"
+                                   class="user-pass"
+                                   value="199156"
+                                   readonly="readonly">
+                            <i
+                                    accid="1"
+                                    pass=""
+                                    onclick="checkPasswd(this)"
+                                    class="iconfont icon-Xtubiao-chakan"></i>
+                            <i
+                                accid="1"
+                                pass=""
+                                onclick="copyPasswd(this)" class="icon icon-reply">
+
+                        </i>
+                            <input class="real-pass"
+                                   type="text"
+                                   id="real_pass_1">
+                        </div>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <a href="https://www.google.com" target="_blank" class="card-link">
+                        <div class="text-content">
+                            <div class="card-title">
+                                <strong>GSuite账号</strong>
+                                <span title="安全等级">高</span>
+                            </div>
+                            <input id="acc_pass_2"
+                                   style="width: 73%"
+                                   type="password"
+                                   class="user-pass"
+                                   value="199156"
+                                   readonly="readonly">
+                            <i
+                                    accid="1"
+                                    pass=""
+                                    onclick="checkPasswd(this)"
+                                    class="iconfont icon-Xtubiao-chakan"></i><i
+                                accid="1"
+                                pass=""
+                                onclick="copyPasswd(this)" class="icon icon-reply">
+
+                        </i>
+                            <input class="real-pass"
+                                   type="text"
+                                   id="real_pass_2">
+                        </div>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <a href="https://www.google.com" target="_blank" class="card-link">
+                        <div class="text-content">
+                            <div class="card-title">
+                                <strong>GSuite账号</strong>
+                                <span title="安全等级">高</span>
+                            </div>
+                            <input id="acc_pass_3"
+                                   style="width: 73%"
+                                   type="password"
+                                   class="user-pass"
+                                   value="199156"
+                                   readonly="readonly">
+                            <i
+                                    accid="1"
+                                    pass=""
+                                    onclick="checkPasswd(this)"
+                                    class="iconfont icon-Xtubiao-chakan"></i><i
+                                accid="1"
+                                pass=""
+                                onclick="copyPasswd(this)" class="icon icon-reply">
+
+                        </i>
+                            <input class="real-pass"
+                                   type="text"
+                                   id="real_pass_3">
+                        </div>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <a href="https://www.google.com" target="_blank" class="card-link">
+                        <div class="text-content">
+                            <div class="card-title">
+                                <strong>GSuite账号</strong>
+                                <span title="安全等级">高</span>
+                            </div>
+                            <input id="acc_pass_4"
+                                   style="width: 73%"
+                                   type="password"
+                                   class="user-pass"
+                                   value="199156"
+                                   readonly="readonly">
+                            <i
+                                    accid="1"
+                                    pass=""
+                                    onclick="checkPasswd(this)"
+                                    class="iconfont icon-Xtubiao-chakan"></i><i
+                                accid="1"
+                                pass=""
+                                onclick="copyPasswd(this)" class="icon icon-reply">
+
+                        </i>
+                            <input class="real-pass"
+                                   type="text"
+                                   id="real_pass_4">
+                        </div>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <a href="https://www.google.com" target="_blank" class="card-link">
+                        <div class="text-content">
+                            <div class="card-title">
+                                <strong>GSuite账号</strong>
+                                <span title="安全等级">高</span>
+                            </div>
+                            <input id="acc_pass_5"
+                                   style="width: 73%"
+                                   type="password"
+                                   class="user-pass"
+                                   value="199156"
+                                   readonly="readonly">
+                            <i
+                                    accid="1"
+                                    pass=""
+                                    onclick="checkPasswd(this)"
+                                    class="iconfont icon-Xtubiao-chakan"></i><i
+                                accid="1"
+                                pass=""
+                                onclick="copyPasswd(this)" class="icon icon-reply">
+
+                        </i>
+                            <input class="real-pass"
+                                   type="text"
+                                   id="real_pass_5">
+                        </div>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <a href="https://www.google.com" target="_blank" class="card-link">
+                        <div class="text-content">
+                            <div class="card-title">
+                                <strong>GSuite账号</strong>
+                                <span title="安全等级">高</span>
+                            </div>
+                            <input id="acc_pass_6"
+                                   style="width: 73%"
+                                   type="password"
+                                   class="user-pass"
+                                   value="199156"
+                                   readonly="readonly">
+                            <i
+                                    accid="1"
+                                    pass=""
+                                    onclick="checkPasswd(this)"
+                                    class="iconfont icon-Xtubiao-chakan"></i><i
+                                accid="1"
+                                pass=""
+                                onclick="copyPasswd(this)" class="icon icon-reply">
+
+                        </i>
+                            <input class="real-pass"
+                                   type="text"
+                                   id="real_pass_6">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<{/block}>

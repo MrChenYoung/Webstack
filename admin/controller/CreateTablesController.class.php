@@ -69,7 +69,7 @@ EEE;
     // 创建账号表
     public function initAccountTable(){
         $tableName = "acc_account";
-        // 创建视频数据表
+        // 创建视频数据表 logo以base64编码方式存储
         $sql = <<<EEE
                     CREATE TABLE $tableName(
                         id int AUTO_INCREMENT PRIMARY KEY COMMENT '账号id',
@@ -78,6 +78,7 @@ EEE;
                         passwd varchar(256) DEFAULT '' COMMENT '密码',
                         address varchar(300) DEFAULT '' COMMENT '登录地址',
                         plat_id int  DEFAULT 0 COMMENT '所属平台',
+                        logo MEDIUMTEXT COMMENT 'logo',
                         remark varchar(500) DEFAULT '' COMMENT '备注'
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='账号表';
 EEE;

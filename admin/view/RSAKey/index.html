@@ -72,15 +72,24 @@
     // 获取保存的公钥和私钥内容
     function loadRsaKeyContent() {
         // 公钥
+        var addPubBtn = $("#add_public_btn");
         var publicKeyContent = getCookie(publickKey);
-        $("#public_key_content").val(publicKeyContent);
+        if (publicKeyContent.length > 0){
+            addPubBtn.text("更换");
+            $("#public_key_content").val(publicKeyContent);
+        }
+
 
         // 私钥
+        var addPrivBtn = $("#add_private_btn");
         var privateKeyContent = getCookie(privateKey);
-        $("#private_key_content").val(privateKeyContent);
+        if (privateKeyContent.length > 0){
+            addPrivBtn.text("更换");
+            $("#private_key_content").val(privateKeyContent);
+        }
     }
 
-    // 添加key
+    // 添加/更换key
     function addKey(content) {
         // 保存内容到cookie
         var key = isAddPublickKey ? publickKey : privateKey;
@@ -122,7 +131,7 @@
                         <textarea readonly="readonly" style="resize: none;height: 150px;cursor: default" id="public_key_content" placeholder="没有公钥记录" class="layui-textarea"></textarea>
                     </div>
                 </div>
-                <button onclick="addPublicKey()" type="button" class="layui-btn layui-btn-primary">添加</button>
+                <button id="add_public_btn" onclick="addPublicKey()" type="button" class="layui-btn layui-btn-primary">添加</button>
             </div>
         </div>
 
@@ -134,7 +143,7 @@
                     <textarea readonly="readonly" style="resize: none;height: 150px;cursor: default" id="private_key_content" placeholder="没有私钥记录" class="layui-textarea"></textarea>
                 </div>
             </div>
-            <button onclick="addPrivateKey()" type="button" class="layui-btn layui-btn-primary">添加</button>
+            <button id="add_private_btn" onclick="addPrivateKey()" type="button" class="layui-btn layui-btn-primary">添加</button>
         </div>
     </form>
     <input type="file" id="key_select_input" style="display:none">

@@ -2,28 +2,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta content="webkit" name="renderer">
-    <meta content="IE=edge,Chrome=1" http-equiv="X-UA-Compatible">
-    <meta content="width=device-width,initial-scale=1,maximum-scale=1" name="viewport">
-    <meta content="yes" name="apple-mobile-web-app-capable">
-    <meta content="blank" name="apple-mobile-web-app-status-bar-style">
-    <meta content="telephone=no" name="format-detection">
-    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
-    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
-    <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
-    <META HTTP-EQUIV="expires" CONTENT="0">
-
     <{block name="title"}>
         <title>账号管家后台管理系统</title>
     <{/block}>
 
-    <link href="<{PUBLIC_PATH}>common/css/icon.css" rel="stylesheet" type="text/css">
-    <link href="<{PUBLIC_PATH}>common/css/common.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="<{PUBLIC_PATH}>common/css/icon.css" type="text/css">
     <link rel="stylesheet" href="<{PUBLIC_PATH}>common/layui/css/layui.css">
-    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1877015_xvyhtha6n5q.css">
-
-    <{block name="myStyles"}> <{/block}>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1877015_8fqwkv39vvc.css" type="text/css" >
+    <link rel="stylesheet" href="<{PUBLIC_PATH}>common/css/common.css" type="text/css">
     <link rel="stylesheet" href="<{PUBLIC_PATH}>admin/css/common.css">
+    <{block name="myStyles"}> <{/block}>
 </head>
 
 <body>
@@ -48,6 +36,18 @@
                 </button>
             </div>
             <div style="font-family: HUPOFont;font-size: 20px;color: white;height: 55px;line-height: 55px;padding-left: 30px">账号管家后台系统</div>
+        </div>
+
+        <div class="mod-message">
+            <div class="message">
+                <a title="首页" target="_blank" href="?m=home&c=Common&a=index" class="btn btn-sm">
+                    <i title="前台" class="iconfont icon-home" onclick="window.location='index.php'"></i>
+                </a>
+
+                <a title="退出" href="?m=admin&c=API_Base&a=logOut&API=" class="btn btn-sm">
+                    <i title="注销" class="icon icon-logout"></i>
+                </a>
+            </div>
         </div>
 
         <ul class="mod-bar">
@@ -89,7 +89,7 @@
             </li>
         </ul>
     </div>
-    <div class="ps-scrollbar-x-rail" style="width: 235px; display: none; left: 0px; bottom: 3px;">
+    <div class="ps-scrollbar-x-rail" style="width: 250px; display: none; left: 0px; bottom: 3px;">
         <div class="ps-scrollbar-x" style="left: 0px; width: 0px;"></div>
     </div>
     <div class="ps-scrollbar-y-rail" style="top: 0px; height: 607px; display: inherit; right: 0px;">
@@ -109,49 +109,13 @@
 </body>
 </html>
 <script src="<{PUBLIC_PATH}>common/layui/layui.js" charset="utf-8"></script>
-<script src="<{PUBLIC_PATH}>home/js/jquery.2.js" type="text/javascript"></script>
-<script src="<{PUBLIC_PATH}>home/js/jquery.form.js" type="text/javascript"></script>
-<script src="<{PUBLIC_PATH}>admin/js/framework.js" type="text/javascript"></script>
-<script src="<{PUBLIC_PATH}>admin/js/global.js" type="text/javascript"></script>
-<!--[if lte IE 8]>
-<script type="text/javascript" src="<{PUBLIC_PATH}>home/js/respond.js"></script>
-<![endif]-->
+<script src="<{PUBLIC_PATH}>common/js/jquery.2.js" type="text/javascript"></script>
+<script src="<{PUBLIC_PATH}>common/js/jsencrypt.min.js" type="text/javascript" ></script>
+<script src="<{PUBLIC_PATH}>common/js/RSAEncrypt.js" type="text/javascript" ></script>
+<script src="<{PUBLIC_PATH}>common/js/cookie.js" type="text/javascript" ></script>
+<script src="<{PUBLIC_PATH}>common/js/common.js"  type="text/javascript"></script>
 <script src="<{PUBLIC_PATH}>admin/js/common.js"  type="text/javascript"></script>
-<script type="text/javascript" src="<{PUBLIC_PATH}>admin/js/sidebar.js"></script>
-<script type="text/javascript" src="<{PUBLIC_PATH}>admin/js/jsencrypt.min.js"></script>
-<script type="text/javascript" src="<{PUBLIC_PATH}>admin/js/RSAEncrypt.js"></script>
-<script type="text/javascript" src="<{PUBLIC_PATH}>common/js/cookie.js"></script>
-<script>
-    // 网络请求baseUrl
-    var baseUrl = $("#base_url").val();
-    // 图片所在文件夹
-    var imageBaseUrl = $("#image_base_url").val();
-
-    // 检查需要函数是否被禁用了
-    function checkDisableFunc() {
-        var functions = ["exec","proc_open"];
-        functions = functions.join(",");
-        var url = baseUrl
-            + "?m=admin&c=API_GetLocalMovies&a=functionDisabled&API=&function_name="+functions;
-
-        get(url,function (data) {
-            var result = data.data;
-            if (result["disabled"]){
-                showAlert("以下函数被禁用了，请取消禁用\r\n"+result["funcs"]);
-            }
-        },false)
-    }
-
-    // 给密码加密
-    function RSAEncryptPass(pass) {
-        return publicEncrypt(rsaPublicContent,pass);
-    }
-
-    // 给密码解密
-    function RSADecryptPass(pass) {
-        return privateDecrypt(rsaPrivateContent,pass);
-    }
-</script>
+<script src="<{PUBLIC_PATH}>common/js/sidebar.js" type="text/javascript"></script>
 <{block name="scriptCode"}><{/block}>
 
 

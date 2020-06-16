@@ -1,16 +1,14 @@
-/*菜单栏背景色*/
-.aw-side {
-    background: #393D49;
-}
-
+/*菜单栏被选中项背景色*/
 .aw-side .active, .aw-side ul li a.active:hover {
     background-color: #2b77a8;
 }
 
+/*鼠标移动到菜单栏显示和隐藏切换按钮上样式*/
 .mod-head-btn {
     cursor: pointer;
 }
 
+/*右下角添加分类/平台/账号/密码按钮*/
 .add-btn {
     position: fixed;
     right: 20px;
@@ -22,79 +20,14 @@
     border-color: transparent;
     cursor: pointer;
 }
-
 .add-btn img {
     width: 25px;
     height: 25px;
 }
-
 .add-btn:hover {
     opacity: 0.8;
 }
 
-/*修改输入框的占位文字颜色*/
-::-webkit-input-placeholder {
-    color: #e6e6e6;
-}
-:-moz-placeholder {/* Firefox 18- */
-    color: #e6e6e6;
-}
-::-moz-placeholder{/* Firefox 19+ */
-    color: #e6e6e6;
-}
-:-ms-input-placeholder {
-    color: #e6e6e6;
-}
-
-.aw-side .iconfont:before {
-    display: inline-block;
-    width: 35px;
-    vertical-align: middle;
-    text-align: center;
-    font-size: 16px;
-}
-
-/*toast样式*/
-body .toast-success-style .layui-layer-content{
-    background-color: #0dcd61;
-    color: white;
-    text-align: center;
-    opacity: 80%;
-}
-body .toast-fail-style .layui-layer-content{
-    background-color: #c42f2f;
-    color: white;
-    text-align: center;
-}
-
-.layui-form-checked[lay-skin=primary] i{
-    border-color:#FFF !important;
-    background-color:#4F94D0 !important;
-    color:#FFF !important;
-}
-.layui-form-radioed i{
-    border-color:#4F94D0 !important;
-    color:#597FC0 !important;
-    font-weight: bold;
-}
-.layui-form-radio>i{
-    font-size: 18px !important;
-}
-
-.aw-content-wrap {
-    margin-top: 20px;
-}
-
-.aw-side {
-    padding-top: 5px;
-}
-
-.as-float-menu {
-    background-color: #cccccc;
-    width: 50px;
-    height: 50px;
-    position: fixed;
-    top: 150px;
-    left: -50px;
-    z-index: 100000;
+.layui-table {
+    margin-bottom: 100px !important;
 }

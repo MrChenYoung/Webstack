@@ -16,7 +16,7 @@ class API_CategoryController extends API_BaseController
     }
 
     // 获取分类列表
-    public function loadCategotyList(){
+    public function loadCategotyList($ret=false){
         $res = DatabaseDataManager::getSingleton()->find($this->tableName);
         // 获取平台列表名称
         $platData = DatabaseDataManager::getSingleton()->find("acc_platform");
@@ -39,9 +39,18 @@ class API_CategoryController extends API_BaseController
                 }
                 $res[$key]["platform_list"] = $platList;
             }
-            echo $this->success($res);
+
+            if ($ret){
+                return $res;
+            }else {
+                echo $this->success($res);
+            }
         }else {
-            echo $this->failed("查询分类列表失败");
+            if ($ret){
+                return [];
+            }else {
+                echo $this->failed("查询分类列表失败");
+            }
         }
     }
 

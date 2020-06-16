@@ -97,4 +97,26 @@ class StringTool
         $suffix = strrchr($string, '.');
         return $suffix;
     }
+
+    // 保存base64编码的图片
+    public function saveBase64Img($base64_image_content,$savePath){
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
+            $type = $result[2];
+            $path = $savePath;
+            if(!file_exists($path))
+            {
+                //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                mkdir($path, 0700);
+            }
+            $fileName = time() . ".{$type}";
+            $new_file = $path ."/". $fileName;
+            if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))){
+                // 保存成功
+                return $fileName;
+            } else {
+                // 保存失败
+                return false;
+            }
+        }
+    }
 }

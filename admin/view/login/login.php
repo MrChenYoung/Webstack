@@ -14,28 +14,11 @@
     <link href="<?php echo $pubP?>/common/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $pubP?>/common/css/icon.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $pubP?>/common/css/login.css" rel="stylesheet" type="text/css">
-    <link href="<?php echo $pubP?>/common/css/common.css" rel="stylesheet" type="text/css">
-    <script src="<?php echo $pubP?>/home/js/jquery.2.js" type="text/javascript"></script>
-    <script src="<?php echo $pubP?>/home/js/jquery.form.js" type="text/javascript"></script>
-    <script src="<?php echo $pubP?>/admin/js/framework.js" type="text/javascript"></script>
-    <script src="<?php echo $pubP?>/admin/js/global.js" type="text/javascript"></script>
-    <script type="text/javascript" src="<?php echo $pubP?>/admin/js/RSAEncrypt.js"></script>
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1877015_jkq7dca58si.css">
+    <script src="<?php echo $pubP?>/common/js/jquery.2.js" type="text/javascript"></script>
+    <script type="text/javascript" src="<?php echo $pubP?>/common/js/RSAEncrypt.js"></script>
     <script type="text/javascript" src="<?php echo $pubP?>/common/js/cookie.js"></script>
-    <script type="text/javascript" src="<?php echo $pubP?>/admin/js/jsencrypt.min.js"></script>
-    <style type="text/css">
-        #cotent{
-            overflow-y: hidden;
-        }
-
-        .bg_img {
-            position:absolute;
-            left:0;
-            top:0;
-            z-index:-1;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+    <script type="text/javascript" src="<?php echo $pubP?>/common/js/JSEncrypt.min.js"></script>
 </head>
 
 <body>
@@ -47,7 +30,7 @@
                 <h1 style="font-family: HUPOFont;font-size: 50px; color: #FFFFFF">账号管家</h1>
             </div>
 
-            <form method="post" action="<?php echo $webSite.'/index.php'?>" id="login_submit">
+            <form method="post" action="<?php echo $webSite.'/index.php?m=admin&c=CategoryManager&a=index'?>" id="login_submit">
                 <?php if ($_GET["loginerr"]) {
                     $disp='display';
                 }else{
@@ -77,7 +60,9 @@
                            };"
                            name="pass"
                            placeholder="密码"
-                           class="form-control"><i class="icon icon-lock"></i>
+                           class="form-control">
+                    <i class="icon icon-lock"></i>
+                    <i id="check_pass_icon" class="iconfont icon-Xtubiao-chakan" onclick="checkPass()"></i>
                 </div>
                 <input id="user_pass_input" type="password" name="loginSuccess" style="display: none">
 
@@ -111,21 +96,18 @@
         });
     });
 
-    function setCookie1(name, value, time='',path='') {
-        if(time && path){
-            var strsec = time * 1000;
-            var exp = new Date();
-            exp.setTime(exp.getTime() + strsec * 1);
-            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path="+path;
-        }else if(time){
-            var strsec = time * 1000;
-            var exp = new Date();
-            exp.setTime(exp.getTime() + strsec * 1);
-            document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
-        }else if(path){
-            document.cookie = name + "=" + escape(value) + ";path="+path;
-        }else{
-            document.cookie = name + "=" + escape(value);
+    // 查看密码
+    function checkPass() {
+        // 密码框
+        var passInput = $("#passwd_input");
+        if (passInput.attr("type") == "password"){
+            // 显示密码
+            passInput.attr("type","text");
+            $("#check_pass_icon").attr("class","iconfont icon-Xtubiao-guanbichakan");
+        }else {
+            // 隐藏密码
+            passInput.attr("type","password");
+            $("#check_pass_icon").attr("class","iconfont icon-Xtubiao-chakan");
         }
     }
 </script>

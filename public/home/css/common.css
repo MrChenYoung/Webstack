@@ -1,0 +1,49 @@
+
+/*覆盖侧边栏样式*/
+.aw-side{
+    width: 250px;
+    background-color: #2c2e2f;
+}
+.aw-side .active,.aw-side ul li a.active:hover {
+    border-color: #313437;
+}
+.aw-side ul {
+    padding: 0 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    list-style: none;
+}
+.aw-side ul li {
+    border:none;
+    color: red;
+}
+.aw-side ul li a {
+    color: #979898;
+    text-decoration: none;
+    display: block;
+    padding: 13px 5px;
+    border-bottom: 1px solid #313437;
+    background-color: transparent;
+    width: 180px;
+    height: 20px;
+    line-height: 20px;
+}
+.as-menu1 button:hover {
+    background-color: transparent;
+}
+.aw-side .active, .aw-side ul li a.active:hover {
+    background-color: transparent;
+}
+.aw-side ul li a {
+    border-left: none;
+    border-right: none;
+}
+.aw-side .mod-bar {
+    margin-top: 0;
+}
+
+/*内容页面背景色*/
+.aw-content-wrap,body {
+    /*F9F9F9*/
+    background-color: #F9F9F9;
+}

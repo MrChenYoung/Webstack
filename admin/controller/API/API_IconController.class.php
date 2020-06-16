@@ -141,8 +141,14 @@ class API_IconController extends API_BaseController
             "Xtubiao-chakan",
             "apple",
             "xt_weiruan",
-            "kaifa",
-            "13"
+            "code-box-fill",
+            "shejiao",
+            "changyongshoukuanrenguanli",
+            "qiyeguanli",
+            "yunxunizhuji",
+            "qunfengshiyongchongzhiqiashangwang",
+            "qita",
+            "yuncunchu"
         ];
         echo $this->success($icons);
     }

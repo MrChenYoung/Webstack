@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>添加秘钥</title>
     <link rel="stylesheet" href="<?php echo $pubP?>/common/layui/css/layui.css">
-    <script src="<?php echo $pubP?>/home/js/jquery.2.js" type="text/javascript"></script>
+    <script src="<?php echo $pubP?>/common/js/jquery.2.js" type="text/javascript"></script>
     <script src="<?php echo $pubP?>/common/layui/layui.js" charset="utf-8"></script>
     <script src="<?php echo $pubP?>/common/js/cookie.js" charset="utf-8"></script>
     <style type="text/css">
@@ -160,8 +160,6 @@
 
         // 再次获取cookie
         var newCookie = getCookie(key);
-        console.log("old:" + oldCoolie);
-        console.log("new:" + newCookie);
         if (newCookie != null && newCookie.length > 0 && newCookie != oldCoolie){
             // 添加成功
             if (isAddPublickKey){

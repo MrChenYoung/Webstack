@@ -4,7 +4,7 @@ namespace framework\core;
 
 class Framework
 {
-    public function __construct()
+    public function __construct($m='',$c='',$a='')
     {
         //初始化自动加载
         $this -> initAutoload();
@@ -13,7 +13,7 @@ class Framework
         $this -> initPathInfo();
 
         //初始化MCA
-        $this -> initMCA();
+        $this -> initMCA($m,$c,$a);
 
         //分发请求
         $this -> initDispatch();
@@ -50,24 +50,37 @@ class Framework
         }
         //4. 文件名
         $class_file = $basic_path.$sub_path.$extension;
+
         if(file_exists($class_file)){
             require_once $class_file;
         }
     }
 
     //直接从index.php拷贝过来的
-    private function initMCA()
+    private function initMCA($modoule,$controller,$action)
     {
         //访问前台？后台？
-        $m = isset($_GET['m']) ? $_GET['m'] : $GLOBALS['config']['default_module'];
+        if (strlen($modoule) > 0){
+            $m = $modoule;
+        }else {
+            $m = isset($_GET['m']) ? $_GET['m'] : $GLOBALS['config']['default_module'];
+        }
         define('MODULE',$m);
 
         //访问哪个控制器
-        $c = isset($_GET['c']) ? $_GET['c'] : $GLOBALS['config']['default_controller'];
+        if (strlen($controller) > 0){
+            $c = $controller;
+        }else {
+            $c = isset($_GET['c']) ? $_GET['c'] : $GLOBALS['config']['default_controller'];
+        }
         define('CONTROLLER',$c);
 
         //访问哪个方法
-        $a = isset($_GET['a']) ? $_GET['a'] : $GLOBALS['config']['default_action'];
+        if (strlen($action) > 0){
+            $a = $action;
+        }else {
+            $a = isset($_GET['a']) ? $_GET['a'] : $GLOBALS['config']['default_action'];
+        }
         define('ACTION',$a);
     }
 
@@ -80,21 +93,12 @@ class Framework
         //实例化控制器对象
         if (strlen(CONTROLLER) > 0){
             if ($preString == "API"){
-                $posControllerNameArr = [
-                    MODULE.'\\controller\\'.'API\\'.CONTROLLER.'Controller',
-                    MODULE.'\\controller\\'.'API\\'.'Local\\'.CONTROLLER.'Controller',
-                    MODULE.'\\controller\\'.'API\\'.'Online\\'.CONTROLLER.'Controller',
-                ];
-
-                foreach ($posControllerNameArr as $value){
-                    if (class_exists($value)){
-                        $controllerName = $value;
-                        break;
-                    }
-                }
+                $controllerName = MODULE.'\\controller\\'.'API\\'.CONTROLLER.'Controller';
             }else {
                 $controllerName = MODULE.'\\controller\\'.CONTROLLER.'Controller';
             }
+
+
         }else {
             $controllerName = 'framework\\'.'core\\'.CONTROLLER.'Controller';
         }

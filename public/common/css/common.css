@@ -69,29 +69,25 @@ ul,ol{padding:0;list-style:none;}
 .aw-header .dropdown-menu li .fa{width:27px;vertical-align:middle;}
 .mod-list-head{background: #f4f4f4;text-align: center;line-height: 40px;border-bottom: 1px solid #ddd;}
 .mod-user li a{padding: 0}
-
-/*aw-side start*/
-.aw-side{position:fixed;top:0; z-index:16;display:block;overflow:hidden; padding-top: 50px;width:235px;height:100%;background:#323232;}
+.aw-side .mod-message{height:35px;background:#393D49; margin-left: 10px}
+.aw-side .mod-message a{position:relative;padding:0;width:35px;height:35px;border-color:#323232;background:transparent;color:#999;line-height:30px; display: inline-block}
+.aw-side .mod-message a:hover{color: #fff}
 .aw-side .mod-logo{padding:10px 10px 10px 25px;height:55px;}
-.ps-scrollbar-y-rail{margin-top: 50px;}
-.aw-side .mod-message{padding:8px 5px 0 10px;height:55px;background:#3f3f3f;}
-.aw-side .mod-message a{position:relative;padding:0;width:35px;height:35px;border-color:#323232;background:#323232;color:#fff;line-height:30px;}
-.aw-side .mod-message a:hover{background:#3695D5;}
 .aw-side .mod-logo img{display:block;width:57px;height:36px;}
 .aw-side .mod-logo h1{float:left;margin:0;padding-left:10px;color:#fff;font-size:22px;line-height:40px;}
-.aw-side ul{padding:0;width:235px;list-style:none;}
+.aw-side ul{padding:0;width:250px;list-style:none;}
 .aw-side ul li{border-bottom:1px solid #434343;}
 .aw-side .active, .aw-side ul li a.active:hover{border-color:#207fbd;background:#3695D5;color:#fff;}
 .aw-side ul li ul li a{border:none;text-indent:40px;}
 .aw-side ul li ul li a.active{border:none;border-color:#323232;}
-.aw-side ul li a{position:relative;display:block;padding-left:25px;height:48px;outline:none;border-right:4px solid #353535;border-left:4px solid #353535;background:#3f3f3f;color:#999;font-size:14px;line-height:48px;}
+.aw-side ul li a{position:relative;display:block;padding-left:25px;height:48px;outline:none;border-right:4px solid #353535;border-left:4px solid #353535;background:#393D49;color:#999;font-size:14px;line-height:48px;}
 .aw-side .icon:before{display:inline-block;width:35px;vertical-align:middle;text-align:center;font-size:16px;}
-.aw-side ul li a:hover, .aw-side ul li ul li a:hover, .aw-side ul li ul li a.active, .aw-side ul li ul li a.active:hover{background:#323232;color:#fff;}
+.aw-side ul li a:hover, .aw-side ul li ul li a:hover, .aw-side ul li ul li a.active, .aw-side ul li ul li a.active:hover{background:transparent;color:#fff;}
 .aw-side ul li a.active[data="icon"]:after{position:absolute;right:15px;content:"\e621";}
 .aw-side ul li a[data="icon"]:after{position:absolute;right:15px;content:"\e651";}
 
 /*数据内容区域 start*/
-.aw-content-wrap{margin:70px 0 0 235px;padding:0 15px 20px;min-height:100%;height:auto;}
+.aw-content-wrap{margin:-35px 0 0 250px;padding:0 15px 20px;min-height:100%;height:auto;overflow: hidden}
 .aw-content-wrap.active{margin-left: 0;}
 .aw-content-wrap .echart-date{margin-top:20px;padding-left:5px;}
 .aw-content-wrap .echart-date .nopadding{padding:0;line-height:36px;}
@@ -313,7 +309,7 @@ textarea{resize:none;}
 .ps-container .ps-scrollbar-y-rail.in-scrolling{background-color:#2780bb;opacity:.9;filter:alpha(opacity=90);}
 .ps-container .ps-scrollbar-x{position:absolute;bottom:0;height:8px;background-color:#aaa;-webkit-transition:background-color .2s linear;-moz-transition:background-color .2s linear;-o-transition:background-color .2s linear;transition:background-color .2s linear;}
 .ps-container .ps-scrollbar-x-rail:hover .ps-scrollbar-x,.ps-container .ps-scrollbar-x-rail.hover .ps-scrollbar-x{background-color:#999;}
-.ps-container .ps-scrollbar-y{position:absolute;right:-0;width:4px;background-color:#3695D5;-webkit-transition:background-color .2s linear;-moz-transition:background-color .2s linear;-o-transition:background-color .2s linear;transition:background-color .2s linear;}
+.ps-container .ps-scrollbar-y{position:absolute;right:-0;width:0;background-color:#3695D5;-webkit-transition:background-color .2s linear;-moz-transition:background-color .2s linear;-o-transition:background-color .2s linear;transition:background-color .2s linear;}
 .ps-container.ie .ps-scrollbar-x,.ps-container.ie .ps-scrollbar-y{visibility:hidden;}
 .ps-container.ie:hover .ps-scrollbar-x,.ps-container.ie:hover .ps-scrollbar-y,.ps-container.ie.hover .ps-scrollbar-x,.ps-container.ie.hover .ps-scrollbar-y{visibility:visible;}
 .aw-content-wrap label.checkbox-inline,.aw-dropdown .aw-dropdown-list li.question b{line-height:30px;}
@@ -378,5 +374,60 @@ label,.aw-content-wrap .mod-title,.aw-article-list b,.aw-question-list b{font-we
 /* HiDPI support */
 @media (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {.icheckbox_square-blue,.iradio_square-blue { background-image: url(../img/blue-2x.png);-webkit-background-size: 240px 24px; background-size: 240px 24px;}}
 
-/*引入自定义css*/
-@import "custom.css";
+/*修改输入框的占位文字颜色*/
+::-webkit-input-placeholder {
+	color: #cdcdcd;
+}
+:-moz-placeholder {/* Firefox 18- */
+	color: #cdcdcd;
+}
+::-moz-placeholder{/* Firefox 19+ */
+	color: #cdcdcd;
+}
+:-ms-input-placeholder {
+	color: #cdcdcd;
+}
+
+/*侧边栏图标*/
+.aw-side .iconfont:before {
+	display: inline-block;
+	width: 35px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 16px;
+}
+
+/*成功toast样式*/
+body .toast-success-style .layui-layer-content{
+	background-color: #0dcd61;
+	color: white;
+	text-align: center;
+	opacity: 80%;
+}
+/*失败toast样式*/
+body .toast-fail-style .layui-layer-content{
+	background-color: #c42f2f;
+	color: white;
+	text-align: center;
+}
+
+/*菜单栏*/
+.aw-side{
+	position:fixed;
+	top:0;
+	z-index:16;
+	display:block;
+	overflow:hidden;
+	padding-top: 5px;
+	width:250px;
+	height:100%;
+	background: #393D49;
+}
+
+/*hover效果以动画形式变化*/
+.aw-side ul li,.aw-side ul li a {
+	-webkit-transition: all 220ms ease-in-out;
+	-moz-transition: all 220ms ease-in-out;
+	-o-transition: all 220ms ease-in-out;
+	transition: all 220ms ease-in-out;
+}

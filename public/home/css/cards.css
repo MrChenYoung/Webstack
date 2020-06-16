@@ -1,0 +1,164 @@
+.aw-content-wrap {
+    margin-top: -75px;
+}
+
+.cards-container {
+    overflow: hidden;
+}
+
+.text-gray {
+    font-size: 18px;
+    display: block;
+    font-weight: bold;
+    color: #555;
+    margin-top: 50px;;
+}
+
+h4 i.iconfont {
+    font-size: 22px;
+    margin-right: 5px;
+}
+
+.row {
+    width: 100%;
+    float: left;
+}
+
+.platform-container {
+
+}
+
+.card-content {
+    position: relative;
+    width: 25%;
+    height: 90px;
+    margin: 20px 0 0;
+    float: left;
+}
+
+.card-content input {
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    color: #9F9F9F;
+    height: 25px;
+    line-height: 25px;
+}
+
+.card-content input::selection {
+    background: transparent;
+}
+
+.card-link {
+    position: absolute;
+    background: #fff;
+    left: 0;
+    right: 0;
+    margin: 0 15px;
+    border-radius: 4px;
+    border: 1px solid #e4ecf3;
+    height: 90px;
+}
+
+.card-link:hover{
+    color: #080808;
+    transform: translateY(-6px);
+    -webkit-transform: translateY(-6px);
+    -moz-transform: translateY(-6px);
+    box-shadow: 0 26px 40px -24px rgba(0,36,100,.3);
+    -webkit-box-shadow: 0 26px 40px -24px rgba(0,36,100,.3);
+    -moz-box-shadow: 0 26px 40px -24px rgba(0,36,100,.3);
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.card-title span {
+    font-size: 10px;
+    color: #9F9F9F;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.card-title span:hover {
+    color: #393D49;
+}
+
+.card-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background: rgba(136,136,136,.15);
+    margin-right: 10px;
+    vertical-align: middle;
+    border: 0;
+}
+
+.text-content {
+    position: absolute;
+    top: 10px;
+    left: 60px;
+}
+
+.text-content .icon,.iconfont{
+    color: #bfbfbf;
+    background: transparent;
+    font-size: 18px;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.text-content .icon,.iconfont,span{
+    -webkit-transition: all 220ms ease-in-out;
+    -moz-transition: all 220ms ease-in-out;
+    -o-transition: all 220ms ease-in-out;
+    transition: all 220ms ease-in-out;
+}
+
+
+.text-content .icon:hover,.iconfont:hover {
+    color: #393D49;
+}
+
+.add-category-box {
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 1000px;
+    margin: 0 auto;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 500;
+    display: none;
+}
+
+.add-category-container {
+    width: 800px;
+    height: 300px;
+    background-color: #FFF;
+    margin: 200px auto;
+    padding: 10px;
+    border-radius: 2px;
+    position: relative;
+}
+
+.layui-field-title{
+    width: 800px;
+}
+
+.real-pass{
+    width: 1px;
+    height: 1px;
+    background-color: transparent;
+    color: transparent;
+    margin: 0;
+    padding: 0;
+    border: none;
+}

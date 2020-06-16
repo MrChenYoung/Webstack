@@ -3,6 +3,7 @@
 
 namespace admin\controller\API;
 use framework\core\Controller;
+use framework\tools\SessionManager;
 
 class API_BaseController extends Controller
 {
@@ -52,5 +53,14 @@ class API_BaseController extends Controller
 
         $decryptPass = $this->getDecryptPass($pass);
         echo $this->success($decryptPass);
+    }
+
+    // 退出d登录
+    function logout(){
+        // 删除session里面的login标识
+        SessionManager::getSingleTon() -> deleteSession("isLogin");
+
+        // 跳转到登录页面
+        echo "<script>window.location.href='index.php?login='</script>";
     }
 }

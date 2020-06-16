@@ -7,7 +7,7 @@ $(document).ready(function () {
         var menuVisible = $('#aw-side').is(':visible');
 
         // 菜单按钮随鼠标移动
-        $menu.css("top",mouseTop - 30);
+        $menu.css("top",mouseTop - 100);
         floatMenuControl($menu,mouseLeft,menuVisible);
     });
 

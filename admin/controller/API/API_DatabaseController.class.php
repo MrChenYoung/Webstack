@@ -5,6 +5,7 @@ namespace admin\controller\API;
 
 
 use framework\tools\DatabaseBackupManager;
+use framework\tools\DatabaseManager;
 use framework\tools\FileManager;
 
 class API_DatabaseController extends API_BaseController
@@ -16,16 +17,73 @@ class API_DatabaseController extends API_BaseController
         $this->backupPath = ADMIN."resource/dbBackup/";
     }
 
+    // 获取所有表名称和备注
+    public function loadTableList(){
+        $sql = "SHOW TABLES";
+        $tableLists = DatabaseManager::getSingleton()->fetch($sql);
+        $tables = [];
+        foreach ($tableLists as $re) {
+            // 表名
+            $tableName = $re["Tables_in_account_db"];
+
+            // 获取表备注
+            $sql = "SHOW CREATE TABLE $tableName";
+            $tableI = DatabaseManager::getSingleton()->fetch($sql);
+            $tableI = $tableI[0]['Create Table'];
+
+            // 通过正则表达式获取表备注
+            $commentReg = '/COMMENT=([^\s]+)[\s|.]*/';
+            preg_match($commentReg,$tableI,$tbComment);
+            // 去掉字符串中的单引号和双引号
+            $tbComment = str_replace(array("'",'"'), "", $tbComment);
+            if (count($tbComment) > 1){
+                $tbInfo["comment"] = $tbComment[1];
+                $tbInfo["tableName"] = $tableName;
+                $tables[] = $tbInfo;
+
+                // 创建盛放单个表备份数据的文件夹
+                $saveDirPath = ROOT."admin/resource/dbBackup/".$tableName;
+                if (!file_exists($saveDirPath)){
+                    mkdir($saveDirPath,0777,true);
+                }
+            }
+        }
+
+        // 创建盛放整个数据库(所有表)备份数据的文件夹
+        $allBackDirPath = ROOT."admin/resource/dbBackup/all";
+        if (!file_exists($allBackDirPath)){
+            mkdir($allBackDirPath,0777,true);
+        }
+
+        echo $this->success($tables);
+    }
+
     // 备份数据库
     public function backupDB(){
-        (new DatabaseBackupManager())->backup('',$this->backupPath);
-        echo $this->success("数据库备份完成");
+        // 表名
+        if (!isset($_GET["tbName"])){
+            echo $this->failed("需要tbName参数");
+            die;
+        }
+        $tbName = $_GET["tbName"];
+        $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
+
+        $path =$this->backupPath.$tbDirName. "/";
+        (new DatabaseBackupManager())->backup($tbName,$path);
+        echo $this->success("备份完成");
     }
 
     // 获取数据库备份历史
     public function loadDbBackupHistory(){
-        $path = $this->backupPath;
+        // 表名
+        if (!isset($_GET["tbName"])){
+            echo $this->failed("需要tbName参数");
+            die;
+        }
+        $tbName = $_GET["tbName"];
+        $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
 
+        $path = $this->backupPath.$tbDirName;
         // 获取所有文件名
         $fileLists = [];
         $handler = file_exists($path) ? opendir($path) : null;
@@ -94,7 +152,15 @@ class API_DatabaseController extends API_BaseController
         }
         $fileName = $_GET["fileName"];
 
-        $path = $this->backupPath.$fileName;
+        // 表名
+        if (!isset($_GET["tbName"])){
+            echo $this->failed("需要tbName参数");
+            die;
+        }
+        $tbName = $_GET["tbName"];
+        $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
+
+        $path = $this->backupPath.$tbDirName."/".$fileName;
         if (file_exists($path)){
             $status = unlink($path);
             if ($status){
@@ -116,7 +182,15 @@ class API_DatabaseController extends API_BaseController
         }
         $fileName = $_GET["fileName"];
 
-        $path = $this->backupPath.$fileName;
+        // 表名
+        if (!isset($_GET["tbName"])){
+            echo $this->failed("需要tbName参数");
+            die;
+        }
+        $tbName = $_GET["tbName"];
+        $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
+
+        $path = $this->backupPath.$tbDirName."/".$fileName;
         (new DatabaseBackupManager())->restore($path);
         echo $this->success("导入完成");
     }

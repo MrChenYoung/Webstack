@@ -1,32 +1,6 @@
 <{extends file="layout.html"}>
 <{block name="myStyles"}>
 <style type="text/css">
-    html, body, div, ul, li, h1, h2, h3, h4, h5, h6, p, dl, dt, dd, ol, form, input, textarea, th, td, select {
-        margin: 0;
-        padding: 0;
-    }
-
-    * {
-        box-sizing: border-box;
-    }
-
-    html, body {
-        min-height: 100%;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        font-weight: normal;
-    }
-
-    ul, ol {
-        list-style: none;
-    }
-
-    img {
-        border: none;
-        vertical-align: middle;
-    }
-
     .layui-table {
         width: 220px;
         display: inline-block;
@@ -48,21 +22,6 @@
         line-height: 25px;
     }
 
-    ::-webkit-input-placeholder {
-        color: #e6e6e6;
-    }
-
-    :-moz-placeholder { /* Firefox 18- */
-        color: #e6e6e6;
-    }
-
-    ::-moz-placeholder { /* Firefox 19+ */
-        color: #e6e6e6;
-    }
-
-    :-ms-input-placeholder {
-        color: #e6e6e6;
-    }
 
     .icon-input {
         border: none;
@@ -110,7 +69,7 @@
     function loadIcons() {
         var kwds = $("#search_icon").val();
         kwds = kwds != undefined ? kwds : "";
-        var url = baseUrl + "?m=admin&c=API_Icon&a=getIconDepository&API=&keyWords=" + kwds;
+        var url = baseUrl + "?m=admin&c=API_Icon&a=getIconDepository&API=&keyWords=" + kwds + "&API=";
         console.log("请求icon:" + url);
         get(url, function (data) {
             createIconDom(data.data);

@@ -25,7 +25,8 @@ if (isset($_FILES['file'])) {
         $msg = "只能上传sql文件";
     }else {
         // 目标文件目录
-        $target_path = "../resource/dbBackup/".$name;
+        $tbName = strlen($_POST["tbName"]) > 0 ? $_POST["tbName"] : "all";
+        $target_path = "../resource/dbBackup/".$tbName."/".$name;
         //将文件从临时目录拷贝到指定目录
         if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
             //上传成功,可进行进一步操作,将路径写入数据库等.
