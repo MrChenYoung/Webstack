@@ -20,7 +20,7 @@ if (isset($_FILES['file'])) {
 
     // 要跳转的目标主机
     $localHost = "http://".$_SERVER['HTTP_HOST'];
-    $url = $localHost."?m=admin&c=DbManager&a=index&tbName="+ $tbName +"&msg=";
+    $url = $localHost."?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=";
 
     $msg = "";
     // 限制文件必须是sql

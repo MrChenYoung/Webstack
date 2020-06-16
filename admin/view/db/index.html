@@ -125,7 +125,11 @@
                     var tableData = tableLists[i];
                     var tableName = tableData["tableName"];
                     var tableComment = tableData["comment"];
-                    dom += '<option value="'+ tableName +'">'+ tableComment +'</option>';
+                    if (tableName == selectedTableName){
+                        dom += '<option selected="selected" value="'+ tableName +'">'+ tableComment +'</option>';
+                    }else{
+                        dom += '<option value="'+ tableName +'">'+ tableComment +'</option>';
+                    }
                 }
                 $("#table_select").html(dom);
                 form.render();
