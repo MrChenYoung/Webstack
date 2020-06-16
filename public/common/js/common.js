@@ -70,12 +70,12 @@ function toast(message,success=true) {
 }
 
 // 发送网络请求
-function get(url, complete=null,withHud=true,showToast=false,timeOut=100000) {
+function get(url, complete=null,withHud=true,showToast=false,timeOut=10000) {
     request(url,null,complete,withHud,showToast,timeOut);
 }
 
 // 发送请求
-function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=100000) {
+function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000) {
     if (withHud){
         showHud();
     }
