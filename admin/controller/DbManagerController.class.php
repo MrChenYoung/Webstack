@@ -17,7 +17,13 @@ class DbManagerController extends Controller
             $msg = $_GET["msg"];
         }
 
+        $tbName = "";
+        if (isset($_GET["tbName"])){
+            $tbName = $_GET["tbName"];
+        }
+
         $this->data["msg"] = base64_decode($msg);
+        $this->data["tbName"] = $tbName;
 
         $this -> loadTemplate(["data"=>$this -> data],"db/index.html");
     }

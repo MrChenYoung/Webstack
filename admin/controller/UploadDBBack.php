@@ -15,9 +15,12 @@ if (isset($_FILES['file'])) {
     // 类型
     $type = \framework\tools\StringTool::getExtension($name);
 
+    // 表名
+    $tbName =  isset($_POST["tbName"]) ? $_POST["tbName"] : "";
+
     // 要跳转的目标主机
     $localHost = "http://".$_SERVER['HTTP_HOST'];
-    $url = $localHost."?m=admin&c=DbManager&a=index&msg=";
+    $url = $localHost."?m=admin&c=DbManager&a=index&tbName="+ $tbName +"&msg=";
 
     $msg = "";
     // 限制文件必须是sql
@@ -25,7 +28,7 @@ if (isset($_FILES['file'])) {
         $msg = "只能上传sql文件";
     }else {
         // 目标文件目录
-        $tbName = strlen($_POST["tbName"]) > 0 ? $_POST["tbName"] : "all";
+        $tbName = strlen($tbName) > 0 ? $tbName : "all";
         $target_path = "../resource/dbBackup/".$tbName."/".$name;
         //将文件从临时目录拷贝到指定目录
         if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {

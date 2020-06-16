@@ -79,6 +79,10 @@
             toast(msg);
         }
 
+        // 传进来的表名
+        selectedTableName = $("#select_tb_name").val();
+        $("#tb_name_input").val(selectedTableName);
+
         // 监听文件被选择
         $('#file_select_input').change(function(e){
             var form = $("#upload_back_form");
@@ -214,6 +218,7 @@
 <{block name="content"}>
 <div class="aw-content-wrap">
     <input id="msg_input" type="hidden" value="<{$data.msg}>">
+    <input id="select_tb_name" type="hidden" value="<{$data.tbName}>">
     <button onclick="backupDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">新增备份</button>
     <button onclick="uploadBackupDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">上传文件</button>
     <div class="notice-box">
