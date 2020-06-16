@@ -18,7 +18,7 @@
     <script src="<?php echo $pubP?>/common/js/jquery.2.js" type="text/javascript"></script>
     <script type="text/javascript" src="<?php echo $pubP?>/common/js/RSAEncrypt.js"></script>
     <script type="text/javascript" src="<?php echo $pubP?>/common/js/cookie.js"></script>
-    <script type="text/javascript" src="<?php echo $pubP?>/common/js/JSEncrypt.min.js"></script>
+    <script type="text/javascript" src="<?php echo $pubP?>/common/js/jsencrypt.min.js"></script>
 </head>
 
 <body>
