@@ -30,7 +30,6 @@ class Controller
         }
         $this -> smarty -> setTemplateDir(ROOT.MODULE.'/view/');
         $this -> smarty -> setCompileDir($tplsDir);
-
         
         // 本站站点
         $this -> website = "http://".$_SERVER['HTTP_HOST'];
