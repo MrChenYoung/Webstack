@@ -14,7 +14,7 @@ return [
 
     //默认的模块
     'default_module'     =>      'home',
-    'default_controller'=>      'common',
+    'default_controller'=>      'Common',
     'default_action'    =>      'index',
 
     //默认每页显示多少记录
