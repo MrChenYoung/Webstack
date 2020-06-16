@@ -23,8 +23,12 @@ class Controller
         $this -> smarty = new Smarty();
         $this -> smarty -> left_delimiter = '<{';
         $this -> smarty -> right_delimiter = '}>';
+        $tplsDir = ROOT.'public/tpls_c/';
+        if (!file($tplsDir)){
+            mkdir($tplsDir);
+        }
         $this -> smarty -> setTemplateDir(ROOT.MODULE.'/view/');
-        $this -> smarty -> setCompileDir(ROOT.'public/tpls_c/');
+        $this -> smarty -> setCompileDir($tplsDir);
 
         // 本站站点
         $this -> website = "http://".$_SERVER['HTTP_HOST'];
