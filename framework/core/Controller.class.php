@@ -26,6 +26,7 @@ class Controller
         $tplsDir = ROOT.'public/tpls_c/';
         if (!file($tplsDir)){
             mkdir($tplsDir);
+            chmod($tplsDir,0700);
         }
         $this -> smarty -> setTemplateDir(ROOT.MODULE.'/view/');
         $this -> smarty -> setCompileDir($tplsDir);
