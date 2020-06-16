@@ -25,6 +25,6 @@ class CommonController extends BaseController
         }
 
         $this->data["catId"] = $catId;
-        $this->loadTemplate(["data"=>$this -> data],"common/index.html");
+//        $this->loadTemplate(["data"=>$this -> data],"common/index.html");
     }
 }
