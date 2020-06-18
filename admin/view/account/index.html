@@ -737,6 +737,7 @@
                 var res = data.data;
                 if (res == '无法获取logo'){
                     addLogo = defaultLogo;
+                    setLogo();
                     toast(res);
                 }else {
                     toast("获取logo成功");
