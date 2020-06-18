@@ -297,7 +297,12 @@
                 var catName = catData["cat_title"];
                 dom += '<option value="'+ catId +'">'+ catName +'</option>';
             }
-            $("#cat_select").html(dom);
+
+            layui.use('form',function () {
+                var form = layui.form;
+                $("#cat_select").html(dom);
+                form.render();
+            });
 
             // 请求账号列表
             setTimeout(function() {
