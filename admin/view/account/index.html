@@ -340,7 +340,7 @@
             get(url,function (data) {
                 // 创建分类列表
                 createAccountDom(data.data);
-            });
+            },true,false,20000);
         }
     }
     
