@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/API/API_BaseController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/API/API_BaseController.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/login/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/login/login.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/common/css/icon.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/common/css/icon.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/common/fonts/STHUPO.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/view/account/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/account/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +78,7 @@
       <workItem from="1591633070915" duration="107401000" />
       <workItem from="1591871479214" duration="35444000" />
       <workItem from="1591945607164" duration="93128000" />
-      <workItem from="1592197095778" duration="99572000" />
+      <workItem from="1592197095778" duration="99852000" />
     </task>
     <servers />
   </component>
