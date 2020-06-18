@@ -321,12 +321,10 @@
         }else {
             var url = baseUrl + "?m=admin&c=API_Account&a=loadAccountList&API=";
             console.log("获取账户列表:" + url);
-            showHud();
             get(url,function (data) {
                 // 创建分类列表
                 createAccountDom(data.data);
-                hideHud();
-            },false);
+            });
         }
     }
     
