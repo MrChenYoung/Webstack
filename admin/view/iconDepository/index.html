@@ -193,7 +193,12 @@
             var api = apiList[i];
             dom += '<option value="'+ api +'">'+ api +'</option>';
         }
-        $("#api_select").html(dom);
+       layui.use('form',function () {
+           var form = layui.form;
+           $("#api_select").html(dom);
+           
+           form.render();
+       })
     }
 
     // 请求icon
