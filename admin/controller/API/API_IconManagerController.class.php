@@ -14,8 +14,12 @@ class API_IconManagerController extends API_BaseController
     {
         parent::__construct();
         $this->apiList = [
-            "常用API"     => "/favicon.ico",
-            "Google API" => "http://www.google.com/s2/favicons?domain="
+            "常用API"            => "/favicon.ico",
+            "Google API1"       => "http://www.google.com/s2/favicons?domain=",
+            "Google API2"       => "https://favicon.link/",
+            "Google API3"       =>  "https://favicon.link/v3/?url=",
+            "360 API1"          =>  "https://favicon.link/v1/ico.php?url=",
+            "360 API2"          =>  "https://favicon.link/v2/ico.php?url="
         ];
     }
 
@@ -192,7 +196,11 @@ class API_IconManagerController extends API_BaseController
             case "常用API":
                 $url = $url.$this->apiList[$api];
                 break;
-            case "Google API":
+            case "Google API1":
+            case "Google API2":
+            case "Google API3":
+            case "360 API1":
+            case "360 API2":
                 $url = $this->apiList[$api].$url;
                 break;
         }
