@@ -321,11 +321,10 @@
         }else {
             var url = baseUrl + "?m=admin&c=API_Account&a=loadAccountList&API=";
             console.log("获取账户列表:" + url);
-            showHud();
             get(url,function (data) {
                 // 创建分类列表
                 createAccountDom(data.data);
-            },false);
+            });
         }
     }
     
@@ -435,7 +434,6 @@
             dom += '<i title="删除" platId="'+ account["plat_id"] +'" accId="'+ account["id"] +'" onclick="deleteAccount(this)" style="cursor: pointer" class="icon icon-trash"></i></td></tr>';
         }
         $("tbody").html(dom);
-        hideHud();
     }
 
     // 查看密码
