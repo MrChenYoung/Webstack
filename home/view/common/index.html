@@ -28,6 +28,19 @@
         color: #FFF;
     }
 
+    .card-title .remark-span {
+        font-size: 10px;
+        color: #9F9F9F;
+        display: inline-block;
+        margin-left: 15px;
+        width: 50px;
+        text-align: left;
+    }
+
+    .card-title .remark-span:hover {
+        color: #393D49;
+    }
+
     .safe-level-low {
         color: #FFF;
         background: #FF0000;
@@ -52,14 +65,31 @@
 <{/block}>
 <{block name="scriptCode"}>
 <script>
+    var cardDoms = "";
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
         var catId = $("#cat_id").val();
         $("#cat_" + catId).addClass("active");
 
-        // 请求备用密码数据
-        loadPassLists();
+        // 获取常用信息列表
+        loadGeneralInfoList();
     });
+
+    // 获取常用信息列表
+    function loadGeneralInfoList() {
+        // 清空
+        cardDoms = "";
+
+        var url = baseUrl + "?m=admin&c=API_GeneralInfo&a=loadGeneralInfoList&API=";
+        console.log("请求常用信息:" + url);
+        get(url, function (data) {
+            // 创建常用信息数据卡片
+            createGInfoCards(data.data);
+
+            // 请求备用密码数据
+            loadPassLists();
+        },false);
+    }
 
     // 请求备用密码数据
     function loadPassLists() {
@@ -70,6 +100,39 @@
             createPassCards(data.data);
             console.log("密码s数据:" + JSON.stringify(data.data));
         },false);
+    }
+
+    // 创建常用信息数据卡片
+    function createGInfoCards(infoList) {
+        var dom = "";
+        dom += '<div class="platform-container">';
+        dom += '<h4 class="text-gray" style="display: inline-block;">';
+        dom += '<i class="iconfont icon-tag" id=""></i>常用信息</h4>';
+        dom += '<div class="row">';
+        for (var i = 0; i < infoList.length; i++) {
+            var passData = infoList[i];
+            var passId = passData["id"];
+            var passDesc = passData["info_desc"];
+            var passwd = passData["encrypt_info"];
+            var remark = passData["remark"];
+
+            dom += '<div class="card-content">';
+            dom += '<a href="javascript:;" class="card-link" >';
+            dom += '<div class="text-content"><div class="card-title">';
+            dom += '<strong>' + passDesc + '</strong>';
+            if (remark.length > 0){
+                remark = "'" + remark + "'";
+                dom += '<span class="remark-span" onclick="checkRemark('+ remark +')">备注</span>';
+            }
+            dom += '</div><input id="acc_pass_' + passId + '" style="width: 73%" type="password" class="user-pass" value="' + passwd + '" readonly="readonly">';
+            dom += '<i flag="1" title="查看" passId="' + passId + '" pass="' + passwd + '" onclick="checkPasswd(this)" class="iconfont icon-Xtubiao-chakan"></i>';
+            dom += '<i flag="1" title="复制" passId="' + passId + '" pass="' + passwd + '"  onclick="copyPasswd(this)" class="icon icon-reply"></i>';
+            dom += '<input class="real-pass" type="text" id="real_pass_' + passId + '">';
+            dom += '</div></a></div>';
+        }
+        dom += '</div></div>';
+
+        cardDoms += dom;
     }
 
     // 创建密码数据卡片
@@ -93,14 +156,15 @@
             dom += '<div class="text-content"><div class="card-title">';
             dom += '<strong>' + passDesc + '</strong><span id="safe_level" class="'+ safeLevelClass +'" title="安全等级">'+ safeTitle +'</span></div>';
             dom += '<input id="acc_pass_' + passId + '" style="width: 73%" type="password" class="user-pass" value="' + passwd + '" readonly="readonly">';
-            dom += '<i title="查看密码" passId="' + passId + '" pass="' + passwd + '" onclick="checkPasswd(this)" class="iconfont icon-Xtubiao-chakan"></i>';
-            dom += '<i title="复制密码" passId="' + passId + '" pass="' + passwd + '"  onclick="copyPasswd(this)" class="icon icon-reply"></i>';
+            dom += '<i flag="0" title="查看密码" passId="' + passId + '" pass="' + passwd + '" onclick="checkPasswd(this)" class="iconfont icon-Xtubiao-chakan"></i>';
+            dom += '<i flag="0" title="复制密码" passId="' + passId + '" pass="' + passwd + '"  onclick="copyPasswd(this)" class="icon icon-reply"></i>';
             dom += '<input class="real-pass" type="text" id="real_pass_' + passId + '">';
             dom += '</div></a></div>';
         }
         dom += '</div></div>';
 
-        $(".cards-container").html(dom);
+        cardDoms += dom;
+        $(".cards-container").html(cardDoms);
     }
     
     // 获取安全的等级显示样式
@@ -161,15 +225,23 @@
         var passId = $this.attr("passId");
         var passwd = $this.attr("pass");
         var passInput = $("#acc_pass_" + passId);
+        var flag = $this.attr("flag");
         if (passInput.attr('type') == "text"){
             // 已经显示密码,隐藏密码
 
             // 请求密码密文
-            var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId + "&API=";
+            var url = "";
+            if (flag == "0"){
+                url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId + "&API=";
+            }else {
+                url = baseUrl + "?m=admin&c=API_GeneralInfo&a=loadGInfo&id=" + passId + "&API=";
+            }
+
             get(url,function (data) {
                 var passData = data.data;
                 passInput.attr("type","password");
-                passInput.val(passData["passwd"]);
+                var encryptInfo = flag == "0" ? passData["passwd"] : passData["encrypt_info"];
+                passInput.val(encryptInfo);
                 $this.attr("class","iconfont icon-Xtubiao-chakan");
             },false);
         }else {
@@ -198,194 +270,54 @@
         // 复制密码
         copyInputContent(input,"密码已复制");
     }
+
+    // 查看备注
+    function checkRemark(remarkContent) {
+        // 阻止默认事件
+        var e = window.event || arguments.callee.caller.arguments[0];
+        e.preventDefault();
+
+        $(".add-category-box").css("display","block");
+        $("#acc_remark").val(remarkContent);
+    }
+
+    // 点击备注查看界面浮层
+    function clickCover() {
+        $(".add-category-box").css("display","none");
+    }
+    // 点击备注内容防止浮层消失
+    function clickRemarkContent() {
+        // 阻止事件冒泡
+        var e = window.event || arguments.callee.caller.arguments[0];
+        e.stopPropagation();
+    }
+
 </script>
 <{/block}>
 <{block name="content"}>
 <div class="aw-content-wrap">
     <input type="hidden" value="<{$data.catId}>" id="cat_id">
     <div class="cards-container">
-        <div class="platform-container">
-            <h4 class="text-gray" style="display: inline-block;"><i class="iconfont icon-tag" id=""></i>
-                谷歌
-            </h4>
-            <div class="row">
-                <div class="card-content">
-                    <a href="https://www.google.com" target="_blank" class="card-link">
-                        <div class="text-content">
-                            <div class="card-title">
-                                <strong>GSuite账号</strong>
-                                <span title="安全等级">高</span>
-                            </div>
-                            <input id="acc_pass_1"
-                                   style="width: 73%"
-                                   type="password"
-                                   class="user-pass"
-                                   value="199156"
-                                   readonly="readonly">
-                            <i
-                                    accid="1"
-                                    pass=""
-                                    onclick="checkPasswd(this)"
-                                    class="iconfont icon-Xtubiao-chakan"></i>
-                            <i
-                                accid="1"
-                                pass=""
-                                onclick="copyPasswd(this)" class="icon icon-reply">
 
-                        </i>
-                            <input class="real-pass"
-                                   type="text"
-                                   id="real_pass_1">
-                        </div>
-                    </a>
-                </div>
-                <div class="card-content">
-                    <a href="https://www.google.com" target="_blank" class="card-link">
-                        <div class="text-content">
-                            <div class="card-title">
-                                <strong>GSuite账号</strong>
-                                <span title="安全等级">高</span>
-                            </div>
-                            <input id="acc_pass_2"
-                                   style="width: 73%"
-                                   type="password"
-                                   class="user-pass"
-                                   value="199156"
-                                   readonly="readonly">
-                            <i
-                                    accid="1"
-                                    pass=""
-                                    onclick="checkPasswd(this)"
-                                    class="iconfont icon-Xtubiao-chakan"></i><i
-                                accid="1"
-                                pass=""
-                                onclick="copyPasswd(this)" class="icon icon-reply">
+    </div>
+</div>
 
-                        </i>
-                            <input class="real-pass"
-                                   type="text"
-                                   id="real_pass_2">
-                        </div>
-                    </a>
-                </div>
-                <div class="card-content">
-                    <a href="https://www.google.com" target="_blank" class="card-link">
-                        <div class="text-content">
-                            <div class="card-title">
-                                <strong>GSuite账号</strong>
-                                <span title="安全等级">高</span>
-                            </div>
-                            <input id="acc_pass_3"
-                                   style="width: 73%"
-                                   type="password"
-                                   class="user-pass"
-                                   value="199156"
-                                   readonly="readonly">
-                            <i
-                                    accid="1"
-                                    pass=""
-                                    onclick="checkPasswd(this)"
-                                    class="iconfont icon-Xtubiao-chakan"></i><i
-                                accid="1"
-                                pass=""
-                                onclick="copyPasswd(this)" class="icon icon-reply">
-
-                        </i>
-                            <input class="real-pass"
-                                   type="text"
-                                   id="real_pass_3">
-                        </div>
-                    </a>
-                </div>
-                <div class="card-content">
-                    <a href="https://www.google.com" target="_blank" class="card-link">
-                        <div class="text-content">
-                            <div class="card-title">
-                                <strong>GSuite账号</strong>
-                                <span title="安全等级">高</span>
-                            </div>
-                            <input id="acc_pass_4"
-                                   style="width: 73%"
-                                   type="password"
-                                   class="user-pass"
-                                   value="199156"
-                                   readonly="readonly">
-                            <i
-                                    accid="1"
-                                    pass=""
-                                    onclick="checkPasswd(this)"
-                                    class="iconfont icon-Xtubiao-chakan"></i><i
-                                accid="1"
-                                pass=""
-                                onclick="copyPasswd(this)" class="icon icon-reply">
-
-                        </i>
-                            <input class="real-pass"
-                                   type="text"
-                                   id="real_pass_4">
-                        </div>
-                    </a>
-                </div>
-                <div class="card-content">
-                    <a href="https://www.google.com" target="_blank" class="card-link">
-                        <div class="text-content">
-                            <div class="card-title">
-                                <strong>GSuite账号</strong>
-                                <span title="安全等级">高</span>
-                            </div>
-                            <input id="acc_pass_5"
-                                   style="width: 73%"
-                                   type="password"
-                                   class="user-pass"
-                                   value="199156"
-                                   readonly="readonly">
-                            <i
-                                    accid="1"
-                                    pass=""
-                                    onclick="checkPasswd(this)"
-                                    class="iconfont icon-Xtubiao-chakan"></i><i
-                                accid="1"
-                                pass=""
-                                onclick="copyPasswd(this)" class="icon icon-reply">
-
-                        </i>
-                            <input class="real-pass"
-                                   type="text"
-                                   id="real_pass_5">
-                        </div>
-                    </a>
-                </div>
-                <div class="card-content">
-                    <a href="https://www.google.com" target="_blank" class="card-link">
-                        <div class="text-content">
-                            <div class="card-title">
-                                <strong>GSuite账号</strong>
-                                <span title="安全等级">高</span>
-                            </div>
-                            <input id="acc_pass_6"
-                                   style="width: 73%"
-                                   type="password"
-                                   class="user-pass"
-                                   value="199156"
-                                   readonly="readonly">
-                            <i
-                                    accid="1"
-                                    pass=""
-                                    onclick="checkPasswd(this)"
-                                    class="iconfont icon-Xtubiao-chakan"></i><i
-                                accid="1"
-                                pass=""
-                                onclick="copyPasswd(this)" class="icon icon-reply">
-
-                        </i>
-                            <input class="real-pass"
-                                   type="text"
-                                   id="real_pass_6">
-                        </div>
-                    </a>
+<!--查看备注浮层-->
+<div class="add-category-box" onclick="clickCover()">
+    <div class="add-category-container" onclick="clickRemarkContent()">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend id="legend_title">备注信息</legend>
+        </fieldset>
+        <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <textarea readonly="readonly" style="resize: none;height: 200px" id="acc_remark" placeholder="暂无备注" class="layui-textarea"></textarea>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <{/block}>

@@ -18,6 +18,8 @@ class CreateTablesController
         $this->initPlatformTable();
         $this->initAccountTable();
         $this->initPassWDTable();
+        $this->initGeneralInfoTable();
+        $this->initAttachmentTable();
     }
 
     // 初始化数据库信息
@@ -105,5 +107,54 @@ EEE;
             "pass_level"    => 4
         ];
         $this->dao->insertData($tableName,"pass_desc",$data);
+    }
+
+    // 创建常用信息表
+    public function initGeneralInfoTable(){
+        $tableName = "acc_general_info";
+        // 创建视频数据表
+        $sql = <<<EEE
+                    CREATE TABLE $tableName(
+                        id int AUTO_INCREMENT PRIMARY KEY COMMENT 'id',
+                        info_desc varchar(128) DEFAULT '' COMMENT '描述',
+                        encrypt_info varchar(256) DEFAULT '' COMMENT '加密信息',
+                        remark varchar(500) DEFAULT '' COMMENT '备注'
+                    ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='常用信息表';
+EEE;
+        $this->dao->createTable($tableName,$sql);
+    }
+
+    // 创建附件表
+    public function initAttachmentTable(){
+        $tableName = "acc_attachment";
+        // 创建附件表
+        $sql = <<<EEE
+                    CREATE TABLE $tableName(
+                        id int AUTO_INCREMENT PRIMARY KEY COMMENT 'id',
+                        aid int COMMENT '关联的id',
+                        tb_name varchar(64) DEFAULT '' COMMENT '关联表名',
+                        att_1 MEDIUMTEXT COMMENT '附件1',
+                        att_2 MEDIUMTEXT COMMENT '附件2',
+                        att_3 MEDIUMTEXT COMMENT '附件3',
+                        att_4 MEDIUMTEXT COMMENT '附件4',
+                        att_5 MEDIUMTEXT COMMENT '附件5',
+                        att_6 MEDIUMTEXT COMMENT '附件6',
+                        att_7 MEDIUMTEXT COMMENT '附件7',
+                        att_8 MEDIUMTEXT COMMENT '附件8',
+                        att_9 MEDIUMTEXT COMMENT '附件9',
+                        att_10 MEDIUMTEXT COMMENT '附件10',
+                        att_11 MEDIUMTEXT COMMENT '附件11',
+                        att_12 MEDIUMTEXT COMMENT '附件12',
+                        att_13 MEDIUMTEXT COMMENT '附件13',
+                        att_14 MEDIUMTEXT COMMENT '附件14',
+                        att_15 MEDIUMTEXT COMMENT '附件15',
+                        att_16 MEDIUMTEXT COMMENT '附件16',
+                        att_17 MEDIUMTEXT COMMENT '附件17',
+                        att_18 MEDIUMTEXT COMMENT '附件18',
+                        att_19 MEDIUMTEXT COMMENT '附件19',
+                        att_20 MEDIUMTEXT COMMENT '附件20'
+                    ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='附件表';
+EEE;
+        $this->dao->createTable($tableName,$sql);
     }
 }

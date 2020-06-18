@@ -2,6 +2,7 @@
 
 namespace home\controller\API;
 
+use admin\controller\API\API_AttachmentController;
 use admin\controller\API\API_BaseController;
 use framework\tools\DatabaseDataManager;
 
@@ -36,6 +37,11 @@ class API_CommonController extends API_BaseController
                             foreach ($accIdLists as $accId) {
                                 $accData = $this->loadAccount($accId);
                                 $accData["plat_name"] = $platData["plat_name"];
+                                // 查询是否有附件
+                                $attachmentData = (new API_AttachmentController())->getAttachmentLists($accId,"acc_account");
+                                $attachmentData = array_key_exists("data",$attachmentData) ? $attachmentData["data"] : [];
+                                $hasAttachment = count($attachmentData) > 0 ? true : false;
+                                $accData["hasAttachment"] = $hasAttachment;
                                 $accLists[] = $accData;
                             }
                         }

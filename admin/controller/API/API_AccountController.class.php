@@ -132,6 +132,12 @@ EEE;
         }
         $remark = $_GET["remark"];
 
+        // 附件id
+        if (!isset($_GET["attachmentId"])){
+            echo $this->failed("需要attachmentId参数");
+            die;
+        }
+        $attachmentId = $_GET["attachmentId"];
 
         // 插入数据库
         $insertData = [
@@ -149,6 +155,9 @@ EEE;
             $resId = $this->addAccountToPlat($platId,$res);
             if ($resId){
                 // 成功
+
+                // 修改附件id
+                DatabaseDataManager::getSingleton()->update("acc_attachment",["aid"=>$res],["id"=>$attachmentId]);
                 echo $this->success("账号添加成功 ");
                 die;
             }
@@ -271,6 +280,8 @@ EEE;
         $res = DatabaseDataManager::getSingleton()->delete($this->tableName,["id"=>$accId]);
 
         if ($res){
+            // 删除附件文件
+            (new API_AttachmentController())->clearAttachment($accId,$this->tableName);
             echo $this->success("删除成功");
             die;
         }
@@ -351,6 +362,18 @@ EEE;
             }
             echo $this->success("无法获取logo");
         }
+    }
+
+    // 取消添加账户，如果没有账户对应的记录，就删除刚添加的附件记录
+    public function cacelAddAccount(){
+        // id
+        if (!isset($_GET["attId"])){
+            echo $this->failed("需要attId参数");
+            die;
+        }
+        $attId = $_GET["attId"];
+
+        $res = (new API_AttachmentController())->clearAttachment("","",$attId);
     }
 
     // 获取账号网址的logo

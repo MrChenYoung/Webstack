@@ -41,13 +41,18 @@
                 var accPasswd = accData["passwd"];
                 var accRemark = accData["remark"];
                 var accAddress = accData["address"];
+                var accAttach = accData["hasAttachment"];
                 dom += '<div class="card-content">';
                 dom += '<a href="'+ accAddress +'"  target="_blank" class="card-link" >';
                 dom += '<img class="card-logo" src="'+ accLogo +'" width="40">';
                 dom += '<div class="text-content"><div class="card-title"><strong>' + accDesc + '</strong>';
                 if (accRemark.length > 0){
                     accRemark = "'" + accRemark + "'";
-                    dom += '<span onclick="checkRemark('+ accRemark +')">查看备注</span>';
+                    dom += '<span onclick="checkRemark('+ accRemark +')">备注</span>';
+                }
+                if (accAttach){
+                    // 有附件
+                    dom += '<span aid="'+ accId +'" onclick="checkAttachment(this)">附件</span>';
                 }
                 dom += '</div><input id="acc_user_'+ accId +'" style="width: 73%" type="text" class="user-name" value="'+ accUserName +'" readonly="readonly">';
                 dom += '<i accId="'+ accId +'" onclick="copyUserName(this)" class="icon icon-reply"></i>';
@@ -140,6 +145,27 @@
         // 阻止事件冒泡
         var e = window.event || arguments.callee.caller.arguments[0];
         e.stopPropagation();
+    }
+
+    // 查看附件
+    function checkAttachment(obj) {
+        // 阻止m默认事件
+        var e = window.event || arguments.callee.caller.arguments[0];
+        e.preventDefault();
+
+        var $this = $(obj);
+        var accId = $this.attr("aid");
+        // 请求附件列表
+        var url = "?m=admin&c=API_Attachment&a=loadAttachmentLists&id=" + accId + "&tbName=acc_account";
+        get(url,function (data) {
+            layui.use('layer',function () {
+                var layer = layui.layer;
+                layer.photos({
+                    photos:data.data
+                    ,anim: 5
+                })
+            });
+        });
     }
 
 </script>

@@ -25,7 +25,7 @@
 
     .add-category-container {
         width: 800px;
-        height: 300px;
+        height: 420px;
         background-color: #FFF;
         margin: 200px auto;
         padding: 10px;
@@ -98,112 +98,96 @@
 <{/block}>
 <{block name="scriptCode"}>
 <script>
-    // 密码描述
-    var passDesc = '';
-    // 密码值
-    var passValue = "";
-    // 安全级别
-    var passLevel = '';
-    // 修改的密码id
-    var editPassId = "";
+    // 描述信息
+    var infoDesc = '';
+    // 加密信息
+    var encryptInfo = "";
+    // 备注
+    var remarkInfo = '';
+    // 修改信息的id
+    var editInfoId = "";
+    // 是否是编辑信息
+    var isEdit = false;
 
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
-        $("#pass_manager").addClass("active");
+        $("#general_info").addClass("active");
 
         // 监听输入描述信息
         var descInput = $("#pass_desc");
         descInput.bind("input propertychange", function (event) {
-            passDesc = descInput.val();
+            infoDesc = descInput.val();
         });
-        // 监听输入密码
+        // 监听加密信息输入
         var passVInput = $("#pass_value");
         passVInput.bind("input propertychange", function (event) {
-            passValue = passVInput.val();
+            encryptInfo = passVInput.val();
         });
 
-        // 监听密码安全级别选择
-        layui.use('form',function () {
-            var form = layui.form;
-            form.on('select(pass-level)', function(data){
-                // 选择的密码安全级别
-                passLevel = data.value;
-            });
+        // 监听备注输入
+        var remarkInput = $("#info_remark");
+        remarkInput.bind("input propertychange", function (event) {
+            remarkInfo = remarkInput.val();
         });
 
-        // 请求密码列表
-        loadPassList();
+        // 获取常用信息列表
+        loadGeneralInfoList();
     });
 
-    // 获取密码列表
-    function loadPassList() {
-        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPassList&API=";
+    // 获取常用信息列表
+    function loadGeneralInfoList() {
+        var url = baseUrl + "?m=admin&c=API_GeneralInfo&a=loadGeneralInfoList&API=";
         get(url,function (data) {
-            // 创建密码列表
-            createPassDom(data.data);
+            // 创建常用信息显示列表
+            createGeneralInfoDom(data.data);
         },false);
     }
 
     // 添加密码
     function addData() {
         isEdit = false;
-        passDesc = "";
-        passValue = "";
-        passLevel = "";
+        infoDesc = "";
+        encryptInfo = "";
+        remarkInfo = "";
         // 显示添加界面
         showEditCatCover();
     }
 
-    // 创建密码列表
-    function createPassDom(data) {
+    // 创建常用信息显示列表
+    function createGeneralInfoDom(data) {
         var dom = "";
         for(var i = 0; i < data.length; i++){
-            var passData = data[i];
-            var passLevel = parseInt(passData["pass_level"]);
-            var levelDes = "";
-            switch (passLevel) {
-                case 1:
-                    levelDes = "低";
-                    break;
-                case 2:
-                    levelDes = "中";
-                    break;
-                case 3:
-                    levelDes ="高";
-                    break;
-                case 4:
-                    levelDes = "最高";
-                    break;
-                default:
-                    levelDes = "其他";
-                    break;
-            }
+            var infoData = data[i];
+            var infoId = infoData["id"];
+            var infoDesc = infoData["info_desc"];
+            var encryptInfo = infoData["encrypt_info"];
+            var remark = infoData["remark"];
 
-            dom += '<tr><td>'+ passData["pass_desc"] +'</td>';
-            dom += '<td><input pass="'+ passData["passwd"] +'" readonly="readonly" type="password" class="layui-input pass-view-input" value="'+ passData["passwd"] +'">';
-            dom += '<i title="查看" passId="'+ passData["id"] +'" onclick="previewPass(this)" class="iconfont icon-Xtubiao-chakan translation-icon"></i><i title="复制" passId="'+ passData["id"] +'" id="copy_btn" onclick="copyPass(this)" class="icon icon-reply translation-icon"></i><input class="real-pass" type="text" id="real_pass_'+ passData["id"] +'"></td>';
-            dom += '<td>'+ levelDes +'</td>';
-            dom += '<td><i onclick="editPass(this)" passId="'+ passData["id"] +'" style="cursor: pointer" class="icon icon-edit"></i>';
-            dom += '<i passId="'+ passData["id"] +'" onclick="deletePass(this)" style="cursor: pointer" class="icon icon-trash"></i></td></tr>';
+            dom += '<tr><td>'+ infoDesc +'</td>';
+            dom += '<td><input pass="'+ encryptInfo +'" readonly="readonly" type="password" class="layui-input pass-view-input" value="'+ encryptInfo +'">';
+            dom += '<i title="查看" passId="'+ infoId +'" onclick="previewInfo(this)" class="iconfont icon-Xtubiao-chakan translation-icon"></i><i title="复制" passId="'+ infoId +'" id="copy_btn" onclick="copyInfo(this)" class="icon icon-reply translation-icon"></i><input class="real-pass" type="text" id="real_pass_'+ infoId +'"></td>';
+            dom += '<td>'+ remark +'</td>';
+            dom += '<td><i onclick="editInfo(this)" passId="'+ infoId +'" style="cursor: pointer" class="icon icon-edit"></i>';
+            dom += '<i passId="'+ infoId +'" onclick="deleteInfo(this)" style="cursor: pointer" class="icon icon-trash"></i></td></tr>';
         }
 
         $("tbody").html(dom);
     }
 
-    // 查看密码
-    function previewPass(obj) {
+    // 查看加密的信息
+    function previewInfo(obj) {
         var $this = $(obj);
         var passId = $this.attr("passId");
         var input = $this.parent().find("input");
 
         if (input.attr("type") == "text"){
-            // 隐藏密码模式
-            // 请求指定账号数据
-            var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId + "&API=";
+            // 隐藏加密文本
+            // 请求该条常用信息获取加密以后的文本信息
+            var url = baseUrl + "?m=admin&c=API_GeneralInfo&a=loadGInfo&id=" + passId + "&API=";
             get(url,function (data) {
                 var accData = data.data;
                 input.attr("type","password");
-                input.val(accData["passwd"]);
+                input.val(accData["encrypt_info"]);
                 $this.attr("class","iconfont icon-Xtubiao-chakan translation-icon");
             },false);
         }else {
@@ -217,8 +201,8 @@
         }
     }
 
-    // 复制密码
-    function copyPass(obj) {
+    // 复制加密文本信息
+    function copyInfo(obj) {
         var $this = $(obj);
         var passId = $this.attr("passId");
         var passInput = $this.parent().find("input");
@@ -227,93 +211,89 @@
         // 解密
         var decryptPass = RSADecryptPass(passInput.attr("pass"));
         input.val(decryptPass);
-        // 复制密码
-        copyInputContent(input,"密码已复制");
+        // 复制
+        copyInputContent(input,"已复制到剪切板");
     }
 
-    // 确定添加/修改密码
+    // 确定添加/修改常用信息
     function confirm() {
-        if (passLevel.length == 0){
-            toast("请选择安全级别");
-            return;
-        }
-        if (passDesc.length == 0){
+        if (infoDesc.length == 0){
             toast("请输入密码描述信息");
             return;
         }
-        if (passValue.length == 0){
-            toast("请输入密码");
+        if (encryptInfo.length == 0){
+            toast("请输入加密信息");
             return;
         }
 
-        // 给密码加密
-        passValue = RSAEncryptPass(passValue);
+        // 加密
+        encryptInfo = RSAEncryptPass(encryptInfo);
         // base64编码 防止特殊字符提交出错
-        passValue = btoa(passValue);
+        encryptInfo = btoa(encryptInfo);
 
-        // 请求添加密码接口
+        // 请求添加常用信息接口
         var url = "";
         if (isEdit){
             // 修改
-            url = baseUrl + "?m=admin&c=API_PassManager&a=editPass&API="
-                + "&id=" + editPassId
-                + "&level=" + passLevel
-                + "&desc=" + passDesc
-                + "&pass=" + passValue;
+            url = baseUrl + "?m=admin&c=API_GeneralInfo&a=editGInfo&API="
+                + "&id=" + editInfoId
+                + "&remark=" + remarkInfo
+                + "&desc=" + infoDesc
+                + "&pass=" + encryptInfo;
             console.log("编辑:" + url);
         }else {
             // 添加
-            url = baseUrl + "?m=admin&c=API_PassManager&a=addPass&API="
-                + "&desc=" + passDesc
-                + "&pass=" + passValue
-                + "&level=" + passLevel;
+            url = baseUrl + "?m=admin&c=API_GeneralInfo&a=addGInfo&API="
+                + "&desc=" + infoDesc
+                + "&pass=" + encryptInfo
+                + "&remark=" + remarkInfo;
         }
 
-        console.log("添加密码:" + url);
+        console.log("添加常用信息:" + url);
         get(url,function () {
             // 浮层消失
             hideEditCatCover();
-            // 刷新密码列表
-            loadPassList();
+            // 刷新常用信息列表
+            loadGeneralInfoList();
         },true,true);
     }
 
-    // 取消添加平台
+    // 取消添加常用信息
     function cancel() {
         hideEditCatCover();
     }
 
-    // 删除密码
-    function deletePass(obj) {
+    // 删除常用信息
+    function deleteInfo(obj) {
         confirmAlert(function () {
             var $this = $(obj);
             var passId = $this.attr("passId");
-            var url = baseUrl + "?m=admin&c=API_PassManager&a=deletePass&id=" + passId + "&API=";
+            var url = baseUrl + "?m=admin&c=API_GeneralInfo&a=deleteGInfo&id=" + passId + "&API=";
             get(url,function () {
                 // 刷新列表
-                loadPassList();
+                loadGeneralInfoList();
             },true,true);
         });
     }
     
-    // 编辑密码
-    function editPass(obj) {
+    // 编辑常用信息
+    function editInfo(obj) {
         isEdit = true;
         var $this = $(obj);
         var passId = $this.attr("passId");
 
-        // 请求指定账号数据
-        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPasswd&id=" + passId + "&API=";
+        // 请求指定常用信息数据
+        var url = baseUrl + "?m=admin&c=API_GeneralInfo&a=loadGInfo&id=" + passId + "&API=";
         get(url,function (data) {
             var accData = data.data;
 
-            editPassId = accData["id"];
-            passDesc = accData["pass_desc"];
-            passValue = accData["passwd"];
-            passLevel = accData["pass_level"];
+            editInfoId = accData["id"];
+            infoDesc = accData["info_desc"];
+            encryptInfo = accData["encrypt_info"];
+            remarkInfo = accData["remark"];
 
             // 解密
-            passValue = RSADecryptPass(passValue);
+            encryptInfo = RSADecryptPass(encryptInfo);
             // 显示编辑页面
             showEditCatCover();
         })
@@ -322,22 +302,23 @@
     // 显示添加/修改平台浮层
     function showEditCatCover() {
         if (isEdit){
-            $("#legend_title").text("修改密码");
+            $("#legend_title").text("修改常用信息");
         }else {
-            $("#legend_title").text("添加密码");
+            $("#legend_title").text("添加常用信息");
         }
         $(".add-category-box").css("display","block");
 
         layui.use('form', function(){
             var form = layui.form;
-            // 安全级别
-            $("#pass_level").val(passLevel);
 
             // 描述
-            $("#pass_desc").val(passDesc);
+            $("#pass_desc").val(infoDesc);
 
-            // 密码
-            $("#pass_value").val(passValue);
+            // 加密信息
+            $("#pass_value").val(encryptInfo);
+
+            // 备注信息
+            $("#info_remark").val(remarkInfo);
             form.render();
         });
     }
@@ -357,14 +338,14 @@
                 <colgroup>
                     <col width="150">
                     <col width="150">
-                    <col width="150">
                     <col width="200">
+                    <col width="150">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>密码描述</th>
-                    <th>密码</th>
-                    <th>安全级别</th>
+                    <th>描述</th>
+                    <th>加密信息</th>
+                    <th>备注</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -379,31 +360,27 @@
 <div class="add-category-box">
     <div class="add-category-container">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend id="legend_title">添加密码</legend>
+            <legend id="legend_title">添加常用信息</legend>
         </fieldset>
         <form class="layui-form layui-form-pane" action="">
             <div class="layui-form-item">
-                <label class="layui-form-label">安全级别</label>
-                <div class="layui-input-inline">
-                    <select id="pass_level" lay-filter="pass-level">
-                        <option value="" >请选择安全级别</option>
-                        <option value="1" >低</option>
-                        <option value="2" >中</option>
-                        <option value="3" >高</option>
-                        <option value="4" >最高</option>
-                    </select>
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-inline user-name">
+                    <input id="pass_desc" type="text" lay-verify="required" placeholder="请输入描述信息" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">密码描述</label>
+                <label class="layui-form-label">加密信息</label>
                 <div class="layui-input-inline user-name">
-                    <input id="pass_desc" type="text" lay-verify="required" placeholder="请输入密码描述信息" autocomplete="off" class="layui-input">
+                    <input id="pass_value" type="text" lay-verify="required" placeholder="请输入加密信息" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-inline user-name">
-                    <input id="pass_value" type="text" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注</label>
+                    <div class="layui-input-block">
+                        <textarea style="resize: none;height: 150px" id="info_remark" placeholder="请输入备注信息" class="layui-textarea"></textarea>
+                    </div>
                 </div>
             </div>
         </form>
@@ -415,4 +392,6 @@
         </div>
     </div>
 </div>
+
+
 <{/block}>

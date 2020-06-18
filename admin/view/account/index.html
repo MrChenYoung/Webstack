@@ -139,6 +139,10 @@
         background-color: transparent;
     }
 
+    #pass_select_box {
+        width: 130px;
+    }
+
     .logo-input {
         width: 60px;
         display: inline-block;
@@ -154,6 +158,10 @@
         position: absolute;
         left: 20px;
         top: 10px;
+    }
+
+    .attachment-box {
+        width: 250px !important;
     }
 
 </style>
@@ -184,6 +192,8 @@
     var selectCatId = "";
     // 筛选选中的platid
     var selectPlatformId = "";
+    // 账号对应的附件表内数据id
+    var addAttachmentId = "";
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
         $("#account_manager").addClass("active");
@@ -392,6 +402,7 @@
     // 添加平台
     function addData() {
         isEdit = false;
+        editAccountId = '';
         selectedPlatId = "";
         addDesc = "";
         addUserName = "";
@@ -525,7 +536,8 @@
                 + "&user=" + addUserName
                 + "&pass=" + addPassWd
                 + "&address=" + addAddress
-                + "&remark=" + addRemark;
+                + "&remark=" + addRemark
+                + "&attachmentId=" + addAttachmentId;
         }
 
         console.log("添加账户:" + url);
@@ -539,6 +551,10 @@
 
     // 取消添加平台
     function cancel() {
+        // 删除已经创建的附件数据
+        var url = baseUrl + "?m=admin&c=API_Account&a=cacelAddAccount&API=&attId="+addAttachmentId;
+        console.log("删除附件记录:" + url);
+        get(url,null,false);
         hideEditCatCover();
     }
 
@@ -657,6 +673,24 @@
             }
         },true,false,5000);
     }
+    
+    // 查询附件 success：获取附件结果回调，bool参数表示是否有附件
+    function loadAttachment(success) {
+        if (editAccountId.length > 0){
+            var url = baseUrl + "?m=admin&c=API_Attachment&a=loadAttachmentLists" + "&API=&id=" + editAccountId + "&tbName=acc_account";
+            console.log("请求附件:" + url);
+            get(url,function (data) {
+                var attachments = data.data.data;
+                if (attachments.length > 0){
+                    success(true);
+                }else {
+                    success(false);
+                }
+            })
+        }else {
+            success(false);
+        }
+    }
 
     // 显示添加/修改平台浮层
     function showEditCatCover() {
@@ -678,11 +712,37 @@
         $("#acc_remark").val(addRemark);
         // logo
         setLogo();
+
+        // 请求附件数据
+        loadAttachment(function (hasAtt) {
+            if (hasAtt){
+                // 有附件
+                $("#attachment_btn").text("编辑附件");
+            }else {
+                // 没有附件
+                $("#attachment_btn").text("上传附件");
+            }
+        });
     }
 
     // 隐藏添加/修改分类浮层
     function hideEditCatCover() {
         $(".add-category-box").css("display","none");
+    }
+    
+    // 上传/编辑附件
+    function editAttachment() {
+        // 首先获取附件表对应的id
+        var getAttIdUrl = baseUrl + "?m=admin&c=API_Attachment&a=getAttachmentId&aid=" + editAccountId + "&tbName=acc_account";
+        console.log("获取附件id:" + getAttIdUrl);
+        get(getAttIdUrl,function (data) {
+            addAttachmentId = data.data;
+
+            // 跳转到附件管理页面
+            var url = baseUrl + "?m=admin&c=AttachmentManager&a=index&id=" + editAccountId + "&tbName=acc_account&accName=" + addDesc;
+            console.log("加载附件列表:" + url);
+            window.open(url,"blank");
+        });
     }
 
 </script>
@@ -766,8 +826,8 @@
                     <input id="add_pass" type="text" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">快速选择</label>
-                <div class="layui-input-inline">
-                    <select id="pass_select" lay-filter="pass-list">
+                <div id="pass_select_box" class="layui-input-inline">
+                    <select id="pass_select" lay-filter="pass-list" >
                     </select>
                 </div>
             </div>
@@ -777,10 +837,11 @@
                     <input id="login_address" type="text" lay-verify="required" placeholder="请输入登录地址" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">logo</label>
-                <div class="layui-input-inline">
+                <div class="layui-input-inline attachment-box">
                     <input readonly="readonly" type="text" lay-verify="required" autocomplete="off" class="layui-input logo-input">
                     <img src="" id="logo_img" class="logo-img">
                     <button  onclick="loadLogo()" type="button" id="logo_btn" class="layui-btn logo-btn">获取</button>
+                    <button  onclick="editAttachment()" type="button" id="attachment_btn" class="layui-btn logo-btn">上传附件</button>
                 </div>
             </div>
             <div class="layui-form-item">

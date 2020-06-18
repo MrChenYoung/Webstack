@@ -15,10 +15,6 @@
     <link href="<?php echo $pubP?>/common/css/icon.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $pubP?>/common/css/login.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1877015_jkq7dca58si.css">
-    <script src="<?php echo $pubP?>/common/js/jquery.2.js" type="text/javascript"></script>
-    <script type="text/javascript" src="<?php echo $pubP?>/common/js/RSAEncrypt.js"></script>
-    <script type="text/javascript" src="<?php echo $pubP?>/common/js/cookie.js"></script>
-    <script type="text/javascript" src="<?php echo $pubP?>/common/js/jsencrypt.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +26,7 @@
                 <h1 style="font-family: HUPOFont;font-size: 50px; color: #FFFFFF">账号管家</h1>
             </div>
 
-            <form method="post" action="<?php echo $webSite.'/index.php?m=admin&c=CategoryManager&a=index'?>" id="login_submit">
+            <form method="post" action="<?php echo $webSite.'/index.php'?>" id="login_submit">
                 <?php if ($_GET["loginerr"]) {
                     $disp='display';
                 }else{
@@ -62,9 +58,10 @@
                            placeholder="密码"
                            class="form-control">
                     <i class="icon icon-lock"></i>
-                    <i id="check_pass_icon" class="iconfont icon-Xtubiao-chakan" onclick="checkPass()"></i>
+                    <i id="check_pass_icon" class="iconfont icon-Xtubiao-chakan" onclick="checkMyPasswd()"></i>
                 </div>
                 <input id="user_pass_input" type="password" name="loginSuccess" style="display: none">
+                <input id="user_pass_input" type="text" name="m" value="<?php echo $_GET['m']?>" style="display: none">
 
                 <button class="btn btn-primary" type="submit" >登录</button>
             </form>
@@ -72,6 +69,10 @@
     </div>
 </body>
 </html>
+<script src="<?php echo $pubP?>/common/js/jquery.2.js" type="text/javascript"></script>
+<script type="text/javascript" src="<?php echo $pubP?>/common/js/RSAEncrypt.js"></script>
+<script type="text/javascript" src="<?php echo $pubP?>/common/js/cookie.js"></script>
+<script type="text/javascript" src="<?php echo $pubP?>/common/js/jsencrypt.min.js"></script>
 <script>
     var realPass = "";
     $(document).ready(function () {
@@ -84,10 +85,14 @@
             realPass = privateDecrypt(privateKeyContent,encryptPass);
         }
 
+        console.log("正确密码:" + realPass);
+
         // 监听密码输入 同时把输入的明文密码加密为密文
         $("#passwd_input").bind("input propertychange", function (event) {
             var userPass = $("#passwd_input").val();
 
+            console.log("验证：" + realPass);
+            console.log("验证1：" + userPass);
             if (realPass == userPass){
                 $("#user_pass_input").val("1");
             }else {
@@ -97,7 +102,7 @@
     });
 
     // 查看密码
-    function checkPass() {
+    function checkMyPasswd() {
         // 密码框
         var passInput = $("#passwd_input");
         if (passInput.attr("type") == "password"){
@@ -110,4 +115,5 @@
             $("#check_pass_icon").attr("class","iconfont icon-Xtubiao-chakan");
         }
     }
+
 </script>

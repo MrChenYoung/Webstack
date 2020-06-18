@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="<{PUBLIC_PATH}>common/css/icon.css" type="text/css">
     <link rel="stylesheet" href="<{PUBLIC_PATH}>common/layui/css/layui.css">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1877015_8fqwkv39vvc.css" type="text/css" >
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1877015_iktc5tvkpxm.css" type="text/css" >
     <link rel="stylesheet" href="<{PUBLIC_PATH}>common/css/common.css" type="text/css">
     <link rel="stylesheet" href="<{PUBLIC_PATH}>admin/css/common.css">
     <{block name="myStyles"}> <{/block}>
@@ -53,6 +53,16 @@
         <ul class="mod-bar">
             <input type="hidden" val="0" id="hide_values">
             <li>
+                <a id="general_info" class=" iconfont icon-changyongshoukuanrenguanli" href="?m=admin&c=GeneralInfo&a=index">
+                    <span>常用信息</span>
+                </a>
+            </li>
+            <li>
+                <a id="pass_manager" class=" icon icon-protect" href="?m=admin&c=PasswdManager&a=index">
+                    <span>密码管理</span>
+                </a>
+            </li>
+            <li>
                 <a id="category_manager" class=" icon icon-format" href="?m=admin&c=CategoryManager&a=index">
                     <span>分类管理</span>
                 </a>
@@ -65,11 +75,6 @@
             <li>
                 <a id="account_manager" class=" icon icon-users" href="?m=admin&c=AccountManager&a=index">
                     <span>账号管理</span>
-                </a>
-            </li>
-            <li>
-                <a id="pass_manager" class=" icon icon-protect" href="?m=admin&c=PasswdManager&a=index">
-                    <span>密码管理</span>
                 </a>
             </li>
             <li>

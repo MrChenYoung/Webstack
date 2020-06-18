@@ -145,7 +145,7 @@ class API_IconController extends API_BaseController
             "shejiao",
             "changyongshoukuanrenguanli",
             "qiyeguanli",
-            "yunxunizhuji",
+            "hostingyunxunizhuji",
             "qunfengshiyongchongzhiqiashangwang",
             "qita",
             "yuncunchu"

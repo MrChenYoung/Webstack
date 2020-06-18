@@ -45,4 +45,27 @@ class ImageTool
         $base64 = $prefiex.chunk_split(base64_encode($file_content));
         return $base64;
     }
+
+    /**
+     * 保存base64格式的图片为本地文件
+     * @param $base64_image_content     base64格式图片
+     * @param $path                     图片保存的文件夹
+     */
+    public static function saveBase64ToImage($base64_image_content,$path){
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
+            $type = $result[2];
+            if (!file_exists($path)){
+                mkdir($path);
+                chmod($path,0777);
+            }
+            $fileName = time() . ".{$type}";
+            $filePath = $path ."/".$fileName;
+            if (file_put_contents($filePath, base64_decode(str_replace($result[1], '', $base64_image_content)))){
+                // 保存成功
+                return $fileName;
+            } else {
+                return false;
+            }
+        }
+    }
 }

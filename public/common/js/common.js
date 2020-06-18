@@ -18,10 +18,9 @@ $(document).ready(function () {
     rsaPrivateContent = getCookie(privateKey);
 
     // 如果公钥或私钥为空 提示去添加
-    var page = pageFlag();
     if (rsaPrivateContent == null || rsaPublicContent == null || rsaPublicContent.length == 0 || rsaPrivateContent.length == 0){
         // rsa密钥为空 跳转到添加页面
-        var url = baseUrl+"/addRsaKey.php&page="+page;
+        var url = baseUrl+"/addRsaKey.php&m=admin";
         window.location = url;
     }
 });
@@ -69,9 +68,14 @@ function toast(message,success=true) {
     });
 }
 
-// 发送网络请求
+// 发送GET网络请求
 function get(url, complete=null,withHud=true,showToast=false,timeOut=10000) {
     request(url,null,complete,withHud,showToast,timeOut);
+}
+
+// 发送post网络请求
+function post(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000) {
+    request(url,data,complete,withHud,showToast,timeOut);
 }
 
 // 发送请求
@@ -80,7 +84,7 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
         showHud();
     }
 
-    var method = data == null ? "GET" : "'POST'";
+    var method = data == null ? "get" : "post";
 
     console.log("方法:" + method);
 

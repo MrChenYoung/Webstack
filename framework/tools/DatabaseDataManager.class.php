@@ -19,13 +19,15 @@ class DatabaseDataManager extends DatabaseManager
             $where_str = '';
         }else{
             $where_str = '';
+            $index = 0;
             foreach ($where as $key=>$value) {
-                if ($key == 0){
+                if ($index == 0){
                     $where_str .= " WHERE ";
                 }else {
                     $where_str .= " AND ";
                 }
                 $where_str .= " `$key` = '$value' ";
+                $index++;
             }
         }
 
@@ -147,6 +149,7 @@ EEE;
             }else {
                 $whereStr .= " `$key`=$value";
             }
+            $index++;
         }
 
         $sql = "DELETE FROM $tbName WHERE $whereStr";

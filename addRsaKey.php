@@ -57,6 +57,7 @@
 </head>
 <body>
 <div class="aw-content-wrap">
+    <input type="hidden" id="modoul_input" value="<?php echo $_GET['m']?>" >
     <div>
         <span id="notice_area" class="notice-area">添加RSA密钥</span>
         <span id="tip_content" class="tip-content">RSA公钥和私钥只保存在浏览器cookie中，不会上传到服务端，所有密码的加密解密工作都在客户端完成</span>
@@ -174,7 +175,7 @@
             var privateKeyContent = getCookie(privateKey);
 
             if (publicKeyContent != null && publicKeyContent.length > 0 && privateKeyContent != null && privateKeyContent.length > 0){
-                var url = $("#web_site").val() + "/index.php";
+                var url = $("#web_site").val() + "/index.php?m=" + $("#modoul_input").val();
                 window.location = url;
             }
         }else {
