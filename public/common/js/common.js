@@ -101,7 +101,9 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
         }
         ,complete: function () {
             console.log("加载完成");
-            hideHud();
+            if (withHud) {
+                hideHud();
+            }
         }
         ,success: function (data,state,xhr) {
             console.log("成功:" + xhr.requestURL);
@@ -116,7 +118,9 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
             }
         },
         error: function (xhr,textStatus,errorMessage) {
-            hideHud();
+            if (withHud) {
+                hideHud();
+            }
             if (showToast){
                 toast("请求服务器失败");
             }
