@@ -148,6 +148,20 @@
         layui.use('element', function(){
             var $ = layui.jquery
                 ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+            element.on('tab(main-content)', function(data){
+                var index = data.index;
+
+                if (index == 0){
+                    // 切换到favicon获取
+
+                }else {
+                    // 切换到icon图标库
+
+                    // 加载icon
+                    loadIcons();
+                }
+            });
         });
 
         // 监听网址输入
@@ -156,9 +170,6 @@
             seachUrl = urlInput.val();
             updateFaviconBtn();
         });
-
-        // 加载icon
-        loadIcons();
 
         // 获取接口
         loadApiLists();
@@ -275,10 +286,10 @@
 <{/block}>
 <{block name="content"}>
 <div class="aw-content-wrap">
-    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <div class="layui-tab layui-tab-brief" lay-filter="main-content">
         <ul class="layui-tab-title">
-            <li class="layui-this">Favicon获取</li>
-            <li>Icon图标库</li>
+            <li class="layui-this" lay-id="111">Favicon获取</li>
+            <li lay-id="222">Icon图标库</li>
         </ul>
         <div class="layui-tab-content" style="height: 100px;">
             <div class="layui-tab-item layui-show">
