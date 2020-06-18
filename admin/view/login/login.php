@@ -23,7 +23,7 @@
     <div id="cotent" class="aw-login">
         <div class="mod center-block" style="padding-top: 60px;">
             <div class="mod-logo" style="text-align: center">
-                <h1 style="font-family: HUPOFont;font-size: 50px; color: #FFFFFF">账号管家</h1>
+                <h1 style="font:50px 'microsoft yahei';color: #FFFFFF">账号管家</h1>
             </div>
 
             <form method="post" action="<?php echo $webSite.'/index.php'?>" id="login_submit">
@@ -61,7 +61,7 @@
                     <i id="check_pass_icon" class="iconfont icon-Xtubiao-chakan" onclick="checkMyPasswd()"></i>
                 </div>
                 <input id="user_pass_input" type="password" name="loginSuccess" style="display: none">
-                <input id="user_pass_input" type="text" name="m" value="<?php echo $_GET['m']?>" style="display: none">
+                <input type="text" name="m" value="<?php echo $_GET['m']?>" style="display: none">
 
                 <button class="btn btn-primary" type="submit" >登录</button>
             </form>

@@ -61,6 +61,6 @@ class API_BaseController extends Controller
         SessionManager::getSingleTon() -> deleteSession("isLogin");
 
         // 跳转到登录页面
-        echo "<script>window.location.href='index.php?login='</script>";
+        echo "<script>window.location.href='index.php?logout='</script>";
     }
 }

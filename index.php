@@ -17,7 +17,7 @@ if (isset($_REQUEST["API"])){
 }
 
 // 点击后台的注销按钮
-if (isset($_REQUEST["login"])){
+if (isset($_REQUEST["logout"])){
     toLogin(false,"","admin");
     return;
 }
