@@ -323,7 +323,7 @@
         loadCatgoryList();
     });
 
-    
+
     // 获取筛选分类列表
     function loadCatgoryList() {
         var url = baseUrl + "?m=admin&c=API_Category&a=loadCategotyList&API=";
@@ -721,6 +721,10 @@
     // 获取/更新logo
     function loadLogo() {
         if (selectApi == 3){
+            // 清空input文件选择 防止选择同一个文件不触发input文件选择框的选择文件完成方法
+            var file = document.getElementById('file_select_input');
+            file.value = '';
+
             // 自定义上传
             $("#file_select_input").click();
         }else {
