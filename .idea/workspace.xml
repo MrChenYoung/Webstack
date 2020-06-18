@@ -3,15 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/API/API_AccountController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/API/API_AccountController.class.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/view/account/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/account/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/core/Factory.class.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/core/Model.class.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/core/MovieBaseModel.class.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/tools/Client.class.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/tools/MovieDownload.class.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/tools/videoManager.class.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +79,7 @@
       <workItem from="1591633070915" duration="107401000" />
       <workItem from="1591871479214" duration="35444000" />
       <workItem from="1591945607164" duration="93128000" />
-      <workItem from="1592197095778" duration="106714000" />
+      <workItem from="1592197095778" duration="107056000" />
     </task>
     <servers />
   </component>
