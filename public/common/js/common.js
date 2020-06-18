@@ -96,11 +96,15 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
         async : true,
         timeout: timeOut,
         dataType : "json",
-        complete: function () {
+        beforeSend:function (jqxhr,settings) {
+            jqxhr.requestURL = url;
+        }
+        ,complete: function () {
             console.log("加载完成");
             hideHud();
         }
         ,success: function (data,state,xhr) {
+            console.log("成功:" + xhr.requestURL);
             var message = typeof(data.data) == 'string' ? data.data : data.message;
             if (data.code == 200){
                 showToast ? toast(message) : "";
