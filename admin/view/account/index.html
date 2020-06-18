@@ -280,8 +280,8 @@
             });
         });
 
-        // 请求账号列表
-        loadAccountList();
+        // 获取筛选分类列表
+        loadCatgoryList();
     });
     
     // 获取筛选分类列表
@@ -298,6 +298,9 @@
                 dom += '<option value="'+ catId +'">'+ catName +'</option>';
             }
             $("#cat_select").html(dom);
+
+            // 请求账号列表
+            loadAccountList();
         });
     }
     
@@ -340,7 +343,7 @@
     }
     
     // 刷新账号列表
-    function reloadAccountList() {
+    function reloadAccountList(success=null) {
         var url = baseUrl + "?m=home&c=API_Common&a=loadHomeAccountLists&API=&id=" + selectCatId;
         get(url,function (data) {
             // 平台列表
