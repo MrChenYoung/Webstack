@@ -277,7 +277,46 @@
             form.on('select(api-select)', function(data){
                 // 选择的接口
                 selectApi = data.value;
+                if (selectApi == 3){
+                    // 自定义上传
+                    $("#logo_btn").text("上传");
+                }else {
+                    // 通过接口获取
+                    setLogo();
+                }
             });
+        });
+
+        // 监听选择logo
+        $('#file_select_input').change(function(e){
+            //获取选中图片对象（包含文件的名称、大小、类型等，如file.size）
+            var file = document.getElementById("file_select_input").files[0];
+
+            // 文件类型
+            var fileSize = file.size;
+            // 限制只能上传图片
+            if (fileSize/1024 > 500){
+                toast("图片大小不能超过500Kb");
+                return;
+            }
+
+            //声明js的文件流
+            var reader = new FileReader();
+            if(file){
+                //通过文件流将文件转换成Base64字符串
+                reader.readAsDataURL(file);
+
+                //转换成功后
+                reader.onloadend = function ()
+                {
+                    //转换结果
+                    var base64ImgContent = reader.result;
+                    // 上传图片
+                    uploadLogoImage(base64ImgContent);
+                }
+            }else {
+                toast("图片为空");
+            }
         });
 
         // 获取筛选分类列表
@@ -627,7 +666,9 @@
     function setLogo() {
         $("#logo_img").attr("src",addLogo);
         var $logoBtn = $("#logo_btn");
-        if (addLogo.length > 0){
+        if (selectApi == 3){
+            $logoBtn.text("上传");
+        }else if (addLogo.length > 0){
             $logoBtn.text("更新");
         }else {
             $logoBtn.text("获取");
@@ -678,20 +719,42 @@
     
     // 获取/更新logo
     function loadLogo() {
-        var add = btoa(addAddress);
-        var accId = editAccountId.length > 0 ? editAccountId : "";
-        var url = baseUrl + "?m=admin&c=API_Account&a=loadLogo&address=" + add + "&API=&accId=" + accId + "&selectApi=" + selectApi;
-        console.log("获取logo:" + url);
-        get(url,function (data) {
-            var res = data.data;
-            if (res == '无法获取logo'){
-                toast(res);
-            }else {
-                toast("获取logo成功");
-                addLogo = res;
-                setLogo();
-            }
-        },true,false,5000);
+        if (selectApi == 3){
+            // 自定义上传
+            $("#file_select_input").click();
+        }else {
+            // 通过接口获取
+            var add = btoa(addAddress);
+            var accId = editAccountId.length > 0 ? editAccountId : "";
+            var url = baseUrl + "?m=admin&c=API_Account&a=loadLogo&address=" + add + "&API=&accId=" + accId + "&selectApi=" + selectApi;
+            console.log("获取logo:" + url);
+            get(url,function (data) {
+                var res = data.data;
+                if (res == '无法获取logo'){
+                    toast(res);
+                }else {
+                    toast("获取logo成功");
+                    addLogo = res;
+                    setLogo();
+                }
+            },true,false,5000);
+        }
+    }
+
+    // 上传logo
+    function uploadLogoImage(base64ImgContent) {
+        var data = {
+            m : "admin",
+            c : "API_Account",
+            a : "uploadLogoImage",
+            accId  : editAccountId,
+            base64ImgContent : base64ImgContent,
+            API : ""
+        };
+        post(baseUrl,data,function () {
+            addLogo = base64ImgContent;
+            setLogo();
+        },true,true)
     }
     
     // 查询附件 success：获取附件结果回调，bool参数表示是否有附件
@@ -864,7 +927,7 @@
                         <option value="">请选择接口</option>
                         <option value="1">接口一</option>
                         <option value="2">接口二</option>
-                        <option value="3">接口三</option>
+                        <option value="3">自定义</option>
                     </select>
 
                     <button  onclick="loadLogo()" type="button" id="logo_btn" class="layui-btn logo-btn">获取</button>
@@ -886,6 +949,8 @@
             <button onclick="cancel()" type="button" class="layui-btn layui-btn-primary">取消</button>
             <button onclick="confirm()" type="button" class="layui-btn confirm-btn">确认</button>
         </div>
+        <!--选择图片上传-->
+        <input type="file" name="file" id="file_select_input" style="display:none">
     </div>
 </div>
 <{/block}>

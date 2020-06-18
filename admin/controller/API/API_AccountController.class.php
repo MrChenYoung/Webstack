@@ -362,6 +362,9 @@ EEE;
             case 2:
                 $logoData = $this->getLogo2($address);
                 break;
+            case 3:
+
+                break;
         }
 
         if ($logoData){
@@ -390,6 +393,31 @@ EEE;
         $attId = $_GET["attId"];
 
         $res = (new API_AttachmentController())->clearAttachment("","",$attId);
+    }
+
+    // 上传logo
+    public function uploadLogoImage(){
+        // id
+        if (!isset($_POST["accId"])){
+            echo $this->failed("需要accId参数");
+            die;
+        }
+        $accId = $_POST["accId"];
+
+        // 图片base64b编码后
+        if (!isset($_POST["base64ImgContent"])){
+            echo $this->failed("需要base64ImgContent参数");
+            die;
+        }
+        $base64ImgContent = $_POST["base64ImgContent"];
+
+        // 保存到数据库
+        $res = DatabaseDataManager::getSingleton()->update($this->tableName,["logo"=>$base64ImgContent],["id"=>$accId]);
+        if ($res){
+            echo $this->success("上传成功");
+        }else {
+            echo $this->failed("上传失败");
+        }
     }
 
     // 获取logo接口1
