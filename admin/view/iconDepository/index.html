@@ -273,6 +273,10 @@
                 var siz = width + "*" + height;
                 $("#img_size").text(siz);
             });
+
+            getImageType(base64Content,function (imageType) {
+                $("#img_type").text(imageType);
+            });
         }
     }
 
@@ -285,6 +289,61 @@
             }
         };
         img.src = imgData;
+    }
+
+    // 获取图片类型
+    function getImageType(imgData,func) {
+        var url = "?m=admin&c=API_IconManager&a=getFaviconType&API=&base64=" + imgData;
+        get(url,function (data) {
+            if (func){
+                func(data.data);
+            }
+        });
+    }
+
+    // 下载
+    function downloadFavicon() {
+        var base64Content = $("#fav_base64_content").val();
+        if (base64Content.length > 0){
+            download(base64Content);
+        }else {
+            toast("图片内容为空");
+        }
+    }
+
+    //下载图片
+    function download(imgData) {
+        downloadFile('test.png', imgData);
+    }
+
+    //下载
+    function downloadFile(fileName, content) {
+        let aLink = document.createElement('a');
+        let blob = base64ToBlob(content); //new Blob([content]);
+
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("click", true, true);//initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+        aLink.download = fileName;
+        aLink.href = URL.createObjectURL(blob);
+
+        // aLink.dispatchEvent(evt);
+        //aLink.click()
+        aLink.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));//兼容火狐
+    }
+
+    //base64转blob
+    function base64ToBlob(code) {
+        let parts = code.split(';base64,');
+        let contentType = parts[0].split(':')[1];
+        let raw = window.atob(parts[1]);
+        let rawLength = raw.length;
+
+        let uInt8Array = new Uint8Array(rawLength);
+
+        for (let i = 0; i < rawLength; ++i) {
+            uInt8Array[i] = raw.charCodeAt(i);
+        }
+        return new Blob([uInt8Array], {type: contentType});
     }
 
 </script>
@@ -325,6 +384,11 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">尺寸</label>
                                 <div style="line-height: 36px" id="img_size" class="layui-input-block">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">类型</label>
+                                <div style="line-height: 36px" id="img_type" class="layui-input-block">
                                 </div>
                             </div>
                             <div class="layui-form-item layui-form-text">

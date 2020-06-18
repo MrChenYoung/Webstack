@@ -19,7 +19,9 @@ class API_IconManagerController extends API_BaseController
             "Google API2"       => "https://favicon.link/",
             "Google API3"       =>  "https://favicon.link/v3/?url=",
             "360 API1"          =>  "https://favicon.link/v1/ico.php?url=",
-            "360 API2"          =>  "https://favicon.link/v2/ico.php?url="
+            "360 API2"          =>  "https://favicon.link/v2/ico.php?url=",
+            "其他接口1"          =>   "http://tool.bitefu.net/ico/?url=",
+            "其他接口2"          =>   "http://favicon.byi.pw/?url="
         ];
     }
 
@@ -201,12 +203,30 @@ class API_IconManagerController extends API_BaseController
             case "Google API3":
             case "360 API1":
             case "360 API2":
+            case "其他接口1":
+            case "其他接口2":
                 $url = $this->apiList[$api].$url;
                 break;
         }
 
         $res = $this->request($url);
         echo $this->success($res);
+    }
+
+    // 获取图片类型
+    public function getFaviconType(){
+        // 网址
+        if (!isset($_GET["base64"])){
+            echo $this->failed("需要base64参数");
+            die;
+        }
+        $base64 = $_GET["base64"];
+
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64, $result)){
+            echo $this->success($result[2]);
+        }
+
+        echo $this->success("");
     }
 
     // 请求
