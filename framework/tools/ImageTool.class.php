@@ -46,6 +46,15 @@ class ImageTool
         return $base64;
     }
 
+    // 原始图片内容转换成base64
+    public static function imageContentToBase64($imageContent){
+        if (strlen($imageContent) == 0) die("图片内容为空");
+
+        $base64 = chunk_split(base64_encode($imageContent));
+        $base64 = 'data:image/jpg/png/gif;base64,'.$base64;
+        return $base64;
+    }
+
     /**
      * 保存base64格式的图片为本地文件
      * @param $base64_image_content     base64格式图片

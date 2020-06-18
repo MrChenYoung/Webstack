@@ -1,6 +1,29 @@
 <{extends file="layout.html"}>
 <{block name="myStyles"}>
 <style type="text/css">
+    .layui-tab-brief>.layui-tab-title .layui-this {
+        color: #393D49;
+        font-size: 20px;
+        font-weight: 300;
+    }
+
+    .layui-tab-title li {
+        color: #cccccc;
+        font-size: 20px;
+        font-weight: 300;
+    }
+
+    .layui-tab-title li:hover {
+        color: #393D49;
+    }
+
+    .layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after{
+        border-color: #393D49;
+    }
+    .form-box {
+        margin-top: 20px;
+    }
+
     .layui-table {
         width: 220px;
         display: inline-block;
@@ -13,6 +36,9 @@
 
     .icon-container {
         width: 100%;
+        height: 680px;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
 
     .layui-form-pane .layui-form-label {
@@ -26,7 +52,6 @@
         height: 25px;
         line-height: 25px;
     }
-
 
     .icon-input {
         border: none;
@@ -45,10 +70,56 @@
         background-color: transparent;
     }
 
+    .favicon-container {
+        margin-top: 20px;;
+    }
+
+    .url-input {
+        width: 250px;
+    }
+
+    .layui-form-select dl dd.layui-this {
+        background-color: #393D49;
+    }
+
+    .logo-btn{
+        background-color: #393D49;
+    }
+
+    .layui-btn-disabled, .layui-btn-disabled:active, .layui-btn-disabled:hover {
+        background: #FBFBFB;
+    }
+
+    .check-result {
+        margin-left: -30px;
+        display: none;
+    }
+    .download-btn {
+        background: #393D49;
+        margin-left: 110px;
+    }
+
+    .empty-result {
+        font-size: 20px;
+        font-weight: 300;
+        display: none;
+        margin-top: 20px;
+    }
+
+    .fav-base64-content {
+        height: 300px;
+    }
+
 </style>
 <{/block}>
 <{block name="scriptCode"}>
 <script>
+    // 选择的api
+    var selectApi = "";
+    // 输入的网址
+    var seachUrl = "";
+    // 接口s数据
+    var apiData;
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
         $("#icon_depository").addClass("active");
@@ -64,17 +135,61 @@
             searchBar.bind("input propertychange", function (event) {
                 loadIcons();
             });
+
+            // 监听接口选择
+            form.on('select(api-select)', function(data){
+                // 选择的api
+                var apiName = data.value;
+                selectApi = apiName;
+                updateFaviconBtn();
+            });
+        });
+
+        layui.use('element', function(){
+            var $ = layui.jquery
+                ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        });
+
+        // 监听网址输入
+        var urlInput = $("#url_input");
+        urlInput.bind("input propertychange", function (event) {
+            seachUrl = urlInput.val();
+            updateFaviconBtn();
         });
 
         // 加载icon
         loadIcons();
+
+        // 获取接口
+        loadApiLists();
+
+        // 设置查询按钮是否可点
+        updateFaviconBtn();
     });
+
+    // 获取接口
+    function loadApiLists() {
+        var url = "?m=admin&c=API_IconManager&a=loadApiLists";
+        get(url,function (data) {
+            createApiSelectDom(data.data);
+        });
+    }
+
+    // 创建接口选择dom
+    function createApiSelectDom(apiList) {
+        var dom = '<option value="">选择接口</option>';
+        for (var i = 0; i < apiList.length; i ++){
+            var api = apiList[i];
+            dom += '<option value="'+ api +'">'+ api +'</option>';
+        }
+        $("#api_select").html(dom);
+    }
 
     // 请求icon
     function loadIcons() {
         var kwds = $("#search_icon").val();
         kwds = kwds != undefined ? kwds : "";
-        var url = baseUrl + "?m=admin&c=API_Icon&a=getIconDepository&API=&keyWords=" + kwds + "&API=";
+        var url = baseUrl + "?m=admin&c=API_IconManager&a=getIconDepository&API=&keyWords=" + kwds + "&API=";
         console.log("请求icon:" + url);
         get(url, function (data) {
             createIconDom(data.data);
@@ -100,24 +215,134 @@
         var inputDom = document.getElementById("icon_" + iconName);
         copyInputContent(inputDom);
     }
+    
+    // 查询favicon
+    function checkFavicon() {
+        var url = "?m=admin&c=API_IconManager&a=getFavicon&api=" + selectApi + "&url=" + seachUrl;
+        console.log("查询favicon:" + url);
+        get(url,function (data) {
+            setCheckResult(data.data);
+        },true,false,100000,function () {
+            setCheckResult("",true);
+        });
+    }
+
+    // 根据输入的网址和选择的api判断是否可查询favicon
+    function updateFaviconBtn() {
+        var $checkBtn = $("#facicon_btn");
+        if (selectApi.length > 0 && seachUrl.length > 0){
+            $checkBtn.removeClass("layui-btn-disabled");
+        }else {
+            $checkBtn.addClass("layui-btn-disabled");
+        }
+    }
+
+    // 设置favicon查询结果
+    function setCheckResult(base64Content,error=false) {
+        if (error || !base64Content){
+            $(".empty-result").css("display",'block');
+            $(".check-result").css("display",'none');
+            if (error){
+                $(".empty-result").text("查询失败");
+            }else {
+                $(".empty-result").text("结果为空");
+            }
+        }else {
+            $(".empty-result").css("display",'none');
+            $(".check-result").css("display",'block');
+            $("#fav_img").attr("src",base64Content);
+            $("#fav_base64_content").val(base64Content);
+
+            getImageSize(base64Content,function (width,height) {
+                var siz = width + "*" + height;
+                $("#img_size").text(siz);
+            });
+        }
+    }
+
+    // 获取图片尺寸
+    function getImageSize(imgData,func) {
+        var img = new Image();
+        img.onload = function(){
+            if (func){
+                func(img.width,img.height);
+            }
+        };
+        img.src = imgData;
+    }
 
 </script>
 <{/block}>
 <{block name="content"}>
 <div class="aw-content-wrap">
-
-    <form class="layui-form layui-form-pane" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                <i class="icon icon-search"></i>
-            </label>
-            <div class="layui-input-inline">
-                <input id="search_icon" type="text" name="username" lay-verify="required" placeholder="输入icon名称"
-                       autocomplete="off" class="layui-input">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">Favicon获取</li>
+            <li>Icon图标库</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show">
+                <div class="favicon-container">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-input-inline">
+                            <input id="url_input" type="text" name="username" lay-verify="required" placeholder="输入网址"
+                                   autocomplete="off" class="layui-input url-input">
+                        </div>
+                        <div class="layui-input-inline">
+                            <select id="api_select" lay-filter="api-select">
+                                <option value="">选择接口</option>
+                            </select>
+                        </div>
+                        <button  onclick="checkFavicon()" type="button" id="facicon_btn" class="layui-btn logo-btn">查询</button>
+                    </form>
+                    <div class="check-result">
+                        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+                            <legend>查询结果</legend>
+                        </fieldset>
+                        <form class="layui-form" action="" lay-filter="example">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">Favicon</label>
+                                <div style="line-height: 36px" class="layui-input-block">
+                                    <img id="fav_img" src="">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">尺寸</label>
+                                <div style="line-height: 36px" id="img_size" class="layui-input-block">
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">Base64</label>
+                                <div class="layui-input-block">
+                                    <textarea id="fav_base64_content" readonly="readonly" class="layui-textarea fav-base64-content" name="desc"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <button onclick="downloadFavicon()" type="button" id="download_btn" class="layui-btn download-btn">下载</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="empty-result">结果为空</div>
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <div class="form-box">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                <i class="icon icon-search"></i>
+                            </label>
+                            <div class="layui-input-inline">
+                                <input id="search_icon" type="text" name="username" lay-verify="required" placeholder="输入icon名称"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="icon-container">
+                </div>
             </div>
         </div>
-    </form>
-    <div class="icon-container">
     </div>
 </div>
 <{/block}>

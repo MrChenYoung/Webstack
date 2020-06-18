@@ -6,7 +6,7 @@ namespace admin\controller;
 
 use framework\core\Controller;
 
-class IconDepositoryController extends Controller
+class IconManagerController extends Controller
 {
     public function index()
     {

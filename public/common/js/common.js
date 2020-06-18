@@ -69,8 +69,8 @@ function toast(message,success=true) {
 }
 
 // 发送GET网络请求
-function get(url, complete=null,withHud=true,showToast=false,timeOut=10000) {
-    request(url,null,complete,withHud,showToast,timeOut);
+function get(url, complete=null,withHud=true,showToast=false,timeOut=10000,failFunc=null) {
+    request(url,null,complete,withHud,showToast,timeOut,failFunc);
 }
 
 // 发送post网络请求
@@ -79,7 +79,7 @@ function post(url, data=null, complete=null,withHud=true,showToast=false,timeOut
 }
 
 // 发送请求
-function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000) {
+function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000,failFunc=null) {
     if (withHud){
         showHud();
     }
@@ -125,6 +125,9 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
                 toast("请求服务器失败");
             }
             console.log("请求失败了偶尔Lee:" + errorMessage);
+            if (failFunc){
+                failFunc();
+            }
         }
     });
 }

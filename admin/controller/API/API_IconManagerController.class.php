@@ -4,8 +4,21 @@
 namespace admin\controller\API;
 
 
-class API_IconController extends API_BaseController
+use framework\tools\ImageTool;
+
+class API_IconManagerController extends API_BaseController
 {
+    private $apiList;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->apiList = [
+            "常用API"     => "/favicon.ico",
+            "Google API" => "http://www.google.com/s2/favicons?domain="
+        ];
+    }
+
     // 获取图标库
     public function getIconDepository(){
         $icons = [
@@ -151,6 +164,81 @@ class API_IconController extends API_BaseController
             "yuncunchu"
         ];
         echo $this->success($icons);
+    }
+
+    // 获取查询favicon的接口
+    public function loadApiLists(){
+        $apis = array_keys($this->apiList);
+        echo $this->success($apis);
+    }
+
+    // 查询favicon
+    public function getFavicon(){
+        // 接口
+        if (!isset($_GET["api"])){
+            echo $this->failed("需要api参数");
+            die;
+        }
+        $api = $_GET["api"];
+
+        // 网址
+        if (!isset($_GET["url"])){
+            echo $this->failed("需要url参数");
+            die;
+        }
+        $url = $_GET["url"];
+
+        switch ($api){
+            case "常用API":
+                $url = $url.$this->apiList[$api];
+                break;
+            case "Google API":
+                $url = $this->apiList[$api].$url;
+                break;
+        }
+
+        $res = $this->request($url);
+        echo $this->success($res);
+    }
+
+    // 请求
+    private function request($url){
+        //1. 初始化curl请求
+        $ch = curl_init();
+        //2. 设置请求的服务器地址
+        curl_setopt($ch,CURLOPT_URL,$url);
+        //3. 不管get、post，都跳过证书验证
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        $result = curl_exec($ch);
+        //4. 关闭资源
+        curl_close($ch);
+
+        // 转成base64
+        $result = ImageTool::imageContentToBase64($result);
+        return $result;
+    }
+
+    // 通过图片base64获取类型
+    private function getExtention($base64){
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64, $result)){
+            return $result;
+
+//            $type = $result[2];
+//
+//            $fileName = time() . ".{$type}";
+//            $filePath = $path ."/".$fileName;
+//            if (file_put_contents($filePath, base64_decode(str_replace($result[1], '', $base64)))){
+//                // 保存成功
+//
+//            } else {
+//
+//            }
+        }
+
+        return [];
     }
 
 }
