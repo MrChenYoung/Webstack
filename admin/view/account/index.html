@@ -161,7 +161,12 @@
     }
 
     .attachment-box {
-        width: 250px !important;
+        width: 350px !important;
+    }
+
+    .attachment-box .layui-form-select {
+        width: 110px;
+        display: inline-block;
     }
 
 </style>
@@ -194,6 +199,8 @@
     var selectPlatformId = "";
     // 账号对应的附件表内数据id
     var addAttachmentId = "";
+    // 选择获取logo的api
+    var selectApi = "";
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
         $("#account_manager").addClass("active");
@@ -264,6 +271,12 @@
                     // 刷新账号列表
                     reloadAccountList();
                 }
+            });
+
+            // 监听获取logo接口选择
+            form.on('select(api-select)', function(data){
+                // 选择的接口
+                selectApi = data.value;
             });
         });
 
@@ -659,11 +672,10 @@
     function loadLogo() {
         var add = btoa(addAddress);
         var accId = editAccountId.length > 0 ? editAccountId : "";
-        var url = baseUrl + "?m=admin&c=API_Account&a=loadLogo&address=" + add + "&API=&accId=" + accId;
+        var url = baseUrl + "?m=admin&c=API_Account&a=loadLogo&address=" + add + "&API=&accId=" + accId + "&selectApi=" + selectApi;
         console.log("获取logo:" + url);
         get(url,function (data) {
             var res = data.data;
-
             if (res == '无法获取logo'){
                 toast(res);
             }else {
@@ -840,6 +852,13 @@
                 <div class="layui-input-inline attachment-box">
                     <input readonly="readonly" type="text" lay-verify="required" autocomplete="off" class="layui-input logo-input">
                     <img src="" id="logo_img" class="logo-img">
+                    <select id="api_select" lay-filter="api-select">
+                        <option value="">请选择接口</option>
+                        <option value="1">接口一</option>
+                        <option value="2">接口二</option>
+                        <option value="3">接口三</option>
+                    </select>
+
                     <button  onclick="loadLogo()" type="button" id="logo_btn" class="layui-btn logo-btn">获取</button>
                     <button  onclick="editAttachment()" type="button" id="attachment_btn" class="layui-btn logo-btn">上传附件</button>
                 </div>

@@ -346,8 +346,24 @@ EEE;
         }
         $accId = $_GET["accId"];
 
-        $url = $address."/favicon.ico";
-        $logoData = ImageTool::imgBase64Encode($url);
+        // 选择的接口
+        if (!isset($_GET["selectApi"])){
+            echo $this->failed("需要selectApi参数");
+            die;
+        }
+        $selectApi = $_GET["selectApi"];
+        $selectApi = strlen($selectApi) == 0 ? 1 : ((int)$selectApi);
+
+        $logoData = "";
+        switch ($selectApi){
+            case 1:
+                $logoData = $this->getLogo1($address);
+                break;
+            case 2:
+                $logoData = $this->getLogo2($address);
+                break;
+        }
+
         if ($logoData){
             // 更新数据库
             if (strlen($accId) > 0){
@@ -376,14 +392,33 @@ EEE;
         $res = (new API_AttachmentController())->clearAttachment("","",$attId);
     }
 
+    // 获取logo接口1
+    private function getLogo1($address){
+        $url = $address."/favicon.ico";
+        $logoData = ImageTool::imgBase64Encode($url);
+        return $logoData;
+    }
+
+    // 获取logo接口2
+    private function getLogo2($address){
+        $url ="http://tool.bitefu.net/ico/?url=".$address."&type=1";
+        //1. 初始化curl请求
+        $ch = curl_init();
+        //2. 设置请求的服务器地址
+        curl_setopt($ch,CURLOPT_URL,$url);
+        //3. 不管get、post，都跳过证书验证
+        curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+        curl_setopt($ch,CURLOPT_SSL_VERIFYHOST,false);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+        $result = curl_exec($ch);
+        //4. 关闭资源
+        curl_close($ch);
+        return $result;
+    }
+
     // 获取账号网址的logo
     private function getLogo($address){
-        // 方法一(有的网站获取不到)
-//        $request = new HttpRequest();
-//        $request->url = "http://tool.bitefu.net/ico/?url=".$address."&type=1";
-//        $res = $request->send();
-
-        // 方法二(大多数可以获取到)
         $url = $address."/favicon.ico";
         $res = ImageTool::imgBase64Encode($url);
 
