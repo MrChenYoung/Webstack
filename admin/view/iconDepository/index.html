@@ -110,6 +110,54 @@
         height: 300px;
     }
 
+    .logo-container ul li {
+        list-style: none;
+        float: left;
+        margin: 10px;
+    }
+
+    .logo-box {
+        width: 60px;
+        height: 80px;
+        display: inline-block;
+        position: relative;
+        background: #f9f9f9;
+        border-radius: 5px;
+    }
+
+    .logo-box img{
+        width: 40px;
+        height: 40px;
+        display: block;
+        margin: 10px auto;
+    }
+
+    #logo_box i {
+        font-size: 16px;
+        cursor: pointer;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background: transparent;
+        color: #cccccc;
+    }
+
+    #logo_box i:hover {
+        color: #393D49;
+    }
+
+    #logo_box .icon-download {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+     }
+
+    #logo_box .icon-reply {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+
 </style>
 <{/block}>
 <{block name="scriptCode"}>
@@ -152,14 +200,19 @@
             element.on('tab(main-content)', function(data){
                 var index = data.index;
 
-                if (index == 0){
-                    // 切换到favicon获取
-
-                }else {
-                    // 切换到icon图标库
-
-                    // 加载icon
-                    loadIcons();
+                switch (index) {
+                    case 0:
+                        // 切换到favicon获取
+                        break;
+                    case 1:
+                        // 切换到icon图标库
+                        // 加载icon
+                        loadIcons();
+                        break;
+                    case 2:
+                        // 切换到logo
+                        loadLogoList();
+                        break;
                 }
             });
         });
@@ -312,8 +365,8 @@
     }
 
     //下载图片
-    function download(imgData) {
-        downloadFile('test.png', imgData);
+    function download(imgData,name='icon.png') {
+        downloadFile(name, imgData);
     }
 
     //下载
@@ -346,6 +399,38 @@
         return new Blob([uInt8Array], {type: contentType});
     }
 
+    // 获取所有logo
+    function loadLogoList() {
+        var url = "?m=admin&c=API_IconManager&a=loadLogoList";
+        get(url,function (data) {
+            var logoList = data.data;
+            var dom = "";
+            for(var i = 0; i < logoList.length; i++){
+                var logo = logoList[i];
+                dom += '<li><div base64="'+ logo +'" id="logo_box" class="logo-box">';
+                dom += '<img src="'+ logo +'">';
+                dom += '<i onclick="downloadLogo(this)" title="下载" class="icon icon-download"></i>';
+                dom += '<i onclick="copyLogo(this)" title="复制base64" class="icon icon-reply"></i>';
+                dom += '<input type="text" style="width: 0.1px;height: 0.1px" readonly="readonly" value="'+ logo +'">';
+                dom += '</div></li>';
+            }
+            $("#logo_container ul").html(dom);
+        });
+    }
+
+    // 下载logo
+    function downloadLogo(obj) {
+        var base64 = $(obj).parent().attr("base64");
+        download(base64,"logo.png");
+    }
+
+    // 复制logo base64
+    function copyLogo(obj) {
+        var base64Input = $(obj).parent().find("input");
+        copyInputContent(base64Input,"复制base64成功");
+        
+    }
+
 </script>
 <{/block}>
 <{block name="content"}>
@@ -354,6 +439,7 @@
         <ul class="layui-tab-title">
             <li class="layui-this" lay-id="111">Favicon获取</li>
             <li lay-id="222">Icon图标库</li>
+            <li lay-id="333">账号logo</li>
         </ul>
         <div class="layui-tab-content" style="height: 100px;">
             <div class="layui-tab-item layui-show">
@@ -420,6 +506,11 @@
                     </form>
                 </div>
                 <div class="icon-container">
+                </div>
+            </div>
+            <div class="layui-tab-item">
+                <div id="logo_container" class="logo-container">
+                    <ul></ul>
                 </div>
             </div>
         </div>

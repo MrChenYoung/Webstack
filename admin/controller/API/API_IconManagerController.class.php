@@ -4,6 +4,7 @@
 namespace admin\controller\API;
 
 
+use framework\tools\DatabaseDataManager;
 use framework\tools\ImageTool;
 
 class API_IconManagerController extends API_BaseController
@@ -249,24 +250,21 @@ class API_IconManagerController extends API_BaseController
         return $result;
     }
 
-    // 通过图片base64获取类型
-    private function getExtention($base64){
-        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64, $result)){
-            return $result;
+    // 获取logo列表
+    public function loadLogoList(){
+        $res = DatabaseDataManager::getSingleton()->find("acc_account",[],["logo"]);
 
-//            $type = $result[2];
-//
-//            $fileName = time() . ".{$type}";
-//            $filePath = $path ."/".$fileName;
-//            if (file_put_contents($filePath, base64_decode(str_replace($result[1], '', $base64)))){
-//                // 保存成功
-//
-//            } else {
-//
-//            }
+        $data = [];
+        if ($res){
+            foreach ($res as $re) {
+                $base64 = $re["logo"];
+                if (strlen($base64) > 0 && !in_array($base64,$data)){
+                    $data[] = $base64;
+                }
+            }
         }
 
-        return [];
+        echo $this->success($data);
     }
 
 }
