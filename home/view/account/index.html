@@ -67,11 +67,17 @@
     }
 
     // 拷贝用户名
-    function copyUserName() {
+    function copyUserName(obj) {
         // 阻止m默认事件
         var e = window.event || arguments.callee.caller.arguments[0];
         e.preventDefault();
-        copyInputContent($(".user-name"));
+
+        var $this = $(obj);
+        var accId = $this.attr("accId");
+        var inputId = "acc_user_" + accId;
+        var input = $("#" + inputId);
+
+        copyInputContent(input);
     }
 
     // 查看密码
