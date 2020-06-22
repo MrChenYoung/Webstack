@@ -169,6 +169,12 @@
         display: inline-block;
     }
 
+    .remark-box {
+        max-width: 400px;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
 </style>
 <{/block}>
 <{block name="scriptCode"}>
@@ -322,7 +328,6 @@
         // 获取筛选分类列表
         loadCatgoryList();
     });
-
 
     // 获取筛选分类列表
     function loadCatgoryList() {
@@ -489,7 +494,7 @@
             dom += '<i  accId="'+ account["id"] +'" onclick="previewPass(this)" class="iconfont icon-Xtubiao-chakan translation-icon"></i><i accId="'+ account["id"] +'" id="copy_btn" onclick="copyPass(this)" class="icon icon-reply translation-icon"></i><input class="real-pass" type="text" id="real_pass_'+ account["id"] +'"></td>';
             dom += '<td>'+ account["address"] +'</td>';
             dom += '<td>'+ account["plat_name"] +'</td>';
-            dom += '<td>'+ account["remark"] +'</td>';
+            dom += '<td><div class="remark-box">'+ account["remark"] +'</div></td>';
             dom += '<td><i title="编辑" onclick="editAccount(this)" accId="'+ account["id"] +'" style="cursor: pointer" class="icon icon-edit"></i>';
             dom += '<i title="复制" onclick="copyAccount(this)" accId="'+ account["id"] +'" style="cursor: pointer" class="icon icon-reply"></i>';
             dom += '<i title="删除" platId="'+ account["plat_id"] +'" accId="'+ account["id"] +'" onclick="deleteAccount(this)" style="cursor: pointer" class="icon icon-trash"></i></td></tr>';
