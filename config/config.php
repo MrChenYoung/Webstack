@@ -7,7 +7,7 @@ return [
     // vps数据库信息
     'host'              =>      'localhost',
     'user'              =>      'root',
-    'pass'              =>      '123456',
+    'pass'              =>      '199156',
     'dbname'            =>      'account_db',
     'port'              =>      3306,
     'charset'           =>      'utf8',
