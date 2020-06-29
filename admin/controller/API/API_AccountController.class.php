@@ -31,7 +31,7 @@ class API_AccountController extends API_BaseController
             // 获取每个账号所属的平台
             foreach ($accData as $key=>$accDatum) {
                 $platId = $accDatum["plat_id"];
-                $platData = DatabaseDataManager::getSingleton()->find("acc_platform",["id"=>$platId],["plat_name"]);
+                $platData = DatabaseDataManager::getSingleton()->find("acc_platform",["id"=>$platId],["plat_name"],"ORDER BY id");
                 $platName = "";
                 if ($platData !== false && count($platData) > 0){
                     $platName = $platData[0]["plat_name"];
