@@ -13,6 +13,7 @@ function initConst()
     define('PUBLIC_PATH','./public/');
 }
 
+
 // 初始化数据库
 initDb();
 function initDb(){
