@@ -7,6 +7,7 @@ use framework\core\Controller;
 
 class BaseController extends Controller
 {
+    protected $catList;
     public function __construct()
     {
         parent::__construct();
@@ -20,6 +21,7 @@ class BaseController extends Controller
     public function getCategoryList(){
         $catController = new API_CategoryController();
         $catList = $catController->loadCategotyList(true);
+        $this->catList = $catList;
 
         $data = [];
         foreach ($catList as $cat) {
@@ -27,7 +29,7 @@ class BaseController extends Controller
             $domId = "cat_".$catId;
             $catName = $cat["cat_title"];
             $catIcon = $cat["cat_icon"];
-            $href = $catName == "常用" ? "?m=home&c=Common&a=index&catId=" : "?m=home&c=Account&a=index&catId=";
+            $href = "?m=home&c=Account&a=index&catId=";
             $href .= $catId;
             $dom = <<<EEE
                     <li>

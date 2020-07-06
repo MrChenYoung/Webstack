@@ -12,14 +12,14 @@ class API_CategoryController extends API_BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->tableName = "acc_category";
+        $this->tableName = "category";
     }
 
     // 获取分类列表
     public function loadCategotyList($ret=false){
         $res = DatabaseDataManager::getSingleton()->find($this->tableName);
         // 获取平台列表名称
-        $platData = DatabaseDataManager::getSingleton()->find("acc_platform");
+        $platData = DatabaseDataManager::getSingleton()->find("platform");
         $plats = [];
         foreach ($platData as $platDatum) {
             $plats[$platDatum["id"]] = $platDatum["plat_name"];

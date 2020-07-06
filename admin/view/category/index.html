@@ -150,7 +150,8 @@
 
     // 请求icon
     function loadIcons() {
-        var url = baseUrl + "?m=admin&c=API_Icon&a=getAliIconfonts&API=";
+        var url = baseUrl + "?m=admin&c=API_IconManager&a=getAliIconfonts&API=";
+        console.log("请求icons:" + url);
         get(url, function (data) {
             layui.use('form', function(){
                 var form = layui.form;
@@ -315,7 +316,7 @@
                 <thead>
                 <tr>
                     <th>分类图标</th>
-                    <th>分类名</th>
+                    <th>分类标题</th>
                     <th>平台</th>
                     <th>操作</th>
                 </tr>

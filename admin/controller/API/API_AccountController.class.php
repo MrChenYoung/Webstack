@@ -14,7 +14,7 @@ class API_AccountController extends API_BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->tableName = "acc_account";
+        $this->tableName = "web_list";
     }
 
     // 获取账号列表
@@ -25,31 +25,18 @@ class API_AccountController extends API_BaseController
             $catId = $_GET["id"];
         }
 
-        // 查询账号列表
+        // 查询网站列表
         $accData = DatabaseDataManager::getSingleton()->find($this->tableName);
         if ($accData !== false){
             // 获取每个账号所属的平台
             foreach ($accData as $key=>$accDatum) {
                 $platId = $accDatum["plat_id"];
-                $platData = DatabaseDataManager::getSingleton()->find("acc_platform",["id"=>$platId],["plat_name"],"ORDER BY id");
+                $platData = DatabaseDataManager::getSingleton()->find("platform",["id"=>$platId],["plat_name"],"ORDER BY id");
                 $platName = "";
                 if ($platData !== false && count($platData) > 0){
                     $platName = $platData[0]["plat_name"];
                 }
                 $accData[$key]["plat_name"] = $platName;
-
-                // 如果账号的logo为空 设置一个默认的logo
-                $logo = $accDatum["logo"];
-                if (!strlen($logo)){
-//                    $logo = $this->getLogo($accDatum["address"]);
-//                    if (strlen($logo)){
-//                        $accData[$key]["logo"] = $logo;
-//                        // 保存logo到数据库
-//                        DatabaseDataManager::getSingleton()->update($this->tableName,["logo"=>$logo],["id"=>$accDatum["id"]]);
-//                    }
-                    $accData[$key]["logo"] = $this->defaultLogo;
-                    DatabaseDataManager::getSingleton()->update($this->tableName,["logo"=>$this->defaultLogo],["id"=>$accDatum["id"]]);
-                }
             }
 
             echo $this->success($accData);
@@ -68,7 +55,7 @@ class API_AccountController extends API_BaseController
         $accId = $_GET["id"];
 
         $sql = <<<EEE
-SELECT acc_account.*,acc_platform.plat_name FROM acc_account,acc_platform WHERE acc_account.plat_id=acc_platform.id AND acc_account.id=$accId;
+SELECT web_list.*,platform.plat_name FROM web_list,platform WHERE web_list.plat_id=platform.id AND web_list.id=$accId;
 EEE;
         $res = DatabaseDataManager::getSingleton()->fetch($sql);
 
@@ -82,74 +69,56 @@ EEE;
     // 添加账号
     public function addAccount(){
         // 所属平台
-        if (!isset($_GET["platId"])){
+        if (!isset($_REQUEST["platId"])){
             echo $this->failed("需要platId参数");
             die;
         }
-        $platId = $_GET["platId"];
+        $platId = $_REQUEST["platId"];
 
         // 账户描述信息
-        if (!isset($_GET["desc"])){
+        if (!isset($_REQUEST["desc"])){
             echo $this->failed("需要desc参数");
             die;
         }
-        $desc = $_GET["desc"];
+        $desc = $_REQUEST["desc"];
 
         // 用户名
-        if (!isset($_GET["user"])){
+        if (!isset($_REQUEST["user"])){
             echo $this->failed("需要user参数");
             die;
         }
-        $user = $_GET["user"];
+        $user = $_REQUEST["user"];
         // base64解码
         $user = base64_decode($user);
         // 解码js进行的uri编码，为了处理中文
         $user = urldecode($user);
 
-
-        // 密码
-        if (!isset($_GET["pass"])){
-            echo $this->failed("需要pass参数");
-            die;
-        }
-        $pass = $_GET["pass"];
-        // base64解码
-        $pass = base64_decode($pass);
-
         // 登录地址
-        if (!isset($_GET["address"])){
+        if (!isset($_REQUEST["address"])){
             echo $this->failed("需要address参数");
             die;
         }
-        $address = $_GET["address"];
+        $address = $_REQUEST["address"];
         // base64解码
         $address = base64_decode($address);
 
         // 网站logo
-        $logo = $this->getLogo($address);
-
-        // 备注
-        if (!isset($_GET["remark"])){
-            echo $this->failed("需要remark参数");
+        if (!isset($_REQUEST["logo"])){
+            echo $this->failed("需要logo参数");
             die;
         }
-        $remark = $_GET["remark"];
-
-        // 附件id
-        if (!isset($_GET["attachmentId"])){
-            echo $this->failed("需要attachmentId参数");
-            die;
-        }
-        $attachmentId = $_GET["attachmentId"];
+        $logo = $_REQUEST["logo"];
+        // base64解码
+        $logo = base64_decode($logo);
+        // 解码js进行的uri编码，为了处理中文
+        $logo = urldecode($logo);
 
         // 插入数据库
         $insertData = [
-            "acc_desc"      =>  $desc,
-            "user"          =>  $user,
-            "passwd"        =>  $pass,
+            "web_desc"      =>  $desc,
+            "web_title"     =>  $user,
             "address"       =>  $address,
             "plat_id"       =>  $platId,
-            "remark"        =>  $remark,
             "logo"          =>  $logo
         ];
         $res = DatabaseDataManager::getSingleton()->insert($this->tableName,$insertData);
@@ -158,77 +127,66 @@ EEE;
             $resId = $this->addAccountToPlat($platId,$res);
             if ($resId){
                 // 成功
-
-                // 修改附件id
-                DatabaseDataManager::getSingleton()->update("acc_attachment",["aid"=>$res],["id"=>$attachmentId]);
-                echo $this->success("账号添加成功 ");
+                echo $this->success("网站添加成功 ");
                 die;
             }
         }
-        echo $this->failed("账号添加失败");
+        echo $this->failed("网站添加失败");
     }
 
     // 修改账号信息
     public function editAccount(){
         // id
-        if (!isset($_GET["id"])){
+        if (!isset($_REQUEST["id"])){
             echo $this->failed("需要id参数");
             die;
         }
-        $accId = $_GET["id"];
+        $accId = $_REQUEST["id"];
 
         // 所属平台id
-        if (!isset($_GET["platId"])){
+        if (!isset($_REQUEST["platId"])){
             echo $this->failed("需要platId参数");
             die;
         }
-        $platId = $_GET["platId"];
+        $platId = $_REQUEST["platId"];
 
         // 账户描述
-        if (!isset($_GET["desc"])){
+        if (!isset($_REQUEST["desc"])){
             echo $this->failed("需要desc参数");
             die;
         }
-        $accDesc = $_GET["desc"];
+        $accDesc = $_REQUEST["desc"];
 
         // 用户名
-        if (!isset($_GET["user"])){
+        if (!isset($_REQUEST["user"])){
             echo $this->failed("需要user参数");
             die;
         }
-        $user = $_GET["user"];
+        $user = $_REQUEST["user"];
         // base64解码
         $user = base64_decode($user);
         // 解码js进行的uri编码，为了处理中文
         $user = urldecode($user);
 
-        // 密码
-        if (!isset($_GET["pass"])){
-            echo $this->failed("需要pass参数");
-            die;
-        }
-        $pass = $_GET["pass"];
-        // base64解密
-        $pass = base64_decode($pass);
-
         // 登录地址
-        if (!isset($_GET["address"])){
+        if (!isset($_REQUEST["address"])){
             echo $this->failed("需要address参数");
             die;
         }
-        $address = $_GET["address"];
+        $address = $_REQUEST["address"];
         // base64解码
         $address = base64_decode($address);
 
         // 网站logo
-        $logo = $this->getLogo($address);
-
-        // 备注
-        if (!isset($_GET["remark"])){
-            echo $this->failed("需要remark参数");
+        if (!isset($_REQUEST["logo"])){
+            echo $this->failed("需要logo参数");
             die;
         }
-        $remark = $_GET["remark"];
+        $logo = $_REQUEST["logo"];
+        // base64解码
+        $logo = base64_decode($logo);
+        // 解码js进行的uri编码，为了处理中文
+        $logo = urldecode($logo);
 
         // 查询原来所属的平台并移除
         $oldPlatData = DatabaseDataManager::getSingleton()->find($this->tableName,["id"=>$accId],["plat_id"]);
@@ -243,11 +201,9 @@ EEE;
             // 修改的数据
             $editData = [
                 "plat_id"       =>  $platId,
-                "acc_desc"      =>  $accDesc,
-                "user"          =>  $user,
-                "passwd"        =>  $pass,
+                "web_desc"      =>  $accDesc,
+                "web_title"     =>  $user,
                 "address"       =>  $address,
-                "remark"        =>  $remark,
                 "logo"          =>  $logo
             ];
             $res = DatabaseDataManager::getSingleton()->update($this->tableName,$editData,["id"=>$accId]);
@@ -283,8 +239,6 @@ EEE;
         $res = DatabaseDataManager::getSingleton()->delete($this->tableName,["id"=>$accId]);
 
         if ($res){
-            // 删除附件文件
-            (new API_AttachmentController())->clearAttachment($accId,$this->tableName);
             echo $this->success("删除成功");
             die;
         }
@@ -295,10 +249,10 @@ EEE;
 
     // 添加$accountId账户到$platId记录中
     private function addAccountToPlat($platId,$accountId){
-        $platData = DatabaseDataManager::getSingleton()->find("acc_platform",["id"=>$platId],["acc_list"]);
+        $platData = DatabaseDataManager::getSingleton()->find("platform",["id"=>$platId],["web_list"]);
         $acc_list = "";
         if ($platData) {
-            $acc_list = $platData[0]["acc_list"];
+            $acc_list = $platData[0]["web_list"];
             if (strlen($acc_list) > 0) {
                 // 以逗号分成数组
                 $accArr = explode(",", $acc_list);
@@ -308,7 +262,7 @@ EEE;
                 $acc_list = $accountId;
             }
 
-            $resId = DatabaseDataManager::getSingleton()->update("acc_platform", ["acc_list" => $acc_list], ["id" => $platId]);
+            $resId = DatabaseDataManager::getSingleton()->update("platform", ["web_list" => $acc_list], ["id" => $platId]);
             return $resId;
         }
 
@@ -318,16 +272,16 @@ EEE;
     // 从$platId平台中移除$deleteAccId账号记录
     private function deleteAccFromPlatform($platId,$deleteAccId){
         // 删除平台表中的账号列表记录
-        $platData = DatabaseDataManager::getSingleton()->find("acc_platform",["id"=>$platId],["acc_list"]);
+        $platData = DatabaseDataManager::getSingleton()->find("platform",["id"=>$platId],["web_list"]);
         if ($platData){
-            $accStr = $platData[0]["acc_list"];
+            $accStr = $platData[0]["web_list"];
             $accArr = explode(",",$accStr);
 
             $key = array_search($deleteAccId,$accArr);
             if($key !== false){
                 unset($accArr[$key]);
                 $accStr = implode(",",$accArr);
-                $resId = DatabaseDataManager::getSingleton()->update("acc_platform",["acc_list"=>$accStr],["id"=>$platId]);
+                $resId = DatabaseDataManager::getSingleton()->update("platform",["web_list"=>$accStr],["id"=>$platId]);
             }
         }
     }
@@ -399,13 +353,6 @@ EEE;
 
     // 上传logo
     public function uploadLogoImage(){
-        // id
-        if (!isset($_POST["accId"])){
-            echo $this->failed("需要accId参数");
-            die;
-        }
-        $accId = $_POST["accId"];
-
         // 图片base64b编码后
         if (!isset($_POST["base64ImgContent"])){
             echo $this->failed("需要base64ImgContent参数");
@@ -413,13 +360,24 @@ EEE;
         }
         $base64ImgContent = $_POST["base64ImgContent"];
 
-        // 保存到数据库
-        $res = DatabaseDataManager::getSingleton()->update($this->tableName,["logo"=>$base64ImgContent],["id"=>$accId]);
-        if ($res){
-            echo $this->success("上传成功");
-        }else {
-            echo $this->failed("上传失败");
+        // id
+        if (!isset($_POST["webId"])){
+            echo $this->failed("需要webId参数");
+            die;
         }
+        $webId = $_POST["webId"];
+
+        if (strlen($webId) == 0){
+            $inserRes = DatabaseDataManager::getSingleton()->insert($this->tableName,["logo"=>$base64ImgContent]);
+            if ($inserRes){
+                $webId = $inserRes;
+            }
+        }else {
+            // 保存到数据库
+            DatabaseDataManager::getSingleton()->update($this->tableName,["logo"=>$base64ImgContent],["id"=>$webId]);
+        }
+
+        echo $this->success($webId);
     }
 
     // 获取logo接口1

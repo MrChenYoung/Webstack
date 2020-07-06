@@ -12,7 +12,7 @@ class API_PlatformController extends API_BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->tableName = "acc_platform";
+        $this->tableName = "platform";
     }
 
     // 获取平台列表
@@ -20,18 +20,18 @@ class API_PlatformController extends API_BaseController
         // 查询平台列表
         $platData = DatabaseDataManager::getSingleton()->find($this->tableName);
 
-        // 获取账号列表名称
-        $accData = DatabaseDataManager::getSingleton()->find("acc_account");
+        // 获取网站列表名称
+        $accData = DatabaseDataManager::getSingleton()->find("web_list");
         $acces = [];
         foreach ($accData as $accDatum) {
-            $acces[$accDatum["id"]] = $accDatum["acc_desc"];
+            $acces[$accDatum["id"]] = $accDatum["web_title"];
         }
 
         if ($platData !== false){
             // 获取每个平台所属的分类
             foreach ($platData as $key=>$platDatum) {
                 $catId = $platDatum["cat_id"];
-                $catData = DatabaseDataManager::getSingleton()->find("acc_category",["id"=>$catId],["cat_title"]);
+                $catData = DatabaseDataManager::getSingleton()->find("category",["id"=>$catId],["cat_title"]);
                 $catName = "";
                 if ($catData !== false && count($catData) > 0){
                     $catName = $catData[0]["cat_title"];
@@ -39,7 +39,7 @@ class API_PlatformController extends API_BaseController
                 $platData[$key]["cat_title"] = $catName;
 
                 // 获取每个平台包含的账号描述信息
-                $plat_acces = $platDatum["acc_list"];
+                $plat_acces = $platDatum["web_list"];
                 $acc_list = [];
                 if (strlen($plat_acces)){
                     $plat_acces_arr = explode(",",$plat_acces);
@@ -49,7 +49,7 @@ class API_PlatformController extends API_BaseController
                         }
                     }
                 }
-                $platData[$key]["acc_list"] = $acc_list;
+                $platData[$key]["web_list"] = $acc_list;
             }
 
             echo $this->success($platData);
@@ -163,7 +163,7 @@ class API_PlatformController extends API_BaseController
     // 从$catId分类中移除$deletePlatId平台记录
     private function deletePlatFromCat($catId,$deletePlatId){
         // 删除分类表中的平台列表
-        $catData = DatabaseDataManager::getSingleton()->find("acc_category",["id"=>$catId],["platform_list"]);
+        $catData = DatabaseDataManager::getSingleton()->find("category",["id"=>$catId],["platform_list"]);
         if ($catData){
             $platStr = $catData[0]["platform_list"];
             $platArr = explode(",",$platStr);
@@ -172,14 +172,14 @@ class API_PlatformController extends API_BaseController
             if($key !== false){
                 unset($platArr[$key]);
                 $platStr = implode(",",$platArr);
-                $resId = DatabaseDataManager::getSingleton()->update("acc_category",["platform_list"=>$platStr],["id"=>$catId]);
+                $resId = DatabaseDataManager::getSingleton()->update("category",["platform_list"=>$platStr],["id"=>$catId]);
             }
         }
     }
 
     // 添加$platId平台到$catId记录中
     private function addPlatformToCat($catId,$platId){
-        $catData = DatabaseDataManager::getSingleton()->find("acc_category",["id"=>$catId],["platform_list"]);
+        $catData = DatabaseDataManager::getSingleton()->find("category",["id"=>$catId],["platform_list"]);
         $plat_list = "";
         if ($catData) {
             $plat_list = $catData[0]["platform_list"];
@@ -192,7 +192,7 @@ class API_PlatformController extends API_BaseController
                 $plat_list = $platId;
             }
 
-            $resId = DatabaseDataManager::getSingleton()->update("acc_category", ["platform_list" => $plat_list], ["id" => $catId]);
+            $resId = DatabaseDataManager::getSingleton()->update("category", ["platform_list" => $plat_list], ["id" => $catId]);
 
             return $resId;
         }

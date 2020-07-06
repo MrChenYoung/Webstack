@@ -174,7 +174,7 @@
             var platform = data[i];
             dom += '<tr><td>'+ platform["plat_name"] +'</td>';
             dom += '<td><ul class="acc_list_ul">';
-            var accList = platform["acc_list"];
+            var accList = platform["web_list"];
             for (var j = 0; j < accList.length; j++){
                 var acc = accList[j];
                 dom += '<li>'+ acc +'</li>';
@@ -290,7 +290,7 @@
                 <thead>
                 <tr>
                     <th>平台名称</th>
-                    <th>账号</th>
+                    <th>网站</th>
                     <th>所属分类</th>
                     <th>操作</th>
                 </tr>

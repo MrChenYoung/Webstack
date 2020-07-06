@@ -27,7 +27,7 @@
 
     .add-category-container {
         width: 800px;
-        height: 600px;
+        height: 400px;
         background-color: #FFF;
         margin: 100px auto;
         padding: 10px;
@@ -144,7 +144,7 @@
     }
 
     .logo-input {
-        width: 60px;
+        width: 120px;
         display: inline-block;
     }
 
@@ -187,6 +187,10 @@
         overflow-x: scroll;
     }
 
+    .cover-form {
+        margin-left: 35px;
+    }
+
 </style>
 <{/block}>
 <{block name="scriptCode"}>
@@ -197,12 +201,8 @@
     var addDesc = "";
     // 要添加账号的用户名
     var addUserName = '';
-    // 要添加账号的密码
-    var addPassWd = '';
     // 要添加账号的登录地址
     var addAddress = '';
-    // 要添加账号的备注
-    var addRemark = '';
     // 是否是编辑
     var isEdit = false;
     // 修改平台id
@@ -215,10 +215,6 @@
     var selectCatId = "";
     // 筛选选中的platid
     var selectPlatformId = "";
-    // 账号对应的附件表内数据id
-    var addAttachmentId = "";
-    // 选择获取logo的api
-    var selectApi = "";
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
         $("#account_manager").addClass("active");
@@ -233,21 +229,11 @@
         userNameInput.bind("input propertychange", function (event) {
             addUserName = userNameInput.val();
         });
-        // 监听输入密码
-        var passInput = $("#add_pass");
-        passInput.bind("input propertychange", function (event) {
-            addPassWd = passInput.val();
-        });
         // 监听输入登录地址
         var loginAddressInput = $("#login_address");
         loginAddressInput.bind("input propertychange", function (event) {
             addAddress = loginAddressInput.val();
             setLogoBtn();
-        });
-        // 监听输入登录地址
-        var remarkInput = $("#acc_remark");
-        remarkInput.bind("input propertychange", function (event) {
-            addRemark = remarkInput.val();
         });
 
         // 监听select选择变化
@@ -259,14 +245,6 @@
                 // 选择的platid
                 var platId = data.value;
                 selectedPlatId = platId;
-            });
-
-            // 监听密码选择
-            form.on('select(pass-list)', function(data){
-                // 选择的密码
-                var pass = data.value;
-                $("#add_pass").val(pass);
-                addPassWd = pass;
             });
 
             // 监听筛选分类选择
@@ -291,18 +269,6 @@
                 }
             });
 
-            // 监听获取logo接口选择
-            form.on('select(api-select)', function(data){
-                // 选择的接口
-                selectApi = data.value;
-                if (selectApi == 3){
-                    // 自定义上传
-                    $("#logo_btn").text("上传");
-                }else {
-                    // 通过接口获取
-                    setLogo();
-                }
-            });
         });
 
         // 监听选择logo
@@ -330,7 +296,8 @@
                     //转换结果
                     var base64ImgContent = reader.result;
                     // 上传图片
-                    uploadLogoImage(base64ImgContent);
+                    addLogo = base64ImgContent;
+                    $("#logo_img").attr("src",addLogo);
                 }
             }else {
                 toast("图片为空");
@@ -398,7 +365,7 @@
             reloadAccountList();
         }else {
             var url = baseUrl + "?m=admin&c=API_Account&a=loadAccountList&API=";
-            console.log("获取账户列表:" + url);
+            console.log("获取网站列表:" + url);
             get(url,function (data) {
                 // 创建分类列表
                 createAccountDom(data.data);
@@ -418,7 +385,7 @@
                 var platData = platList[i];
                 var platId = platData["id"];
                 if (selectPlatformId == platId){
-                    accountData = platData["acc_list"];
+                    accountData = platData["web_list"];
                     break;
                 }
             }
@@ -451,32 +418,6 @@
         })
     }
 
-    // 请求密码列表
-    function loadPassList(success) {
-        var url = baseUrl + "?m=admin&c=API_PassManager&a=loadPassList&API=";
-        console.log("请求密码列表:" + url);
-        get(url, function (data) {
-            layui.use('form', function(){
-                var form = layui.form;
-                var passData = data.data;
-                // 创建要选择的分类列表
-                var dom = '<option value="">请选择密码</option>';
-                for (var i = 0; i < passData.length; i++){
-                    var pass = passData[i];
-                    // 密码解密
-                    var passwd = RSADecryptPass(pass["passwd"]);
-                    dom += '<option value="'+ passwd +'" >'+ passwd +'</option>';
-                }
-                $("#pass_select").html(dom);
-                form.render();
-
-                if (success){
-                    success();
-                }
-            });
-        })
-    }
-
     // 添加平台
     function addData() {
         isEdit = false;
@@ -484,15 +425,10 @@
         selectedPlatId = "";
         addDesc = "";
         addUserName = "";
-        addPassWd = "";
         addAddress = "";
-        addRemark = "";
-        addLogo = "";
-        // 请求密码列表
-        loadPassList(function () {
-            // 请求平台列表
-            loadPlatList();
-        });
+        addLogo = defaultLogo;
+        // 请求平台列表
+        loadPlatList();
     }
 
     // 创建账号列表
@@ -500,59 +436,16 @@
         var dom = "";
         for(var i = 0; i < data.length; i++){
             var account = data[i];
-            dom += '<tr><td>'+ account["acc_desc"] +'</td>';
-            dom += '<td>'+ account["user"] +'</td>';
-            dom += '<td><input pass="'+ account["passwd"] +'" readonly="readonly" type="password" class="layui-input pass-view-input" value="'+ account["passwd"] +'">';
-            dom += '<i  accId="'+ account["id"] +'" onclick="previewPass(this)" class="iconfont icon-Xtubiao-chakan translation-icon"></i><i accId="'+ account["id"] +'" id="copy_btn" onclick="copyPass(this)" class="icon icon-reply translation-icon"></i><input class="real-pass" type="text" id="real_pass_'+ account["id"] +'"></td>';
+            dom += '<tr><td><img src="'+ account["logo"] +'"></td>';
+            dom += '<td>'+ account["web_title"] +'</td>';
+            dom += '<td>'+ account["web_desc"] +'</td>';
             dom += '<td><div class="login-address-box">'+ account["address"] +'</div></td>';
             dom += '<td>'+ account["plat_name"] +'</td>';
-            dom += '<td><div class="remark-box">'+ account["remark"] +'</div></td>';
             dom += '<td><i title="编辑" onclick="editAccount(this)" accId="'+ account["id"] +'" style="cursor: pointer" class="icon icon-edit"></i>';
             dom += '<i title="复制" onclick="copyAccount(this)" accId="'+ account["id"] +'" style="cursor: pointer" class="icon icon-reply"></i>';
             dom += '<i title="删除" platId="'+ account["plat_id"] +'" accId="'+ account["id"] +'" onclick="deleteAccount(this)" style="cursor: pointer" class="icon icon-trash"></i></td></tr>';
         }
         $("tbody").html(dom);
-    }
-
-    // 查看密码
-    function previewPass(obj) {
-        var $this = $(obj);
-        var accId = $this.attr("accId");
-        var input = $this.parent().find("input");
-
-        if (input.attr("type") == "text"){
-            // 隐藏密码
-            // 请求指定账号数据
-            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId + "&API=";
-            get(url,function (data) {
-                var accData = data.data;
-                input.attr("type","password");
-                input.val(accData["passwd"]);
-                $this.attr("class","iconfont icon-Xtubiao-chakan translation-icon");
-            },false);
-        }else {
-            // 开启查看模式
-            var prepass = input.attr("pass");
-            // 解密
-            var decryptPass = RSADecryptPass(prepass);
-            input.attr("type","text");
-            input.val(decryptPass);
-            $this.attr("class","iconfont icon-Xtubiao-guanbichakan translation-icon");
-        }
-    }
-
-    // 复制密码
-    function copyPass(obj) {
-        var $this = $(obj);
-        var accId = $this.attr("accId");
-        var passInput = $this.parent().find("input");
-        var input = $("#real_pass_"+accId);
-
-        // 解密
-        var decryptPass = RSADecryptPass(passInput.attr("pass"));
-        input.val(decryptPass);
-        // 复制密码
-        copyInputContent(input,"密码已复制");
     }
 
     // 确定添加/修改账号
@@ -562,77 +455,67 @@
             return;
         }
         if (addDesc.length == 0){
-            toast("请输入账户描述信息");
+            toast("请输入描述信息");
             return;
         }
         if (addUserName.length == 0){
-            toast("请输入用户名");
-            return;
-        }
-        if (addPassWd.length == 0){
-            toast("请输入密码");
+            toast("请输入标题");
             return;
         }
         if (addAddress.length == 0){
-            toast("请输入登录地址");
+            toast("请输入地址");
             return;
         }
 
         // logo
         if (addLogo.length == 0){
             // 获取logo
-            loadLogo();
+            addLogo = defaultLogo;
         }
+        addLogo = btoa(encodeURIComponent(addLogo));
 
         // 用户名和登录地址要base64编码处理 防止特殊字符出错
         // 用户名要先进行uri编码处理中文内容,因为btoa直接编码中文h会报错
         addUserName = btoa(encodeURIComponent(addUserName));
         addAddress = btoa(addAddress);
 
-        // 密码加密
-        addPassWd = RSAEncryptPass(addPassWd);
-        // base64编码
-        addPassWd = btoa(addPassWd);
-
         // 请求添加账号接口
         var url = "";
+        var postData = [];
         if (isEdit){
             // 修改
-            url = baseUrl + "?m=admin&c=API_Account&a=editAccount&API="
-                + "&id=" + editAccountId
-                + "&platId=" + selectedPlatId
-                + "&desc=" + addDesc
-                + "&user=" + addUserName
-                + "&pass=" + addPassWd
-                + "&address=" + addAddress
-                + "&remark=" + addRemark;
+            postData = {
+                id : editAccountId,
+                platId : selectedPlatId,
+                desc : addDesc,
+                user : addUserName,
+                address : addAddress,
+                logo : addLogo
+            };
+            url = baseUrl + "?m=admin&c=API_Account&a=editAccount&API=";
         }else {
             // 添加
-            url = baseUrl + "?m=admin&c=API_Account&a=addAccount&API="
-                + "&platId=" + selectedPlatId
-                + "&desc=" + addDesc
-                + "&user=" + addUserName
-                + "&pass=" + addPassWd
-                + "&address=" + addAddress
-                + "&remark=" + addRemark
-                + "&attachmentId=" + addAttachmentId;
+            postData = {
+                platId : selectedPlatId,
+                desc : addDesc,
+                user : addUserName,
+                address : addAddress,
+                logo : addLogo
+            };
+            url = baseUrl + "?m=admin&c=API_Account&a=addAccount&API=";
         }
 
-        console.log("添加账户:" + url);
-        get(url,function () {
+        console.log("添加网站:" + url);
+        post(url,postData,function () {
             // 浮层消失
             hideEditCatCover();
-            // 刷新账号列表
+            // 刷新列表
             loadAccountList();
         },true,true);
     }
 
     // 取消添加平台
     function cancel() {
-        // 删除已经创建的附件数据
-        var url = baseUrl + "?m=admin&c=API_Account&a=cacelAddAccount&API=&attId="+addAttachmentId;
-        console.log("删除附件记录:" + url);
-        get(url,null,false);
         hideEditCatCover();
     }
 
@@ -658,52 +541,19 @@
         var accId = $this.attr("accId");
         editAccountId = accId;
 
-        // 加载密码列表
-        loadPassList(function () {
-            // 请求指定账号数据
-            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId + "&API=";
-            get(url,function (data) {
-                var accData = data.data;
-                selectedPlatId = accData["plat_id"];
-                addDesc = accData["acc_desc"];
-                addUserName = accData["user"];
-                addPassWd = accData["passwd"];
-                addLogo = accData["logo"];
-                // 解密
-                addPassWd = RSADecryptPass(addPassWd);
-                addAddress = accData["address"];
-                addRemark = accData["remark"];
+        // 请求指定账号数据
+        var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId + "&API=";
+        get(url,function (data) {
+            var accData = data.data;
+            selectedPlatId = accData["plat_id"];
+            addDesc = accData["web_desc"];
+            addUserName = accData["web_title"];
+            addLogo = accData["logo"];
+            addAddress = accData["address"];
 
-                // 加载平台列表
-                loadPlatList();
-            });
+            // 加载平台列表
+            loadPlatList();
         });
-    }
-
-    // 设置logo
-    function setLogo() {
-        $("#logo_img").attr("src",addLogo);
-        var $logoBtn = $("#logo_btn");
-        if (selectApi == 3){
-            $logoBtn.text("上传");
-        }else if (addLogo.length > 0){
-            $logoBtn.text("更新");
-        }else {
-            $logoBtn.text("获取");
-        }
-        setLogoBtn();
-    }
-
-    // 设置获取logo按钮状态
-    function setLogoBtn() {
-        var $logoBtn = $("#logo_btn");
-        if (addAddress.length > 0){
-            $logoBtn.removeClass("layui-btn-disabled");
-            $logoBtn.addClass("logo-btn");
-        }else {
-            $logoBtn.addClass("layui-btn-disabled");
-            $logoBtn.removeClass("logo-btn");
-        }
     }
 
     // 复制一个账号
@@ -713,25 +563,18 @@
         var accId = $this.attr("accId");
         editAccountId = accId;
 
-        // 加载密码列表
-        loadPassList(function () {
-            // 请求指定账号数据
-            var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId + "&API=";
-            get(url,function (data) {
-                var accData = data.data;
-                selectedPlatId = accData["plat_id"];
-                addDesc = accData["acc_desc"];
-                addUserName = accData["user"];
-                addPassWd = accData["passwd"];
-                addLogo = accData["logo"];
-                // 解密
-                addPassWd = RSADecryptPass(addPassWd);
-                addAddress = accData["address"];
-                addRemark = accData["remark"];
+        // 请求指定账号数据
+        var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId + "&API=";
+        get(url,function (data) {
+            var accData = data.data;
+            selectedPlatId = accData["plat_id"];
+            addDesc = accData["web_desc"];
+            addUserName = accData["web_title"];
+            addLogo = accData["logo"];
+            addAddress = accData["address"];
 
-                // 加载平台列表
-                loadPlatList();
-            });
+            // 加载平台列表
+            loadPlatList();
         });
     }
     
@@ -764,22 +607,6 @@
             },true,false,5000);
         }
     }
-
-    // 上传logo
-    function uploadLogoImage(base64ImgContent) {
-        var data = {
-            m : "admin",
-            c : "API_Account",
-            a : "uploadLogoImage",
-            accId  : editAccountId,
-            base64ImgContent : base64ImgContent,
-            API : ""
-        };
-        post(baseUrl,data,function () {
-            addLogo = base64ImgContent;
-            setLogo();
-        },true,true)
-    }
     
     // 查询附件 success：获取附件结果回调，bool参数表示是否有附件
     function loadAttachment(success) {
@@ -802,34 +629,19 @@
     // 显示添加/修改平台浮层
     function showEditCatCover() {
         if (isEdit){
-            $("#legend_title").text("修改账号");
+            $("#legend_title").text("修改网站");
         }else {
-            $("#legend_title").text("添加账号");
+            $("#legend_title").text("添加网站");
         }
         $(".add-category-box").css("display","block");
         // 描述
         $("#add_user_desc").val(addDesc);
         // 用户名
         $("#add_user_name").val(addUserName);
-        // 密码
-        $("#add_pass").val(addPassWd);
         // 登录地址
         $("#login_address").val(addAddress);
-        // 备注
-        $("#acc_remark").val(addRemark);
         // logo
-        setLogo();
-
-        // 请求附件数据
-        loadAttachment(function (hasAtt) {
-            if (hasAtt){
-                // 有附件
-                $("#attachment_btn").text("编辑附件");
-            }else {
-                // 没有附件
-                $("#attachment_btn").text("上传附件");
-            }
-        });
+        $("#logo_img").attr("src",addLogo);
     }
 
     // 隐藏添加/修改分类浮层
@@ -837,19 +649,14 @@
         $(".add-category-box").css("display","none");
     }
     
-    // 上传/编辑附件
+    // 上传logo 打开文件选择框
     function editAttachment() {
-        // 首先获取附件表对应的id
-        var getAttIdUrl = baseUrl + "?m=admin&c=API_Attachment&a=getAttachmentId&aid=" + editAccountId + "&tbName=acc_account";
-        console.log("获取附件id:" + getAttIdUrl);
-        get(getAttIdUrl,function (data) {
-            addAttachmentId = data.data;
+        // 清空input文件选择 防止选择同一个文件不触发input文件选择框的选择文件完成方法
+        var file = document.getElementById('file_select_input');
+        file.value = '';
 
-            // 跳转到附件管理页面
-            var url = baseUrl + "?m=admin&c=AttachmentManager&a=index&id=" + editAccountId + "&tbName=acc_account&accName=" + addDesc;
-            console.log("加载附件列表:" + url);
-            window.open(url,"blank");
-        });
+        // 自定义上传
+        $("#file_select_input").click();
     }
 
 </script>
@@ -880,17 +687,15 @@
                     <col width="150">
                     <col width="150">
                     <col width="150">
-                    <col >
                     <col width="150">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th>账户描述</th>
-                    <th>用户名</th>
-                    <th>密码</th>
-                    <th>登录地址</th>
+                    <th>logo</th>
+                    <th>标题</th>
+                    <th>描述</th>
+                    <th>地址</th>
                     <th>所属平台</th>
-                    <th>备注</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -905,9 +710,9 @@
 <div class="add-category-box">
     <div class="add-category-container">
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend id="legend_title">添加账号</legend>
+            <legend id="legend_title">添加网站</legend>
         </fieldset>
-        <form class="layui-form layui-form-pane" action="">
+        <form class="layui-form layui-form-pane cover-form" action="">
             <div class="layui-form-item">
                 <label class="layui-form-label">所属平台</label>
                 <div class="layui-input-inline">
@@ -915,55 +720,31 @@
                     </select>
                 </div>
             </div>
+
             <div class="layui-form-item">
-                <label class="layui-form-label">账户描述</label>
-                <div class="layui-input-inline user-name">
-                    <input id="add_user_desc" type="text" lay-verify="required" placeholder="请输入账户描述信息" autocomplete="off" class="layui-input">
+                <label class="layui-form-label">Logo</label>
+                <div class="layui-input-inline attachment-box">
+                    <input readonly="readonly" type="text" lay-verify="required" autocomplete="off" class="layui-input logo-input">
+                    <img src="" id="logo_img" class="logo-img">
+                    <button  onclick="editAttachment()" type="button" id="attachment_btn" class="layui-btn logo-btn">上传</button>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">用户名</label>
+                <label class="layui-form-label">标题</label>
                 <div class="layui-input-inline user-name">
                     <input id="add_user_name" type="text" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-inline pass-word">
-                    <input id="add_pass" type="text" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                </div>
-                <label class="layui-form-label">快速选择</label>
-                <div id="pass_select_box" class="layui-input-inline">
-                    <select id="pass_select" lay-filter="pass-list" >
-                    </select>
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-inline user-name">
+                    <input id="add_user_desc" type="text" lay-verify="required" placeholder="请输入账户描述信息" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">登录地址</label>
+                <label class="layui-form-label">地址</label>
                 <div class="layui-input-inline login-address">
                     <input id="login_address" type="text" lay-verify="required" placeholder="请输入登录地址" autocomplete="off" class="layui-input">
-                </div>
-                <label class="layui-form-label">logo</label>
-                <div class="layui-input-inline attachment-box">
-                    <input readonly="readonly" type="text" lay-verify="required" autocomplete="off" class="layui-input logo-input">
-                    <img src="" id="logo_img" class="logo-img">
-                    <select id="api_select" lay-filter="api-select">
-                        <option value="">请选择接口</option>
-                        <option value="1">接口一</option>
-                        <option value="2">接口二</option>
-                        <option value="3">自定义</option>
-                    </select>
-
-                    <button  onclick="loadLogo()" type="button" id="logo_btn" class="layui-btn logo-btn">获取</button>
-                    <button  onclick="editAttachment()" type="button" id="attachment_btn" class="layui-btn logo-btn">上传附件</button>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">备注</label>
-                    <div class="layui-input-block">
-                        <textarea style="resize: none;height: 150px" id="acc_remark" placeholder="请输入备注信息" class="layui-textarea"></textarea>
-                    </div>
                 </div>
             </div>
         </form>
