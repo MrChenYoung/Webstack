@@ -12,18 +12,6 @@ var privateKey = "rsaPrivateKey";
 var rsaPublicContent;
 // rsa私钥内容
 var rsaPrivateContent;
-$(document).ready(function () {
-    // 获取公钥和私钥
-    rsaPublicContent = getCookie(publickKey);
-    rsaPrivateContent = getCookie(privateKey);
-
-    // 如果公钥或私钥为空 提示去添加
-    if (rsaPrivateContent == null || rsaPublicContent == null || rsaPublicContent.length == 0 || rsaPrivateContent.length == 0){
-        // rsa密钥为空 跳转到添加页面
-        var url = baseUrl+"/addRsaKey.php&m=admin";
-        window.location = url;
-    }
-});
 
 // 显示hud
 function showHud() {

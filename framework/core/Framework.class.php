@@ -105,8 +105,10 @@ class Framework
 
         $controller = new $controllerName;
 
+
         //调用控制器的方法
         $a = ACTION;
+
         $controller -> $a();
     }
 

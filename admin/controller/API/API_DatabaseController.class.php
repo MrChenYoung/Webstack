@@ -7,14 +7,19 @@ namespace admin\controller\API;
 use framework\tools\DatabaseBackupManager;
 use framework\tools\DatabaseManager;
 use framework\tools\FileManager;
+use framework\tools\ShellManager;
 
 class API_DatabaseController extends API_BaseController
 {
+    // 本地数据库备份目录
     private $backupPath;
+    // 谷歌云上数据库备份目录
+    private $driveDbPath;
     public function __construct()
     {
         parent::__construct();
         $this->backupPath = ADMIN."resource/dbBackup/";
+        $this->driveDbPath = "/www/wwwroot/cloud.yycode.ml/cloudmount/GDSuite/我的数据/备份数据/db/";
     }
 
     // 获取所有表名称和备注
@@ -68,9 +73,52 @@ class API_DatabaseController extends API_BaseController
         $tbName = $_GET["tbName"];
         $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
 
+        // 备份数据库到本地
         $path =$this->backupPath.$tbDirName. "/";
+        if(!file_exists($path)){
+            mkdir($path);
+            chmod($path,0700);
+        }
         (new DatabaseBackupManager())->backup($tbName,$path);
-        echo $this->success("备份完成");
+
+        // 移动本地备份文件到谷歌云盘
+        $dbName = $GLOBALS["db_info"]["dbname"];
+        $cmd = "rclone lsjson GDSuite:我的数据/备份数据/db/";
+        $checkDbDirRes = ShellManager::exec($cmd);
+        if ($checkDbDirRes["success"]){
+            $fileList = $checkDbDirRes["result"];
+            $fileList = implode("",$fileList);
+            $fileList = json_decode($fileList,true);
+            $exist = false;
+            foreach ($fileList as $item) {
+                if ($item["name"] == $dbName){
+                    $exist = true;
+                    break;
+                }
+            }
+            if (!$exist){
+                $cmd = "rclone mkdir GDSuite:我的数据/备份数据/db/".$dbName;
+                $execRes = ShellManager::exec($cmd);
+                if (!$execRes["success"]){
+                    $cmd = "rm -f ".$path."*";
+                    ShellManager::exec($cmd);
+
+                    echo $this->failed("备份失败");
+                    die;
+                }
+            }
+        }
+        // 先清空目录内的历史数据
+//        $cmd = "rclone delete GDSuite:我的数据/备份数据/db/".$dbName."/".$tbDirName;
+//        ShellManager::exec($cmd);
+        // 移动备份文件
+        $cmd = "rclone moveto ".$path." GDSuite:我的数据/备份数据/db/".$dbName."/".$tbDirName;
+        $moveRes = ShellManager::exec($cmd);
+        if (!$moveRes["success"]){
+            echo $this->failed("备份失败");
+            die;
+        }
+        echo $this->success("备份成功");
     }
 
     // 获取数据库备份历史

@@ -87,7 +87,7 @@ class DatabaseBackupManager
 
     /**
      * 数据库备份
-     * 参数：备份哪个表(可选),备份目录(可选，默认为backup),分卷大小(可选,默认2000，即2M)
+     * 参数：备份哪个表(可选),备份目录(可选，默认为backup),分卷大小(可选,默认512000，即500M)
      *
      * @param $string $dir
      * @param int $size
@@ -99,7 +99,7 @@ class DatabaseBackupManager
         if (! is_dir ( $dir )) {
             mkdir ( $dir, 0777, true ) or die ( '创建文件夹失败' );
         }
-        $size = $size ? $size : 2048;
+        $size = $size ? $size : 512000;
         $sql = '';
         // 只备份某个表
         if (! empty ( $tablename )) {

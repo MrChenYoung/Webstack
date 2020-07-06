@@ -16,15 +16,16 @@ if (isset($_REQUEST["API"])){
     return;
 }
 
-// 点击后台的注销按钮
-if (isset($_REQUEST["logout"])){
-    toLogin(false,"","admin");
-    return;
+// 点击后台的注销按钮或者前台的回到后台按钮
+if (isset($_REQUEST["logout"]) || (isset($_REQUEST["m"]) && $_REQUEST["m"] == "admin")){
+    // 检测是否已经添加rsa key
+    require_once "./framework/tools/CookieManager.class.php";
+    checkRsaKey();
+}else {
+    // 默认进入前台首页
+    toHome();
 }
 
-// 检测是否已经添加rsa key
-require_once "./framework/tools/CookieManager.class.php";
-checkRsaKey();
 function checkRsaKey(){
     // 保存到cookie的公钥键
     $publickKey = "rsaPublicKey";
@@ -34,24 +35,20 @@ function checkRsaKey(){
     $privateKeyContent = CookieManager::getCookie($privateKey);
     $publickKeyContent = CookieManager::getCookie($publickKey);
 
-    // 模块
-    $modoule = isset($_REQUEST["m"]) ? $_REQUEST["m"] : "home";
-
     // 没有添加 跳转到添加页面
     if (strlen($privateKeyContent) == 0 || strlen($publickKeyContent) == 0){
         // 没有添加 跳转到添加页面
-        $url = "http://".$_SERVER['HTTP_HOST']."/addRsaKey.php?m=".$modoule;
+        $url = "http://".$_SERVER['HTTP_HOST']."/addRsaKey.php?m=admin";
         header("Refresh:0;url=".$url);
     }else {
         // 已经添加
-
         // 检测登录状态
-        checkLoginStatus($modoule);
+        checkLoginStatus();
     }
 }
 
 // 检测登录状态
-function checkLoginStatus($m){
+function checkLoginStatus(){
     require_once './framework/tools/SessionManager.class.php';
     $session = \framework\tools\SessionManager::getSingleTon();
 
@@ -61,19 +58,14 @@ function checkLoginStatus($m){
     if ($session -> issetSession("isLogin")){
         // session已经记录登录状态
         if ($isLogin){
-            if ($m == "admin"){
-                // 进入后台页面
-                $modoule = isset($_GET["m"]) ? $_GET["m"] : "admin";
-                $controller = isset($_GET["c"]) ? $_GET["c"] : "GeneralInfo";
-                $action = isset($_GET["a"]) ? $_GET["a"] : "index";
-                toHome($modoule,$controller,$action);
-            }else {
-                // 进入前台首页
-                toHome();
-            }
+            // 进入后台页面
+            $modoule = isset($_GET["m"]) ? $_GET["m"] : "admin";
+            $controller = isset($_GET["c"]) ? $_GET["c"] : "CategoryManager";
+            $action = isset($_GET["a"]) ? $_GET["a"] : "index";
+            toHome($modoule,$controller,$action);
         }else {
             // 点击首页退出登录页面进来的
-            toLogin(false,"",$m);
+            toLogin(false,"","admin");
         }
     }else if(isset($_POST["login"])){
         // 点击登录页面登录按钮进来的
@@ -84,21 +76,15 @@ function checkLoginStatus($m){
             // 账号密码正确 保存登录状态数据到session
             $session -> setSession("isLogin",true);
 
-            // 进入主页
-            if ($m == "admin"){
-                // 进入后台首页
-                toHome("admin","GeneralInfo","index");
-            }else {
-                // j进入前台首页
-                toHome();
-            }
+            // 进入后台首页
+            toHome("admin","CategoryManager","index");
         }else {
             // 账号密码不正确 重新进入登录页
             toLogin(true,"账号或密码错误",$m);
         }
     } else {
         // session已经记录登录状态
-        toLogin($m);
+        toLogin("admin");
     }
 }
 
@@ -110,7 +96,7 @@ function toHome($m='',$c='',$a=''){
 }
 
 // 进入登录页
-function toLogin($loginerr=false,$errMsg="",$m="home"){
+function toLogin($loginerr=false,$errMsg="",$m="admin"){
     $pass = "";
     // 查询登录密码
     $option = $GLOBALS["db_info"];

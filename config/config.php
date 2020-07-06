@@ -13,7 +13,7 @@ return [
     'charset'           =>      'utf8',
 
     //默认的模块
-    'default_module'     =>      'admin',
-    'default_controller'=>      'CategoryManager',
+    'default_module'     =>      'home',
+    'default_controller'=>      'Account',
     'default_action'    =>      'index',
 ];
