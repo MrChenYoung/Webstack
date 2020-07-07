@@ -30,8 +30,6 @@ if ($backupAll == "1"){
     }
 }else {
     // 备份当前数据库
-    addLog($logPath,"备份数据库:".$dbName." tbname:".$tbName." path:".$path." tbDir:".$tbDirName);
-
     backupDb($dbName,$tbName,$path,$logPath,$tbDirName);
 }
 
@@ -39,6 +37,8 @@ addLog($logPath,"数据库备份完成");
 
 // 备份指定数据库指定表
 function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName){
+    addLog($logP,"备份数据库:".$dataBase." tbname:".$table." path:".$localTbPath." tbDir:".$tableDirName);
+
     addLog($logP,"正在备份数据库:".$dataBase." 表:".$tableDirName);
     // 备份数据库到本地
     if(!file_exists($localTbPath)){
