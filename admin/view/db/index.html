@@ -63,6 +63,10 @@
         width: 140px;
     }
 
+    .layui-form-item .layui-input-inline{
+        width: 140px;
+    }
+
     /*右下角查看日志按钮*/
     .open-log-btn {
         position: fixed;
@@ -128,12 +132,37 @@
             });
         });
 
+        // 请求数据库列表
+        loadDbList();
         // 请求数据表
         loadTableList();
-
         // 获取备份历史文件
         loadDbBackupLists();
     });
+
+    // 请求数据库列表
+    function loadDbList() {
+        var url = baseUrl + "?m=admin&c=API_Database&a=loadAllDatabase&API=";
+        console.log("获取数据库列表:" + url);
+        get(url,function (data) {
+            var listDb = data.data.list;
+            var currentDb = data.data.currentDb;
+            layui.use('form',function () {
+                var form = layui.form;
+                var dom = '';
+                for (var i = 0; i < listDb.length; i++){
+                    var dbName = listDb[i];
+                    if (dbName == currentDb){
+                        dom += '<option selected="selected" value="'+ dbName +'">'+ dbName +'</option>';
+                    }else{
+                        dom += '<option disabled="" value="'+ dbName +'">'+ dbName +'</option>';
+                    }
+                }
+                $("#db_select").html(dom);
+                form.render();
+            });
+        },false);
+    }
 
     // 请求数据表
     function loadTableList() {
@@ -213,9 +242,19 @@
         },"确认导入吗？这将覆盖原有数据库数据");
     }
 
+    // 备份当前数据库
+    function backupCurrentDB() {
+        backupDb("0");
+    }
+    
+    // 备份所有数据库
+    function backupAllDB() {
+        backupDb("1");
+    }
+
     // 备份数据库
-    function backupDB() {
-        var url = baseUrl + "?m=admin&c=API_Database&a=backupDB&API=&tbName=" + selectedTableName;
+    function backupDb(all) {
+        var url = baseUrl + "?m=admin&c=API_Database&a=backupDB&API=&tbName=" + selectedTableName + "&backupAll=" + all;
         console.log("备份数据库:" + url);
         get(url,function () {
             // 备份完成 刷新备份历史列表
@@ -248,12 +287,19 @@
     <input id="msg_input" type="hidden" value="<{$data.msg}>">
     <input id="select_tb_name" type="hidden" value="<{$data.tbName}>">
     <button onclick="backupDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">新增备份</button>
-    <button onclick="uploadBackupDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">上传文件</button>
+    <button onclick="backupAllDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">备份所有数据库</button>
+    <button onclick="uploadBackupDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">上传备份</button>
     <div class="notice-box">
         <span id="notice_area" class="notice-area">警告:导入数据库会覆盖原有数据库数据，请谨慎操作</span>
     </div>
     <form class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
+            <label class="layui-form-label">当前数据库</label>
+            <div class="layui-input-inline">
+                <select id="db_select" lay-filter="db-data-filter">
+                    <option value="">请选择</option>
+                </select>
+            </div>
             <label class="layui-form-label">当前数据表</label>
             <div class="layui-input-inline">
                 <select id="table_select" lay-filter="table-data-filter">

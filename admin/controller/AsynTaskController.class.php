@@ -37,6 +37,12 @@ class AsynTaskController extends Controller
         if (!isset($_REQUEST["tbName"])) die;
         $tbName = $_REQUEST["tbName"];
         $tbName = strlen($tbName) == 0 ? "-1" : $tbName;
+        // 是否是备份所有数据库
+        if (!isset($_REQUEST["backupAll"])) die;
+        $backupAll = $_REQUEST["backupAll"];
+        // 数据库列表
+        if (!isset($_REQUEST["dbList"])) die;
+        $dbList = $_REQUEST["dbList"];
         // 数据库
         $dbName = $GLOBALS["db_info"]["dbname"];
         $tName = $tbName === "-1" ? "全部" : $tbName;
@@ -47,7 +53,7 @@ class AsynTaskController extends Controller
 
         // 执行转存文件php脚本
         $cmd = "php ".ADMIN."controller/DbBackup.php ".LogManager::getSingleton()->logFilePath." ".$dbName;
-        $cmd = $cmd." ".$localBackupPath." ".$tbName." ".$backupManagerFilePath;
+        $cmd = $cmd." ".$localBackupPath." ".$tbName." ".$backupManagerFilePath." ".$backupAll." '".$dbList."'";
         $res = ShellManager::exec($cmd);
         if (!$res["success"]){
             LogManager::getSingleton()->addLog("执行测试php脚本失败:".json_encode($res));

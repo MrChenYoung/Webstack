@@ -19,12 +19,21 @@ class API_DatabaseController extends API_BaseController
     private $driveDbPath;
     // 数据库
     private $dbName;
+    // 数据库列表
+    private $dbList;
     public function __construct()
     {
         parent::__construct();
         $this->backupPath = ADMIN."resource/dbBackup/";
         $this->driveDbPath = "/www/wwwroot/cloud.yycode.ml/cloudmount/GDSuite/我的数据/备份数据/db/";
         $this->dbName = $GLOBALS["db_info"]["dbname"];
+        $this->dbList = ["movie","account_db","cloud_manager_db","web_stack_db"];
+    }
+
+    // 获取所有数据库名
+    public function loadAllDatabase(){
+        $currentDb = $this->dbName;
+        echo $this->success(["list"=>$this->dbList,"currentDb"=>$currentDb]);
     }
 
     // 获取所有表名称和备注
@@ -77,6 +86,14 @@ class API_DatabaseController extends API_BaseController
             die;
         }
         $tbName = $_GET["tbName"];
+
+        // 是否是备份所有数据库
+        if (!isset($_GET["backupAll"])){
+            echo $this->failed("需要backupAll参数");
+            die;
+        }
+        $backupAll = $_GET["backupAll"];
+
         // 备份类文件位置
         $backupManagerFilePath = ROOT."framework/tools/DatabaseBackupManager.class.php";
 
@@ -87,7 +104,9 @@ class API_DatabaseController extends API_BaseController
             "a"=>"index",
             "localBackupPath" => $this->backupPath,
             "backupManagerFilePath" => $backupManagerFilePath,
-            "tbName" => $tbName
+            "tbName" => $tbName,
+            "backupAll" => $backupAll,
+            "dbList"    =>  json_encode($this->dbList)
         ];
 
         MultiThreadTool::addTask($this->website."/index.php","backupDb",$params);

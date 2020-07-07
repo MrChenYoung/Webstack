@@ -13,12 +13,26 @@ $tbName = $argv[4];
 $tbName = $tbName === "-1" ? "" : $tbName;
 // 数据表备份文件夹
 $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
-$path = $localBackupPath.$tbDirName. "/";
+$path = $localBackupPath.$dbName."/".$tbDirName. "/";
 // 备份类文件位置
 $backupManagerFilePath = $argv[5];
 require_once $backupManagerFilePath;
+// 是否是备份所有数据库
+$backupAll = $argv[6];
+// 数据库列表
+$dbList = json_decode($argv[7],true);
 
-backupDb($dbName,$tbName,$path,$logPath,$tbDirName);
+if ($backupAll == "1"){
+    // 备份所有数据库
+    foreach ($dbList as $item) {
+        $path = $localBackupPath.$item."/all/";
+        backupDb($item,"",$path,$logPath,"all");
+    }
+}else {
+    // 备份当前数据库
+    backupDb($dbName,$tbName,$path,$logPath,$tbDirName);
+}
+
 addLog($logPath,"数据库备份完成");
 
 // 备份指定数据库指定表
