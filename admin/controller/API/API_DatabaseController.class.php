@@ -254,6 +254,8 @@ class API_DatabaseController extends API_BaseController
             $tbName = $fileInfo["tbName"];
             $tbDirName = strlen($tbName) == 0 ? "all" : $tbName;
 
+            LogManager::getSingleton()->addLog("测试上传");
+
             // 限制文件必须是sql
             if ($type != "application/x-sql"){
                 echo $this->failed("只能上传sql文件");
