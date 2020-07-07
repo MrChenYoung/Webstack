@@ -13,8 +13,6 @@ class API_IconManagerController extends API_BaseController
     public function getAliIconfonts(){
         $icons = [
             "gugegoogle114",
-            "Xtubiao-guanbichakan",
-            "Xtubiao-chakan",
             "apple",
             "xt_weiruan",
             "code-box-fill",
@@ -25,7 +23,8 @@ class API_IconManagerController extends API_BaseController
             "qunfengshiyongchongzhiqiashangwang",
             "qita",
             "yuncunchu",
-            "wode"
+            "wode",
+            "icon-sousuo"
         ];
         echo $this->success($icons);
     }
