@@ -26,6 +26,7 @@ class API_CommonController extends API_BaseController
             if (strlen($platIdLists) > 0){
                 $platIdLists = explode(",",$platIdLists);
                 $platLists = [];
+                $platSortList = [];
                 foreach ($platIdLists as $platId) {
                     $platData = $this->loadPlatform($platId);
                     // 获取账号列表
@@ -34,16 +35,23 @@ class API_CommonController extends API_BaseController
                         $accLists = [];
                         if (strlen($accIdLists) > 0){
                             $accIdLists = explode(",",$accIdLists);
+                            $accSortList = [];
                             foreach ($accIdLists as $accId) {
                                 $accData = $this->loadAccount($accId);
                                 $accData["plat_name"] = $platData["plat_name"];
                                 $accLists[] = $accData;
+                                $accSortList[] = $accData["sort"];
                             }
+
+                            array_multisort($accSortList, SORT_ASC, $accLists);
                         }
                         $platData["web_list"] = $accLists;
                     }
                     $platLists[] = $platData;
+                    $platSortList[] = $platData["sort"];
                 }
+
+                array_multisort($platSortList, SORT_ASC, $platLists);
                 $catData["platform_list"] = $platLists;
             }
         }
