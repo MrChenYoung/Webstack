@@ -3,20 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/UploadDBBack.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1592469768.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1592469778.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1592817350.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1593464344.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1593464354.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1593467984.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1593467990.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1593470395.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1593470403.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1593470519.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/resource/attachmentImages/1593470525.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/view/account/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/account/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/common/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/common/js/common.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +92,7 @@
       <workItem from="1593500600979" duration="17000" />
       <workItem from="1593533959108" duration="1088000" />
       <workItem from="1593697776336" duration="403000" />
-      <workItem from="1593933224484" duration="55461000" />
+      <workItem from="1593933224484" duration="55796000" />
     </task>
     <servers />
   </component>

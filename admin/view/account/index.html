@@ -191,6 +191,11 @@
         margin-left: 35px;
     }
 
+    .logo-img {
+        width: 30px;
+        height: 30px;
+    }
+
 </style>
 <{/block}>
 <{block name="scriptCode"}>
@@ -435,7 +440,7 @@
         var dom = "";
         for(var i = 0; i < data.length; i++){
             var account = data[i];
-            dom += '<tr><td><img src="'+ account["logo"] +'"></td>';
+            dom += '<tr><td><img class="logo-img" src="'+ account["logo"] +'"></td>';
             dom += '<td>'+ account["web_title"] +'</td>';
             dom += '<td>'+ account["web_desc"] +'</td>';
             dom += '<td><div class="login-address-box">'+ account["address"] +'</div></td>';
