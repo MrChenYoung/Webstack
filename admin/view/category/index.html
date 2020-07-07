@@ -179,6 +179,7 @@
         isEdit = false;
         selectedIcon = "";
         addCatName = "";
+        sort = 0;
         showEditCatCover();
     }
 
@@ -241,10 +242,19 @@
         var url = "";
         if (isEdit){
             // 修改
-            url = baseUrl + "?m=admin&c=API_Category&a=editCategory&icon=" + selectedIcon + "&catName=" + addCatName + "&id=" + editCatId + "&API=";
+            url = baseUrl + "?m=admin&c=API_Category&a=editCategory"
+                + "&icon=" + selectedIcon
+                + "&catName=" + addCatName
+                + "&id=" + editCatId
+                + "&API="
+                + "&sort=" + sort;
         }else {
             // 添加
-            url = baseUrl + "?m=admin&c=API_Category&a=addCategory&icon=" + selectedIcon + "&catName=" + addCatName + "&API=";
+            url = baseUrl + "?m=admin&c=API_Category&a=addCategory"
+                + "&icon=" + selectedIcon
+                + "&catName=" + addCatName
+                + "&API="
+                + "&sort=" + sort;
         }
 
         get(url,function () {
