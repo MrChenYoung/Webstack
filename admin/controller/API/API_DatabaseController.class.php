@@ -242,9 +242,6 @@ class API_DatabaseController extends API_BaseController
 
     // 上传备份文件
     public function uploadBackup(){
-        LogManager::getSingleton()->addLog("测试上传");
-        die;
-
         //判断是否有文件上传
         if (isset($_FILES['file'])) {
             // 文件信息
@@ -254,7 +251,7 @@ class API_DatabaseController extends API_BaseController
             // 类型
             $type = $fileInfo["type"];
             // 表名
-            $tbName = $fileInfo["tbName"];
+            $tbName = $_POST["tbName"];
             $tbDirName = strlen($tbName) == 0 ? "all" : $tbName;
 
             // 限制文件必须是sql
