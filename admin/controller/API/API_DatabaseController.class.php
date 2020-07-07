@@ -69,6 +69,7 @@ class API_DatabaseController extends API_BaseController
             }
         }
 
+        
         // 创建盛放整个数据库(所有表)备份数据的文件夹
         $allBackDirPath = ROOT."admin/resource/dbBackup/".$this->dbName."/all";
         if (!file_exists($allBackDirPath)){
