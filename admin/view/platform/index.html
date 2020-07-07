@@ -90,6 +90,10 @@
         background-color: #e6e6e6;
     }
 
+    .layui-form-item .cat-sort {
+        width: 100px;
+    }
+
 </style>
 <{/block}>
 <{block name="scriptCode"}>
@@ -113,6 +117,12 @@
         var addPlatInput = $("#add_plat_name");
         addPlatInput.bind("input propertychange", function (event) {
             addPlatformName = addPlatInput.val();
+        });
+
+        // 监听输入排序
+        var catSortInput = $("#cat_sort");
+        catSortInput.bind("input propertychange", function (event) {
+            sort = catSortInput.val();
         });
 
         // 监听分类选择
@@ -166,6 +176,7 @@
         isEdit = false;
         selectedCatId = "";
         addPlatformName = "";
+        sort = 0;
         loadCatList();
     }
 
@@ -208,10 +219,19 @@
         var url = "";
         if (isEdit){
             // 修改
-            url = baseUrl + "?m=admin&c=API_Platform&a=editPlatform&id=" + editPlatId + "&catId=" + selectedCatId + "&platName=" + addPlatformName + "&API=";
+            url = baseUrl + "?m=admin&c=API_Platform&a=editPlatform"
+                + "&id=" + editPlatId
+                + "&catId=" + selectedCatId
+                + "&platName=" + addPlatformName
+                + "&API="
+                + "&sort=" + sort;
         }else {
             // 添加
-            url = baseUrl + "?m=admin&c=API_Platform&a=addPlatform&catId=" + selectedCatId + "&platName=" + addPlatformName + "&API=";
+            url = baseUrl + "?m=admin&c=API_Platform&a=addPlatform"
+                + "&catId=" + selectedCatId
+                + "&platName=" + addPlatformName
+                + "&API="
+                + "&sort=" + sort;
         }
 
         get(url,function () {
@@ -315,6 +335,12 @@
             <legend id="legend_title">添加平台</legend>
         </fieldset>
         <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline cat-sort">
+                    <input style="text-align: center" id="cat_sort" type="text" lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
+                </div>
+            </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">所属分类</label>
                 <div class="layui-input-inline">

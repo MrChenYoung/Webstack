@@ -79,9 +79,20 @@ class API_PlatformController extends API_BaseController
         }
         $platName = $_GET["platName"];
 
+        // 排序
+        if (!isset($_GET["sort"])){
+            echo $this->failed("需要sort参数");
+            die;
+        }
+        $sort = $_GET["sort"];
+
         // 插入数据库
-        $res = DatabaseDataManager::getSingleton()->insert($this->tableName,["plat_name"=>$platName,"cat_id"=>$catId]);
+        $res = DatabaseDataManager::getSingleton()->insert($this->tableName,["plat_name"=>$platName,"cat_id"=>$catId,"sort"=>$sort]);
         if ($res){
+            if ($sort == "0"){
+                DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$res],["id"=>$res]);
+            }
+
             // 添加id到分类表
             $resId = $this->addPlatformToCat($catId,$res);
             if ($resId){
@@ -116,6 +127,24 @@ class API_PlatformController extends API_BaseController
         }
         $platName = $_GET["platName"];
 
+        // 排序
+        if (!isset($_GET["sort"])){
+            echo $this->failed("需要sort参数");
+            die;
+        }
+        $sort = $_GET["sort"];
+        $sortInt = (int)$sort;
+
+        if ($sortInt > 0){
+            $oldsort = DatabaseDataManager::getSingleton()->find($this->tableName,["id"=>$platId]);
+            $existSort = DatabaseDataManager::getSingleton()->find($this->tableName,["sort"=>$sort]);
+            if ($existSort){
+                $existSort = $existSort[0];
+                $oldsort = $oldsort[0];
+                DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$oldsort["sort"]],["id"=>$existSort["id"]]);
+            }
+        }
+
         // 查询原来所属的分类并移除
         $oldCatData = DatabaseDataManager::getSingleton()->find($this->tableName,["id"=>$platId],["cat_id"]);
         if ($oldCatData){
@@ -125,7 +154,7 @@ class API_PlatformController extends API_BaseController
         // 添加平台id记录到新的分类中
         $resId = $this->addPlatformToCat($catId,$platId);
         if ($resId){
-            $res = DatabaseDataManager::getSingleton()->update($this->tableName,["plat_name"=>$platName,"cat_id"=>$catId],["id"=>$platId]);
+            $res = DatabaseDataManager::getSingleton()->update($this->tableName,["plat_name"=>$platName,"cat_id"=>$catId,"sort"=>$sort],["id"=>$platId]);
             if ($res){
                 echo $this->success("修改成功");
                 die;
