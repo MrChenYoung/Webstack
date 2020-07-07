@@ -57,17 +57,17 @@ function toast(message,success=true) {
 }
 
 // 发送GET网络请求
-function get(url, complete=null,withHud=true,showToast=false,timeOut=10000,failFunc=null) {
-    request(url,null,complete,withHud,showToast,timeOut,failFunc);
+function get(url, complete=null,withHud=true,showToast=false,timeOut=10000,failFunc=null,type='json') {
+    request(url,null,complete,withHud,showToast,timeOut,failFunc,type);
 }
 
 // 发送post网络请求
-function post(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000) {
-    request(url,data,complete,withHud,showToast,timeOut);
+function post(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000,ailFunc=null,type='json') {
+    request(url,data,complete,withHud,showToast,timeOut,failFunc,type);
 }
 
 // 发送请求
-function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000,failFunc=null) {
+function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000,failFunc=null,type='json') {
     if (withHud){
         showHud();
     }
@@ -83,7 +83,7 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
         cache : false,
         async : true,
         timeout: timeOut,
-        dataType : "json",
+        dataType : type,
         beforeSend:function (jqxhr,settings) {
             jqxhr.requestURL = url;
         }
@@ -95,23 +95,26 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
         }
         ,success: function (data,state,xhr) {
             console.log("成功:" + xhr.requestURL);
-            var message = typeof(data.data) == 'string' ? data.data : data.message;
-            if (data.code == 200){
-                showToast ? toast(message) : "";
-                complete ? complete(data) : "";
+            if (type == 'json'){
+                var message = typeof(data.data) == 'string' ? data.data : data.message;
+                if (data.code == 200){
+                    showToast ? toast(message) : "";
+                    complete ? complete(data) : "";
 
-            }else if(data.code != 200){
-                // 提示失败信息
-                toast(message,false);
+                }else if(data.code != 200){
+                    // 提示失败信息
+                    toast(message,false);
+                }
+            }else {
+                complete ? complete(data) : "";
             }
         },
         error: function (xhr,textStatus,errorMessage) {
             if (withHud) {
                 hideHud();
             }
-            if (showToast){
-                toast("请求服务器失败");
-            }
+            toast("请求失败:" + errorMessage);
+
             console.log("请求失败了偶尔Lee:" + errorMessage);
             if (failFunc){
                 failFunc();
