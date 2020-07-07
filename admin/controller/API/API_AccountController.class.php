@@ -26,7 +26,7 @@ class API_AccountController extends API_BaseController
         }
 
         // 查询网站列表
-        $accData = DatabaseDataManager::getSingleton()->find($this->tableName);
+        $accData = DatabaseDataManager::getSingleton()->find($this->tableName,[],[],"ORDER BY sort");
         if ($accData !== false){
             // 获取每个账号所属的平台
             foreach ($accData as $key=>$accDatum) {
@@ -117,16 +117,28 @@ EEE;
         // 解码js进行的uri编码，为了处理中文
         $logo = urldecode($logo);
 
+        // 排序
+        if (!isset($_REQUEST["sort"])){
+            echo $this->failed("需要sort参数");
+            die;
+        }
+        $sort = $_REQUEST["sort"];
+
         // 插入数据库
         $insertData = [
             "web_desc"      =>  $desc,
             "web_title"     =>  $user,
             "address"       =>  $address,
             "plat_id"       =>  $platId,
-            "logo"          =>  $logo
+            "logo"          =>  $logo,
+            "sort"          =>  $sort
         ];
         $res = DatabaseDataManager::getSingleton()->insert($this->tableName,$insertData);
         if ($res){
+            if ($sort == "0"){
+                DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$res],["id"=>$res]);
+            }
+
             // 添加id到平台表
             $resId = $this->addAccountToPlat($platId,$res);
             if ($resId){
@@ -192,6 +204,24 @@ EEE;
         // 解码js进行的uri编码，为了处理中文
         $logo = urldecode($logo);
 
+        // 排序
+        if (!isset($_REQUEST["sort"])){
+            echo $this->failed("需要sort参数");
+            die;
+        }
+        $sort = $_REQUEST["sort"];
+        $sortInt = (int)$sort;
+
+        if ($sortInt > 0){
+            $oldsort = DatabaseDataManager::getSingleton()->find($this->tableName,["id"=>$accId]);
+            $existSort = DatabaseDataManager::getSingleton()->find($this->tableName,["sort"=>$sort]);
+            if ($existSort){
+                $existSort = $existSort[0];
+                $oldsort = $oldsort[0];
+                DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$oldsort["sort"]],["id"=>$existSort["id"]]);
+            }
+        }
+
         // 查询原来所属的平台并移除
         $oldPlatData = DatabaseDataManager::getSingleton()->find($this->tableName,["id"=>$accId],["plat_id"]);
         if ($oldPlatData){
@@ -208,7 +238,8 @@ EEE;
                 "web_desc"      =>  $accDesc,
                 "web_title"     =>  $user,
                 "address"       =>  $address,
-                "logo"          =>  $logo
+                "logo"          =>  $logo,
+                "sort"          =>  $sort
             ];
             $res = DatabaseDataManager::getSingleton()->update($this->tableName,$editData,["id"=>$accId]);
             if ($res){

@@ -249,6 +249,12 @@
             addAddress = loginAddressInput.val();
         });
 
+        // 监听输入排序
+        var catSortInput = $("#cat_sort");
+        catSortInput.bind("input propertychange", function (event) {
+            sort = catSortInput.val();
+        });
+
         // 监听select选择变化
         layui.use('form',function () {
             var form = layui.form;
@@ -440,6 +446,7 @@
         addUserName = "";
         addAddress = "";
         addLogo = defaultLogo;
+        sort = 0;
         // 请求平台列表
         loadPlatList();
     }
@@ -505,7 +512,8 @@
                 desc : addDesc,
                 user : addUserName,
                 address : addAddress,
-                logo : addLogo
+                logo : addLogo,
+                sort : sort
             };
             url = baseUrl + "?m=admin&c=API_Account&a=editAccount&API=";
         }else {
@@ -515,7 +523,8 @@
                 desc : addDesc,
                 user : addUserName,
                 address : addAddress,
-                logo : addLogo
+                logo : addLogo,
+                sort : sort
             };
             url = baseUrl + "?m=admin&c=API_Account&a=addAccount&API=";
         }
