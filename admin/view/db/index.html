@@ -272,8 +272,8 @@
         var $this = $(obj);
         var backName = $this.attr("backName");
         var dirName = selectedTableName.length > 0 ? selectedTableName : "all";
-        var url = baseUrl + "/admin/resource/dbBackup/" + dirName + "/" + backName;
-
+        // var url = baseUrl + "/admin/resource/dbBackup/" + dirName + "/" + backName;
+        var url = "http://cloudmount.yycode.ml/GDSuite/我的数据/备份数据/db/" + $("#db_name").val() + "/" + dirName + "/" + backName;
         var $eleForm = $("<form method='get'></form>");
         $eleForm.attr("action",url);
         $(document.body).append($eleForm);
