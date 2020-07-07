@@ -262,7 +262,7 @@ class API_DatabaseController extends API_BaseController
 
             // 目标文件目录
             $target_path = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/".$name;
-            LogManager::getSingleton()->addLog("path:".$target_path);
+            LogManager::getSingleton()->addLog("path路径:".$target_path);
             die;
 
             //将文件从临时目录拷贝到指定目录
