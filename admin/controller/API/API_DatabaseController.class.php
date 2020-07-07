@@ -62,7 +62,7 @@ class API_DatabaseController extends API_BaseController
                 $tables[] = $tbInfo;
 
                 // 创建盛放单个表备份数据的文件夹
-                $saveDirPath = ROOT."admin/resource/dbBackup/".$tableName;
+                $saveDirPath = ROOT."admin/resource/dbBackup/".$this->dbName."/".$tableName;
                 if (!file_exists($saveDirPath)){
                     mkdir($saveDirPath,0777,true);
                 }
@@ -70,7 +70,7 @@ class API_DatabaseController extends API_BaseController
         }
 
         // 创建盛放整个数据库(所有表)备份数据的文件夹
-        $allBackDirPath = ROOT."admin/resource/dbBackup/all";
+        $allBackDirPath = ROOT."admin/resource/dbBackup/".$this->dbName."/all";
         if (!file_exists($allBackDirPath)){
             mkdir($allBackDirPath,0777,true);
         }
