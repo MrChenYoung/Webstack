@@ -294,7 +294,7 @@ class API_DatabaseController extends API_BaseController
 
                 // 移动备份文件
                 $cmd = "rclone moveto ".$target_path." GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName;
-                $moveRes = myshellExec($cmd);
+                $moveRes = ShellManager::exec($cmd);
                 if (!$moveRes["success"]){
                     echo $this->failed("上传备份失败2");
                     die;
