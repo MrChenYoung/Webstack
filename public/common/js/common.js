@@ -62,7 +62,7 @@ function get(url, complete=null,withHud=true,showToast=false,timeOut=10000,failF
 }
 
 // 发送post网络请求
-function post(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000,ailFunc=null,type='json') {
+function post(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000,failFunc=null,type='json') {
     request(url,data,complete,withHud,showToast,timeOut,failFunc,type);
 }
 
