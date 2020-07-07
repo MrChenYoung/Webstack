@@ -183,6 +183,7 @@
             var category = data[i];
             dom += '<tr><td><i class="iconfont icon-'+ category["cat_icon"] +'"></i></td>';
             dom += '<td>' + category["cat_title"] + '</td>';
+            dom += '<td>' + category["sort"] + '</td>';
             dom += '<td><ul class="plat_list_ul">';
 
             var platList = category["platform_list"];
@@ -310,6 +311,7 @@
                 <colgroup>
                     <col width="150">
                     <col width="150">
+                    <col width="150">
                     <col>
                     <col width="200">
                 </colgroup>
@@ -317,6 +319,7 @@
                 <tr>
                     <th>分类图标</th>
                     <th>分类标题</th>
+                    <th>排序</th>
                     <th>平台</th>
                     <th>操作</th>
                 </tr>

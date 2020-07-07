@@ -45,7 +45,8 @@ class CreateTablesController
                         id int AUTO_INCREMENT PRIMARY KEY COMMENT '分类id',
                         cat_icon varchar(64) DEFAULT '' COMMENT '分类图标',
                         cat_title varchar(300) DEFAULT '' COMMENT '分类标题',
-                        platform_list varchar(300)  DEFAULT '' COMMENT '平台列表'
+                        platform_list varchar(300)  DEFAULT '' COMMENT '平台列表',
+                        sort int DEFAULT 0 COMMENT '排序'
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='分类表';
 EEE;
         $this->dao->createTable($tableName,$sql);
@@ -60,7 +61,8 @@ EEE;
                         id int AUTO_INCREMENT PRIMARY KEY COMMENT '平台id',
                         plat_name varchar(300) DEFAULT '' COMMENT '平台名称',
                         web_list varchar(300) DEFAULT '' COMMENT '网站列表',
-                        cat_id int  DEFAULT 0 COMMENT '所属分类'
+                        cat_id int  DEFAULT 0 COMMENT '所属分类',
+                        sort int DEFAULT 0 COMMENT '排序'
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='平台表';
 EEE;
         $this->dao->createTable($tableName,$sql);
@@ -77,7 +79,8 @@ EEE;
                         web_desc varchar(128) DEFAULT '' COMMENT '描述',
                         address varchar(300) DEFAULT '' COMMENT '地址',
                         plat_id int  DEFAULT 0 COMMENT '所属平台',
-                        logo MEDIUMTEXT COMMENT 'logo'
+                        logo MEDIUMTEXT COMMENT 'logo',
+                        sort int DEFAULT 0 COMMENT '排序'
                     ) DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='网站表';
 EEE;
         $this->dao->createTable($tableName,$sql);

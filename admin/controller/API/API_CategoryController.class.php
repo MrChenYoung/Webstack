@@ -17,7 +17,7 @@ class API_CategoryController extends API_BaseController
 
     // 获取分类列表
     public function loadCategotyList($ret=false){
-        $res = DatabaseDataManager::getSingleton()->find($this->tableName);
+        $res = DatabaseDataManager::getSingleton()->find($this->tableName,[],[],"ORDER BY sort");
         // 获取平台列表名称
         $platData = DatabaseDataManager::getSingleton()->find("platform");
         $plats = [];
@@ -36,6 +36,10 @@ class API_CategoryController extends API_BaseController
                             $platList[] = $plats[$item];
                         }
                     }
+                }
+
+                if ($re["sort"] == 0){
+                    DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$re["id"]],["id"=>$re["id"]]);
                 }
                 $res[$key]["platform_list"] = $platList;
             }
