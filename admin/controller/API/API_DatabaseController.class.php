@@ -31,14 +31,11 @@ class API_DatabaseController extends API_BaseController
     public function loadTableList(){
         $sql = "SHOW TABLES";
         $tableLists = DatabaseManager::getSingleton()->fetch($sql);
-
-        echo "<pre>";
-        var_dump($tableLists);
-        die;
         $tables = [];
         foreach ($tableLists as $re) {
             // 表名
-            $tableName = $re["Tables_in_account_db"];
+            $field = "Tables_in_".$this->dbName;
+            $tableName = $re[$field];
 
             // 获取表备注
             $sql = "SHOW CREATE TABLE $tableName";
