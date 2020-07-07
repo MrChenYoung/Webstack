@@ -130,7 +130,7 @@ class API_CategoryController extends API_BaseController
             if ($existSort){
                 $existSort = $existSort[0];
                 $oldsort = $oldsort[0];
-                echo "存在:".$existSort["id"];
+                echo "存在:".$existSort["id"]." catid:".$catId;
                 die;
                 DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$oldsort["sort"]],["id"=>$existSort["id"]]);
             }
