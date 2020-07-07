@@ -36,6 +36,11 @@ class API_PlatformController extends API_BaseController
                 if ($catData !== false && count($catData) > 0){
                     $catName = $catData[0]["cat_title"];
                 }
+
+                if ($platDatum["sort"] == 0){
+                    DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$platDatum["id"]],["id"=>$platDatum["id"]]);
+                }
+
                 $platData[$key]["cat_title"] = $catName;
 
                 // 获取每个平台包含的账号描述信息
