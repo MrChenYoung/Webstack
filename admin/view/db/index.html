@@ -328,7 +328,7 @@
             </table>
         </div>
     </div>
-    <form id="upload_back_form" enctype="multipart/form-data" method="post" action="<{$data.baseUrl}>/admin/controller/UploadDBBack.php">
+    <form id="upload_back_form" enctype="multipart/form-data" method="post" action="<{$data.baseUrl}>?m=admin&c=API_Database&a=uploadBackup">
         <input type="file" name="file" id="file_select_input" style="display:none">
         <input type="text" name="tbName" id="tb_name_input" style="display:none">
     </form>

@@ -244,7 +244,7 @@ class API_DatabaseController extends API_BaseController
     public function uploadBackup(){
         LogManager::getSingleton()->addLog("测试上传");
         die;
-        
+
         //判断是否有文件上传
         if (isset($_FILES['file'])) {
             // 文件信息
