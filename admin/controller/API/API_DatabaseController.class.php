@@ -81,13 +81,6 @@ class API_DatabaseController extends API_BaseController
 
     // 备份数据库
     public function backupDB(){
-//        $option = $GLOBALS["db_info"];
-//        $backup = new DatabaseBackupManager($option);
-//        $r = $backup->backup("","/Users/mrchen/Desktop/www/PhpProjects/WebStack/admin/resource/dbBackup/web_stack_db/all/");
-//        if (!$r){
-//            LogManager::getSingleton()->addLog("备份数据库失败");
-//        }
-//        die;
         // 表名
         if (!isset($_GET["tbName"])){
             echo $this->failed("需要tbName参数");
@@ -210,16 +203,12 @@ class API_DatabaseController extends API_BaseController
         $tbName = $_GET["tbName"];
         $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
 
-        $path = $this->backupPath.$tbDirName."/".$fileName;
-        if (file_exists($path)){
-            $status = unlink($path);
-            if ($status){
-                echo $this->success("备份删除成功");
-            }else {
-                echo $this->failed("备份删除失败");
-            }
+        $cmd = "rclone delete GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName."/".$fileName;
+        $res = ShellManager::exec($cmd);
+        if ($res["success"]){
+            echo $this->success("备份删除成功");
         }else {
-            echo $this->failed("备份不存在");
+            echo $this->failed("备份删除失败");
         }
     }
 
