@@ -10,6 +10,7 @@ use framework\tools\FileManager;
 use framework\tools\LogManager;
 use framework\tools\MultiThreadTool;
 use framework\tools\ShellManager;
+use framework\tools\StringTool;
 
 class API_DatabaseController extends API_BaseController
 {
@@ -249,24 +250,19 @@ class API_DatabaseController extends API_BaseController
             // 名字
             $name = $fileInfo["name"];
             // 类型
-            $type = $fileInfo["type"];
+            $type = StringTool::getExtension($name);
             // 表名
             $tbName = $_POST["tbName"];
             $tbDirName = strlen($tbName) == 0 ? "all" : $tbName;
 
-            echo "<pre>";
-            var_dump($fileInfo);
-            die;
             // 限制文件必须是sql
-            if ($type != "application/x-sql"){
+            if ($type != ".sql"){
                 echo $this->failed("只能上传sql文件");
                 die;
             }
 
             // 目标文件目录
             $target_path = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/".$name;
-            LogManager::getSingleton()->addLog("path路径:".$target_path);
-            die;
 
             //将文件从临时目录拷贝到指定目录
             if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
