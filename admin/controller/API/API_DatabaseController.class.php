@@ -203,12 +203,18 @@ class API_DatabaseController extends API_BaseController
         $tbName = $_GET["tbName"];
         $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
 
-        $cmd = "rclone delete GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName."/".$fileName;
-        $res = ShellManager::exec($cmd);
-        if ($res["success"]){
-            echo $this->success("备份删除成功");
+//        $cmd = "rclone delete GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName."/".$fileName;
+//        $res = ShellManager::exec($cmd);
+        $path = $this->driveDbPath.$this->dbName."/".$tbDirName."/".$fileName;
+        if (file_exists($path)){
+            $res = unlink($path);
+            if ($res){
+                echo $this->success("备份删除成功");
+            }else {
+                echo $this->failed("备份删除失败");
+            }
         }else {
-            echo $this->failed("备份删除失败");
+            echo $this->failed("备份文件不存在");
         }
     }
 
