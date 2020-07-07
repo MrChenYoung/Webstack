@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/controller/API/API_CategoryController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/API/API_CategoryController.class.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +91,7 @@
       <workItem from="1593500600979" duration="17000" />
       <workItem from="1593533959108" duration="1088000" />
       <workItem from="1593697776336" duration="403000" />
-      <workItem from="1593933224484" duration="61103000" />
+      <workItem from="1593933224484" duration="61307000" />
     </task>
     <servers />
   </component>

@@ -128,11 +128,14 @@ class API_CategoryController extends API_BaseController
 
             $existSort = DatabaseDataManager::getSingleton()->find($this->tableName,["sort"=>$sort]);
             if ($existSort){
+                echo "存在";
+                die;
                 $existSort = $existSort[0];
                 $oldsort = $oldsort[0];
                 DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$oldsort["sort"]],["id"=>$existSort["id"]]);
             }
         }
+
 
         $res = DatabaseDataManager::getSingleton()->update($this->tableName,["cat_icon"=>$iconName,"cat_title"=>$catName,"sort"=>$sort],["id"=>$catId]);
         if ($res){
