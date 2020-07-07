@@ -285,7 +285,7 @@ class API_DatabaseController extends API_BaseController
                         if (!$execRes["success"]){
                             $cmd = "rm -f ".$target_path;
                             ShellManager::exec($cmd);
-                            echo $this->failed("上传备份失败");
+                            echo $this->failed("上传备份失败1");
                             die;
                         }
                     }
@@ -295,10 +295,10 @@ class API_DatabaseController extends API_BaseController
                 $cmd = "rclone moveto ".$target_path." GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName;
                 $moveRes = myshellExec($cmd);
                 if (!$moveRes["success"]){
-                    echo $this->failed("上传备份失败");
+                    echo $this->failed("上传备份失败2");
                     die;
                 }
-                
+
                 echo $this->success("上传成功");
             }  else {
                 // 上传失败
