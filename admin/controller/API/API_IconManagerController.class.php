@@ -24,7 +24,7 @@ class API_IconManagerController extends API_BaseController
             "qita",
             "yuncunchu",
             "wode",
-            "icon-sousuo"
+            "sousuo"
         ];
         echo $this->success($icons);
     }
