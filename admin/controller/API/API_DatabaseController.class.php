@@ -235,8 +235,8 @@ class API_DatabaseController extends API_BaseController
         $tbName = $_GET["tbName"];
         $tbDirName = strlen($tbName) > 0 ? $tbName : "all";
 
-        $path = $this->backupPath.$tbDirName."/".$fileName;
-        (new DatabaseBackupManager())->restore($path);
+        $path = $this->driveDbPath.$this->dbName."/".$tbDirName."/".$fileName;
+        (new DatabaseBackupManager($GLOBALS["db_info"]))->restore($path);
         echo $this->success("导入完成");
     }
 
@@ -250,6 +250,9 @@ class API_DatabaseController extends API_BaseController
             $name = $fileInfo["name"];
             // 类型
             $type = $fileInfo["type"];
+            // 表名
+            $tbName = $fileInfo["tbName"];
+            $tbDirName = strlen($tbName) == 0 ? "all" : $tbName;
 
             // 限制文件必须是sql
             if ($type != "application/x-sql"){
@@ -258,11 +261,44 @@ class API_DatabaseController extends API_BaseController
             }
 
             // 目标文件目录
-            $target_path = ADMIN."resource/dbBackup/".$name;
+            $target_path = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/".$name;
 
             //将文件从临时目录拷贝到指定目录
             if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
-                //上传成功,可进行进一步操作,将路径写入数据库等.
+                //上传成功,移动文件到谷歌云盘
+                $cmd = "rclone lsjson GDSuite:我的数据/备份数据/db/";
+                $checkDbDirRes = ShellManager::exec($cmd);
+                if ($checkDbDirRes["success"]){
+                    $fileList = $checkDbDirRes["result"];
+                    $fileList = implode("",$fileList);
+                    $fileList = json_decode($fileList,true);
+                    $exist = false;
+                    foreach ($fileList as $item) {
+                        if ($item["name"] == $this->dbName){
+                            $exist = true;
+                            break;
+                        }
+                    }
+                    if (!$exist){
+                        $cmd = "rclone mkdir GDSuite:我的数据/备份数据/db/".$this->dbName;
+                        $execRes = ShellManager::exec($cmd);
+                        if (!$execRes["success"]){
+                            $cmd = "rm -f ".$target_path;
+                            ShellManager::exec($cmd);
+                            echo $this->failed("上传备份失败");
+                            die;
+                        }
+                    }
+                }
+
+                // 移动备份文件
+                $cmd = "rclone moveto ".$target_path." GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName;
+                $moveRes = myshellExec($cmd);
+                if (!$moveRes["success"]){
+                    echo $this->failed("上传备份失败");
+                    die;
+                }
+                
                 echo $this->success("上传成功");
             }  else {
                 // 上传失败
