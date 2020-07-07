@@ -133,11 +133,10 @@ EEE;
             "logo"          =>  $logo,
             "sort"          =>  $sort
         ];
+
         $res = DatabaseDataManager::getSingleton()->insert($this->tableName,$insertData);
         if ($res){
-            if ($sort == "0"){
-                DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$res],["id"=>$res]);
-            }
+            DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$res],["id"=>$res]);
 
             // 添加id到平台表
             $resId = $this->addAccountToPlat($platId,$res);
