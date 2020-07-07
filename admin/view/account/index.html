@@ -444,7 +444,7 @@
         var dom = "";
         for(var i = 0; i < data.length; i++){
             var account = data[i];
-            dom += '<tr><td><div><img class="list-logo-img" src="'+ account["logo"] +'"></div></td>';
+            dom += '<tr><td><div class="logo-box"><img class="list-logo-img" src="'+ account["logo"] +'"></div></td>';
             dom += '<td>'+ account["web_title"] +'</td>';
             dom += '<td>'+ account["web_desc"] +'</td>';
             dom += '<td><div class="login-address-box">'+ account["address"] +'</div></td>';
@@ -541,10 +541,32 @@
             },true,true);
         });
     }
-    
+
     // 编辑账号
     function editAccount(obj) {
         isEdit = true;
+        var $this = $(obj);
+        var accId = $this.attr("accId");
+        editAccountId = accId;
+
+        // 请求指定账号数据
+        var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId + "&API=";
+        get(url,function (data) {
+            var accData = data.data;
+            selectedPlatId = accData["plat_id"];
+            addDesc = accData["web_desc"];
+            addUserName = accData["web_title"];
+            addLogo = accData["logo"];
+            addAddress = accData["address"];
+
+            // 加载平台列表
+            loadPlatList();
+        });
+    }
+
+    // 复制一个账号
+    function copyAccount(obj) {
+        isEdit = false;
         var $this = $(obj);
         var accId = $this.attr("accId");
         editAccountId = accId;
