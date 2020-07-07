@@ -196,7 +196,7 @@
         get(url,function () {
             // 备份完成 刷新备份历史列表
             loadDbBackupLists();
-        },true,true);
+        },true,true,50000);
     }
 
     // 上传备份文件
