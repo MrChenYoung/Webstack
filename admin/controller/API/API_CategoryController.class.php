@@ -123,9 +123,7 @@ class API_CategoryController extends API_BaseController
         }
         $sort = $_GET["sort"];
         $sortInt = (int)$sort;
-
-        echo $sortInt;
-        die;
+        
         if ($sortInt > 0){
             $oldsort = DatabaseDataManager::getSingleton()->find($this->tableName,["id"=>$catId]);
             $existSort = DatabaseDataManager::getSingleton()->find($this->tableName,["sort"=>$sort]);
