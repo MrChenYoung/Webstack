@@ -30,7 +30,9 @@ if ($backupAll == "1"){
     }
 }else {
     // 备份当前数据库
-    backupDb($dbName,$tbName,$path,$logPath,$tbDirName);
+    addLog($logPath,"备份数据库:".$dbName." tbname:".$tbName." path:".$path." tbDir:".$tbDirName);
+
+//    backupDb($dbName,$tbName,$path,$logPath,$tbDirName);
 }
 
 addLog($logPath,"数据库备份完成");
