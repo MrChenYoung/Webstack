@@ -138,6 +138,12 @@
             addCatName = addCatInput.val();
         });
 
+        // 监听输入排序
+        var catSortInput = $("#cat_sort");
+        catSortInput.bind("input propertychange", function (event) {
+            sort = catSortInput.val();
+        });
+
         // 请求分类列表
         loadCategoryList();
         // 请求icon

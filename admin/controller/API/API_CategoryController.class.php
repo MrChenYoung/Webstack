@@ -123,15 +123,15 @@ class API_CategoryController extends API_BaseController
         }
         $sort = $_GET["sort"];
         $sortInt = (int)$sort;
+
+        echo $sortInt;
+        die;
         if ($sortInt > 0){
             $oldsort = DatabaseDataManager::getSingleton()->find($this->tableName,["id"=>$catId]);
-
             $existSort = DatabaseDataManager::getSingleton()->find($this->tableName,["sort"=>$sort]);
             if ($existSort){
                 $existSort = $existSort[0];
                 $oldsort = $oldsort[0];
-                echo "存在:".$existSort["id"]." catid:".$oldsort["sort"]." dd:".$existSort["id"]." sort:".$sortInt;
-                die;
                 DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$oldsort["sort"]],["id"=>$existSort["id"]]);
             }
         }
