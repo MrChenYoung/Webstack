@@ -243,6 +243,7 @@ class API_DatabaseController extends API_BaseController
 
     // 上传备份文件
     public function uploadBackup(){
+        $errMsg = "";
         //判断是否有文件上传
         if (isset($_FILES['file'])) {
             // 文件信息
@@ -257,7 +258,7 @@ class API_DatabaseController extends API_BaseController
 
             // 限制文件必须是sql
             if ($type != ".sql"){
-                echo $this->failed("只能上传sql文件");
+                $this->uploadResultHandle($tbName,"只能上传sql文件");
                 die;
             }
 
@@ -287,7 +288,7 @@ class API_DatabaseController extends API_BaseController
                         if (!$execRes["success"]){
                             $cmd = "rm -f ".$target_path;
                             ShellManager::exec($cmd);
-                            echo $this->failed("上传备份失败1");
+                            $this->uploadResultHandle($tbName,"上传备份失败");
                             die;
                         }
                     }
@@ -297,18 +298,25 @@ class API_DatabaseController extends API_BaseController
                 $cmd = "rclone moveto ".$target_dir." GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName;
                 $moveRes = ShellManager::exec($cmd);
                 if (!$moveRes["success"]){
-                    echo $this->failed("上传备份失败2");
+                    $this->uploadResultHandle($tbName,"上传备份失败");
                     die;
                 }
 
-                echo $this->success("上传成功");
+                $this->uploadResultHandle($tbName,"上传成功");
             }  else {
                 // 上传失败
-                echo $this->failed("上传失败");
+                $this->uploadResultHandle($tbName,"上传备份失败");
             }
         }else {
-            echo $this->failed("上传发生错误");
+            $this->uploadResultHandle("","上传发生错误");
         }
+    }
+
+    // 上传备份结果处理
+    private function uploadResultHandle($tbName,$msg){
+        $msg = base64_encode($msg);
+        $url = "?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=".$msg;
+        header("Refresh:0;url=$url");
     }
 
     // 清空日志
