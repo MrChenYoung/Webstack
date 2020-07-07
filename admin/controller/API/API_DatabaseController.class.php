@@ -262,7 +262,8 @@ class API_DatabaseController extends API_BaseController
             }
 
             // 目标文件目录
-            $target_path = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/".$name;
+            $target_dir = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/";
+            $target_path = $target_dir.$name;
 
             //将文件从临时目录拷贝到指定目录
             if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
@@ -293,9 +294,7 @@ class API_DatabaseController extends API_BaseController
                 }
 
                 // 移动备份文件
-                $cmd = "rclone moveto ".$target_path." GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName;
-                LogManager::getSingleton()->addLog("命令是:".$cmd);
-                die;
+                $cmd = "rclone moveto ".$target_dir." GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName;
                 $moveRes = ShellManager::exec($cmd);
                 if (!$moveRes["success"]){
                     echo $this->failed("上传备份失败2");
