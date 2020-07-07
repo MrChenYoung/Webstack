@@ -122,6 +122,17 @@ class API_CategoryController extends API_BaseController
             die;
         }
         $sort = $_GET["sort"];
+        $sortInt = (int)$sort;
+        if ($sortInt > 0){
+            $oldsort = DatabaseDataManager::getSingleton()->find($this->tableName,["id"=>$catId]);
+
+            $existSort = DatabaseDataManager::getSingleton()->find($this->tableName,["sort"=>$sort]);
+            if ($existSort){
+                $existSort = $existSort[0];
+                $oldsort = $oldsort[0];
+                DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$oldsort["sort"]],["id"=>$existSort["id"]]);
+            }
+        }
 
         $res = DatabaseDataManager::getSingleton()->update($this->tableName,["cat_icon"=>$iconName,"cat_title"=>$catName,"sort"=>$sort],["id"=>$catId]);
         if ($res){
