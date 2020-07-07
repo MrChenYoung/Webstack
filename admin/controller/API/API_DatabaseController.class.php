@@ -81,6 +81,13 @@ class API_DatabaseController extends API_BaseController
 
     // 备份数据库
     public function backupDB(){
+//        $option = $GLOBALS["db_info"];
+//        $backup = new DatabaseBackupManager($option);
+//        $r = $backup->backup("","/Users/mrchen/Desktop/www/PhpProjects/WebStack/admin/resource/dbBackup/web_stack_db/all/");
+//        if (!$r){
+//            LogManager::getSingleton()->addLog("备份数据库失败");
+//        }
+//        die;
         // 表名
         if (!isset($_GET["tbName"])){
             echo $this->failed("需要tbName参数");

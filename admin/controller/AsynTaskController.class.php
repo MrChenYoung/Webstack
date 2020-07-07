@@ -52,7 +52,7 @@ class AsynTaskController extends Controller
         LogManager::getSingleton()->addLog("开始备份数据库:".$dbName.",数据表:".$tName);
 
         // 执行转存文件php脚本
-        $cmd = "php ".ADMIN."controller/DbBackup.php ".LogManager::getSingleton()->logFilePath." ".$dbName;
+        $cmd = "php ".ADMIN."controller/DbBackup.php ".LogManager::getSingleton()->logFilePath." '".json_encode($GLOBALS["db_info"])."'";
         $cmd = $cmd." ".$localBackupPath." ".$tbName." ".$backupManagerFilePath." ".$backupAll." '".$dbList."'";
         $res = ShellManager::exec($cmd);
         if (!$res["success"]){
