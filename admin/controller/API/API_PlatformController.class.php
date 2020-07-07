@@ -245,7 +245,7 @@ class API_PlatformController extends API_BaseController
         $platId = $_GET["id"];
 
         $sql = <<<EEE
-SELECT acc_platform.*,acc_category.cat_title  FROM acc_category,acc_platform WHERE acc_category.id=acc_platform.cat_id AND acc_platform.id=$platId;
+SELECT platform.*,category.cat_title  FROM category,platform WHERE category.id=platform.cat_id AND platform.id=$platId;
 EEE;
         $res = DatabaseDataManager::getSingleton()->fetch($sql);
 
