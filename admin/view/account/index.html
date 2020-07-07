@@ -200,6 +200,9 @@
         height: 20px;
     }
 
+    .layui-form-item .cat-sort {
+        width: 100px;
+    }
 </style>
 <{/block}>
 <{block name="scriptCode"}>
@@ -224,6 +227,8 @@
     var selectCatId = "";
     // 筛选选中的platid
     var selectPlatformId = "";
+    // 排序
+    var sort = 0;
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
         $("#account_manager").addClass("active");
@@ -444,7 +449,9 @@
         var dom = "";
         for(var i = 0; i < data.length; i++){
             var account = data[i];
-            dom += '<tr><td><div class="logo-box"><img class="list-logo-img" src="'+ account["logo"] +'"></div></td>';
+            dom += '<tr>';
+            dom += '<td>'+ account["sort"] +'</td>';
+            dom += '<td><div class="logo-box"><img class="list-logo-img" src="'+ account["logo"] +'"></div></td>';
             dom += '<td>'+ account["web_title"] +'</td>';
             dom += '<td>'+ account["web_desc"] +'</td>';
             dom += '<td><div class="login-address-box">'+ account["address"] +'</div></td>';
@@ -648,9 +655,11 @@
                     <col width="150">
                     <col width="150">
                     <col width="150">
+                    <col width="150">
                 </colgroup>
                 <thead>
                 <tr>
+                    <th>排序</th>
                     <th>logo</th>
                     <th>标题</th>
                     <th>描述</th>
@@ -673,6 +682,12 @@
             <legend id="legend_title">添加网站</legend>
         </fieldset>
         <form class="layui-form layui-form-pane cover-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline cat-sort">
+                    <input style="text-align: center" id="cat_sort" type="text" lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
+                </div>
+            </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">所属平台</label>
                 <div class="layui-input-inline">
