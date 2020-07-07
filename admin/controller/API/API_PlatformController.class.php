@@ -18,7 +18,7 @@ class API_PlatformController extends API_BaseController
     // 获取平台列表
     public function loadPlatformList(){
         // 查询平台列表
-        $platData = DatabaseDataManager::getSingleton()->find($this->tableName);
+        $platData = DatabaseDataManager::getSingleton()->find($this->tableName,[],[],"ORDER BY sort");
 
         // 获取网站列表名称
         $accData = DatabaseDataManager::getSingleton()->find("web_list");

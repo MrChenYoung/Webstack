@@ -102,6 +102,8 @@
     var isEdit = false;
     // 修改平台id
     var editPlatId = "";
+    // 排序
+    var sort = 0;
 
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
@@ -172,7 +174,9 @@
         var dom = "";
         for(var i = 0; i < data.length; i++){
             var platform = data[i];
-            dom += '<tr><td>'+ platform["plat_name"] +'</td>';
+            dom += '<tr>';
+            dom += '<td>'+ platform["sort"] +'</td>';
+            dom += '<td>'+ platform["plat_name"] +'</td>';
             dom += '<td><ul class="acc_list_ul">';
             var accList = platform["web_list"];
             for (var j = 0; j < accList.length; j++){
@@ -283,12 +287,14 @@
             <table class="layui-table">
                 <colgroup>
                     <col width="150">
+                    <col width="150">
                     <col>
                     <col width="150">
                     <col width="200">
                 </colgroup>
                 <thead>
                 <tr>
+                    <th>排序</th>
                     <th>平台名称</th>
                     <th>网站</th>
                     <th>所属分类</th>
