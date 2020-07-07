@@ -37,6 +37,10 @@ class API_AccountController extends API_BaseController
                     $platName = $platData[0]["plat_name"];
                 }
                 $accData[$key]["plat_name"] = $platName;
+
+                if ($accDatum["sort"] == 0){
+                    DatabaseDataManager::getSingleton()->update($this->tableName,["sort"=>$accDatum["id"]],["id"=>$accDatum["id"]]);
+                }
             }
 
             echo $this->success($accData);
