@@ -13,8 +13,8 @@
         font-weight: bold;
     }
 
-    .layui-table tbody tr td {
-        margin: 0 auto;
+    .layui-table tbody tr {
+        text-align: center;
     }
 
     .add-category-box {
@@ -195,7 +195,7 @@
         margin-left: 35px;
     }
 
-    .logo-img {
+    .list-logo-img {
         width: 20px;
         height: 20px;
     }
@@ -444,7 +444,7 @@
         var dom = "";
         for(var i = 0; i < data.length; i++){
             var account = data[i];
-            dom += '<tr><td><img class="logo-img" src="'+ account["logo"] +'"></td>';
+            dom += '<tr><td><div><img class="list-logo-img" src="'+ account["logo"] +'"></div></td>';
             dom += '<td>'+ account["web_title"] +'</td>';
             dom += '<td>'+ account["web_desc"] +'</td>';
             dom += '<td><div class="login-address-box">'+ account["address"] +'</div></td>';
@@ -562,76 +562,6 @@
             // 加载平台列表
             loadPlatList();
         });
-    }
-
-    // 复制一个账号
-    function copyAccount(obj) {
-        isEdit = false;
-        var $this = $(obj);
-        var accId = $this.attr("accId");
-        editAccountId = accId;
-
-        // 请求指定账号数据
-        var url = baseUrl + "?m=admin&c=API_Account&a=loadAccount&id=" + accId + "&API=";
-        get(url,function (data) {
-            var accData = data.data;
-            selectedPlatId = accData["plat_id"];
-            addDesc = accData["web_desc"];
-            addUserName = accData["web_title"];
-            addLogo = accData["logo"];
-            addAddress = accData["address"];
-
-            // 加载平台列表
-            loadPlatList();
-        });
-    }
-    
-    // 获取/更新logo
-    function loadLogo() {
-        if (selectApi == 3){
-            // 清空input文件选择 防止选择同一个文件不触发input文件选择框的选择文件完成方法
-            var file = document.getElementById('file_select_input');
-            file.value = '';
-
-            // 自定义上传
-            $("#file_select_input").click();
-        }else {
-            // 通过接口获取
-            var add = btoa(addAddress);
-            var accId = editAccountId.length > 0 ? editAccountId : "";
-            var url = baseUrl + "?m=admin&c=API_Account&a=loadLogo&address=" + add + "&API=&accId=" + accId + "&selectApi=" + selectApi;
-            console.log("获取logo:" + url);
-            get(url,function (data) {
-                var res = data.data;
-                if (res == '无法获取logo'){
-                    addLogo = defaultLogo;
-                    setLogo();
-                    toast(res);
-                }else {
-                    toast("获取logo成功");
-                    addLogo = res;
-                    setLogo();
-                }
-            },true,false,5000);
-        }
-    }
-    
-    // 查询附件 success：获取附件结果回调，bool参数表示是否有附件
-    function loadAttachment(success) {
-        if (editAccountId.length > 0){
-            var url = baseUrl + "?m=admin&c=API_Attachment&a=loadAttachmentLists" + "&API=&id=" + editAccountId + "&tbName=acc_account";
-            console.log("请求附件:" + url);
-            get(url,function (data) {
-                var attachments = data.data.data;
-                if (attachments.length > 0){
-                    success(true);
-                }else {
-                    success(false);
-                }
-            })
-        }else {
-            success(false);
-        }
     }
 
     // 显示添加/修改平台浮层
