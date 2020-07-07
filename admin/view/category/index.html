@@ -121,6 +121,8 @@
     var isEdit = false;
     // 修改分类的id
     var editCatId = "";
+    // 排序
+    var sort = 0;
 
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
@@ -280,6 +282,7 @@
             var catData = data.data;
             selectedIcon = catData["cat_icon"];
             addCatName = catData["cat_title"];
+            sort = catData["sort"];
             showEditCatCover();
         })
     }
@@ -295,6 +298,7 @@
         selectIcon(selectedIcon);
 
         $("#add_cat_name").val(addCatName);
+        $("#cat_sort").val(sort);
     }
 
     // 隐藏添加/修改分类浮层
@@ -339,6 +343,12 @@
             <legend id="legend_title">添加分类</legend>
         </fieldset>
         <form class="layui-form layui-form-pane" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline cat-name">
+                    <input id="cat_sort" type="text" lay-verify="required" placeholder="请输入排序" autocomplete="off" class="layui-input">
+                </div>
+            </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">图标</label>
                 <div class="layui-input-inline">
