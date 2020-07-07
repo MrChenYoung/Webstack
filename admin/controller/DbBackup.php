@@ -32,7 +32,7 @@ if ($backupAll == "1"){
     // 备份当前数据库
     addLog($logPath,"备份数据库:".$dbName." tbname:".$tbName." path:".$path." tbDir:".$tbDirName);
 
-//    backupDb($dbName,$tbName,$path,$logPath,$tbDirName);
+    backupDb($dbName,$tbName,$path,$logPath,$tbDirName);
 }
 
 addLog($logPath,"数据库备份完成");
@@ -48,40 +48,40 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName){
     (new DatabaseBackupManager())->backup($table,$localTbPath);
 
     // 移动本地备份文件到谷歌云盘
-    $cmd = "rclone lsjson GDSuite:我的数据/备份数据/db/";
-    $checkDbDirRes = myshellExec($cmd);
-    if ($checkDbDirRes["success"]){
-        $fileList = $checkDbDirRes["result"];
-        $fileList = implode("",$fileList);
-        $fileList = json_decode($fileList,true);
-        $exist = false;
-        foreach ($fileList as $item) {
-            if ($item["name"] == $dataBase){
-                $exist = true;
-                break;
-            }
-        }
-        if (!$exist){
-            $cmd = "rclone mkdir GDSuite:我的数据/备份数据/db/".$dataBase;
-            $execRes = myshellExec($cmd);
-            if (!$execRes["success"]){
-                $cmd = "rm -f ".$localTbPath."*";
-                myshellExec($cmd);
-
-                addLog($logP,"创建".$dataBase."文件夹失败,备份终止");
-                die;
-            }
-        }
-    }
-// 先清空目录内的历史数据
-//        $cmd = "rclone delete GDSuite:我的数据/备份数据/db/".$dbName."/".$tbDirName;
-//        ShellManager::exec($cmd);
-// 移动备份文件
-    $cmd = "rclone moveto ".$localTbPath." GDSuite:我的数据/备份数据/db/".$dataBase."/".$tableDirName;
-    $moveRes = myshellExec($cmd);
-    if (!$moveRes["success"]){
-        addLog($logP,"备份".$tableDirName."表失败");
-    }
+//    $cmd = "rclone lsjson GDSuite:我的数据/备份数据/db/";
+//    $checkDbDirRes = myshellExec($cmd);
+//    if ($checkDbDirRes["success"]){
+//        $fileList = $checkDbDirRes["result"];
+//        $fileList = implode("",$fileList);
+//        $fileList = json_decode($fileList,true);
+//        $exist = false;
+//        foreach ($fileList as $item) {
+//            if ($item["name"] == $dataBase){
+//                $exist = true;
+//                break;
+//            }
+//        }
+//        if (!$exist){
+//            $cmd = "rclone mkdir GDSuite:我的数据/备份数据/db/".$dataBase;
+//            $execRes = myshellExec($cmd);
+//            if (!$execRes["success"]){
+//                $cmd = "rm -f ".$localTbPath."*";
+//                myshellExec($cmd);
+//
+//                addLog($logP,"创建".$dataBase."文件夹失败,备份终止");
+//                die;
+//            }
+//        }
+//    }
+//// 先清空目录内的历史数据
+////        $cmd = "rclone delete GDSuite:我的数据/备份数据/db/".$dbName."/".$tbDirName;
+////        ShellManager::exec($cmd);
+//// 移动备份文件
+//    $cmd = "rclone moveto ".$localTbPath." GDSuite:我的数据/备份数据/db/".$dataBase."/".$tableDirName;
+//    $moveRes = myshellExec($cmd);
+//    if (!$moveRes["success"]){
+//        addLog($logP,"备份".$tableDirName."表失败");
+//    }
     addLog($logP,"备份".$tableDirName."表完成");
 }
 
