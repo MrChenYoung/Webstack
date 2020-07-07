@@ -227,7 +227,7 @@
         },false,true);
     }
 
-    
+
     // 导入备份
     function importBackup(obj) {
         // 确认提示
@@ -287,7 +287,7 @@
 <div class="aw-content-wrap">
     <input id="msg_input" type="hidden" value="<{$data.msg}>">
     <input id="select_tb_name" type="hidden" value="<{$data.tbName}>">
-    <button onclick="backupDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">新增备份</button>
+    <button onclick="backupCurrentDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">新增备份</button>
     <button onclick="backupAllDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">备份所有数据库</button>
     <button onclick="uploadBackupDB()" type="button" class="layui-btn layui-btn-primary layui-btn-lg">上传备份</button>
     <div class="notice-box">
