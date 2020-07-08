@@ -111,6 +111,7 @@ class API_PhpNeedleController extends API_BaseController
     // 获取所有禁用的函数
     public function loadDisableFuncList(){
         $disfun=ini_get('disable_functions');
+        $disfun = explode(",",$disfun);
         if (empty($disfun)){
             echo $this->success([]);
         }else {
