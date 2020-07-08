@@ -49,7 +49,8 @@ class API_PhpNeedleController extends API_BaseController
         // php安全模式状态
         $phpSafeStatus = ini_get("safe_mode") == 0 ? "off" : "on";
         // memory_get_usage
-        $memoryUsage = "0";
+        $totalMemoryUsage = FileManager::formatBytes(memory_get_usage (true));
+        $phpMemory = FileManager::formatBytes(memory_get_usage());
         if (function_exists('memory_get_usage')){
             $memoryUsage = ini_get('memory_get_usage');
         }
@@ -76,7 +77,8 @@ class API_PhpNeedleController extends API_BaseController
             "文件上传最大限制"              =>  $uploadLimit,
             "脚本超时时间"                  =>  $scriptTimeout,
             "PHP安全模式"                  =>  $phpSafeStatus,
-            "内存使用"                     =>  $memoryUsage,
+            "分配给PHP总内存"               =>  $totalMemoryUsage,
+            "当前PHP脚本占用内存"            => $phpMemory,
             "磁盘总空间"                    =>  $diskTotal,
             "磁盘可用空间"                  =>  $diskFree
         ];
