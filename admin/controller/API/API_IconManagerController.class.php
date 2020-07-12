@@ -27,7 +27,8 @@ class API_IconManagerController extends API_BaseController
             "sousuo",
             "shipinbofangyingpian2",
             "hostingyunxunizhuji",
-            "changyong2"
+            "changyong2",
+            "ziyuan"
         ];
         echo $this->success($icons);
     }
