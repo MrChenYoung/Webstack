@@ -26,9 +26,9 @@ class API_DatabaseController extends API_BaseController
     {
         parent::__construct();
         $this->backupPath = ADMIN."resource/dbBackup/";
-        $this->driveDbPath = "/www/wwwroot/cloud.yycode.ml/cloudmount/GDSuite/我的数据/备份数据/db/";
+        $this->driveDbPath = "/www/wwwroot/cloudmount.yycode.ml/GDSuite/我的数据/备份数据/db/";
         $this->dbName = $GLOBALS["db_info"]["dbname"];
-        $this->dbList = ["movie","account_db","cloud_manager_db","web_stack_db"];
+        $this->dbList = ["account_db","cloud_manager_db","web_stack_db","movie_theater_db"];
     }
 
     // 获取所有数据库名

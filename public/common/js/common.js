@@ -13,27 +13,25 @@ var rsaPublicContent;
 // rsa私钥内容
 var rsaPrivateContent;
 
+less = {
+    env: "development",
+    async: false,
+    fileAsync: false,
+    poll: 1000,
+    functions: {},
+    dumpLineNumbers: "comments",
+    relativeUrls: false,
+    rootpath: ":/a.com/"
+};
+
 // 显示hud
 function showHud() {
-    layui.use('layer', function() {
-        var layer = layui.layer;
-        layer.ready(function () {
-            loadIndex = layer.load(0,{
-                shade: [0.6, '#FFF'],
-                shadeClose: true
-            });
-        });
-    });
+    $(".main-hud").css("display","block");
 };
 
 // 隐藏hud
 function hideHud() {
-    layui.use('layer', function() {
-        var layer = layui.layer;
-        layer.ready(function () {
-            layer.close(loadIndex);
-        });
-    });
+    $(".main-hud").css("display","none");
 }
 
 /**
