@@ -22,7 +22,9 @@
         get(url,function (data) {
             var platLists = data.data["platform_list"];
             // 创建卡片列表
-            createCards(platLists);
+            if (platLists instanceof  Array){
+                createCards(platLists);
+            }
         });
     }
 
