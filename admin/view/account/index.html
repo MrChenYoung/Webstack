@@ -638,6 +638,12 @@
         $("#file_select_input").click();
     }
 
+    // 设置成默认logo
+    function setDefaultLogo() {
+        addLogo = defaultLogo;
+        $("#logo_img").attr("src",addLogo);
+    }
+
 </script>
 <{/block}>
 <{block name="content"}>
@@ -714,6 +720,7 @@
                     <input readonly="readonly" type="text" lay-verify="required" autocomplete="off" class="layui-input logo-input">
                     <img src="" id="logo_img" class="logo-img">
                     <button  onclick="editAttachment()" type="button" id="attachment_btn" class="layui-btn logo-btn">上传</button>
+                    <button  onclick="setDefaultLogo()" type="button" class="layui-btn logo-btn">设成默认</button>
                 </div>
             </div>
             <div class="layui-form-item">

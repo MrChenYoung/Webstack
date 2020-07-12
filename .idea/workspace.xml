@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/controller/API/API_AccountController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/API/API_AccountController.class.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/view/account/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/account/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,6 +101,7 @@
       <workItem from="1594501379046" duration="2674000" />
       <workItem from="1594552852098" duration="1187000" />
       <workItem from="1594561689075" duration="1578000" />
+      <workItem from="1594569717922" duration="192000" />
     </task>
     <servers />
   </component>
