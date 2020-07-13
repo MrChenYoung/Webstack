@@ -2,8 +2,6 @@
 var baseUrl = $("#base_url").val();
 // 图片所在文件夹
 var imageBaseUrl = $("#image_base_url").val();
-//layui loading
-var loadIndex;
 // 保存到cookie的公钥键
 var publickKey = "rsaPublicKey";
 // 保存到cookie的私钥键
