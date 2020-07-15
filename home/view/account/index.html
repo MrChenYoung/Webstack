@@ -19,13 +19,16 @@
         var catId  = $("#cat_id").val();
         var url = baseUrl + "?m=home&c=API_Common&a=loadHomeAccountLists&API=&id=" + catId;
         console.log("获取平台列表:" + url);
+        $(".loading-cover").css("display","block");
         get(url,function (data) {
+            $(".loading-cover").css("display","none");
+
             var platLists = data.data["platform_list"];
             // 创建卡片列表
             if (platLists instanceof  Array){
                 createCards(platLists);
             }
-        });
+        },false);
     }
 
     // 创建卡片
@@ -66,5 +69,10 @@
     <div class="cards-container">
 
     </div>
+</div>
+
+<!--等待加载loading-->
+<div class="loading-cover">
+    <img src="/public/common/img/ajax-loader.gif">
 </div>
 <{/block}>
