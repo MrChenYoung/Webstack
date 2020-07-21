@@ -23,12 +23,12 @@
         console.log("获取平台列表:" + url);
         $(".loading-cover").css("display","block");
         get(url,function (data) {
-            // $(".loading-cover").css("display","none");
+            $(".loading-cover").css("display","none");
 
             var platLists = data.data["platform_list"];
             // 创建卡片列表
             if (platLists instanceof  Array){
-                // createCards(platLists);
+                createCards(platLists);
             }
         },false);
     }
