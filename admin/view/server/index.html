@@ -97,53 +97,6 @@
         },20);
     }
 
-    // 加载所有扩展
-    function loadExtensionList() {
-        var url = baseUrl + "?m=admin&c=API_PhpNeedle&a=loadExtensionList&API=";
-        console.log("加载所有扩展:" + url);
-        get(url,function (data) {
-            // 创建带宽测试信息
-            createExtensionListDom(data.data);
-        },false);
-    }
-    
-    // 创建扩展列表
-    function createExtensionListDom(data) {
-        var dom = '';
-        for(var i = 0; i < data.length; i++){
-            var d = data[i];
-            dom += '<li>' + d + '</li>';
-        }
-        $("#extension_ul").html(dom);
-
-        // 加载禁用函数列表
-        loadDisableFuncList();
-    }
-    
-    // 加载禁用函数列表
-    function loadDisableFuncList() {
-        var url = baseUrl + "?m=admin&c=API_PhpNeedle&a=loadDisableFuncList&API=";
-        console.log("加载禁用函数:" + url);
-        get(url,function (data) {
-            // 创建带宽测试信息
-            createDisableFuncListDom(data.data);
-        },false);
-    }
-
-    // 创建禁用函数列表
-    function createDisableFuncListDom(data) {
-        var dom = '';
-        for(var i = 0; i < data.length; i++){
-            var d = data[i];
-            dom += '<li>' + d + '</li>';
-        }
-        $("#disable_func_ul").html(dom);
-
-        setTimeout(function () {
-            hideHud();
-        },20);
-    }
-
 </script>
 <{/block}>
 <{block name="content"}>
@@ -182,40 +135,6 @@
             </tr>
             </thead>
             <tbody>
-            </tbody>
-        </table>
-    </div>
-
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-        <legend>已加载的扩展库</legend>
-    </fieldset>
-    <div class="layui-form">
-        <table class="layui-table" id="extension_lib_table" lay-skin="nob">
-            <tbody>
-            <tr>
-                <td>
-                    <ul class="list-ul" id="extension_ul">
-
-                    </ul>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-        <legend>禁用的函数</legend>
-    </fieldset>
-    <div class="layui-form">
-        <table class="layui-table" id="disable_func_table" lay-skin="nob">
-            <tbody>
-            <tr>
-                <td>
-                    <ul class="list-ul" id="disable_func_ul">
-
-                    </ul>
-                </td>
-            </tr>
             </tbody>
         </table>
     </div>
