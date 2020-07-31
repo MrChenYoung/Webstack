@@ -35,42 +35,40 @@
 <{/block}>
 <{block name="scriptCode"}>
 <script>
-
     $(document).ready(function () {
         // 设置边栏服务器信息选中状态
         $("#php_needle").addClass("active");
         $(".add-btn").css("display","none");
 
-        // 获取基本信息
-        loadBaseInfo();
+        // 获取内存使用详情
+        loadMemoryUsed();
     });
     
-    // 获取基本信息
-    function loadBaseInfo() {
-        var url = baseUrl + "?m=admin&c=API_PhpNeedle&a=loadBaseInfo&API=";
-        console.log("获取基本信息:" + url);
+    // 获取内存使用详情
+    function loadMemoryUsed() {
+        var url = baseUrl + "?m=admin&c=API_ServerInfo&a=getServerMemoryUsage&API=";
+        console.log("获取内存使用详情:" + url);
         showHud();
         get(url,function (data) {
-            // 创建基本信息列表
-            createBaseInfoTableDom(data.data);
+            // 创建内存使用信息列表
+            createMemoryUsedTableDom(data.data);
         },false);
     }
 
-    // 创建基本信息列表
-    function createBaseInfoTableDom(data) {
-        var keys = Object.keys(data);
-        console.log("所有键：" + JSON.stringify(keys));
-        var dom = "";
-        for(var i = 0; i < keys.length; i++){
-            var key = keys[i];
-            dom += '<tr>';
-            dom += '<td>' + key + '</td>';
-            dom += '<td>' + data[key] + '</td></tr>';
-        }
-        $("#base_info_table tbody").html(dom);
+    // 创建内存使用信息列表
+    function createMemoryUsedTableDom(data) {
+        var dom = '<tr>';
+        dom += '<td>memory</td>';
+        dom += '<td>' + data["memoryUsed"] + "</td>";
+        dom += '<td>' + data["memoryPersent"] + "</td></tr>";
+        dom += "<tr><td>swap</td>";
+        dom += '<td>' + data["swapUsed"] + "</td>";
+        dom += '<td>' + data["swapPersent"] + "</td></tr>";
+
+        $("#memory_used_table tbody").html(dom);
 
         // 服务器性能测试
-        loadPerformResult();
+        // loadPerformResult();
     }
     
     // 服务器性能测试
@@ -159,10 +157,10 @@
 <{block name="content"}>
 <div class="aw-content-wrap">
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-        <legend>基本信息</legend>
+        <legend>内存使用</legend>
     </fieldset>
     <div class="layui-form">
-        <table class="layui-table" id="base_info_table" lay-skin="nob">
+        <table class="layui-table" id="memory_used_table" lay-skin="nob">
             <tbody>
             </tbody>
         </table>
