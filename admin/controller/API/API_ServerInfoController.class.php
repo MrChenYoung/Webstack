@@ -20,6 +20,7 @@ class API_ServerInfoController extends API_BaseController
             // 虚拟内存信息
             $swap = preg_replace($patt,' ',$res[2]);
 
+            $memory = array_filter($memory);
             echo "<pre>";
             var_dump($memory);
             var_dump(explode(" ", $memory));
