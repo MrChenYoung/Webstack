@@ -50,7 +50,8 @@ class API_ServerInfoController extends API_BaseController
     // 获取进程占用cpu和内存详情
     public function getProgressInfo(){
         // 进程列表
-        $proList = ["rclone","BT-Panel","kcptun","sshd","ffmpeg","python","BT-Task"];
+//        $proList = ["rclone","BT-Panel","kcptun","sshd","ffmpeg","python","BT-Task"];
+        $proList = $this->getAllProgress();
 
         $data = [];
         $mem = [];
@@ -66,7 +67,7 @@ class API_ServerInfoController extends API_BaseController
     }
 
     // 获取所有进程
-    public function getAllProgress(){
+    private function getAllProgress(){
         $cmd = "ps -A";
         $res = ShellManager::exec($cmd);
         $proList = [];
@@ -84,9 +85,6 @@ class API_ServerInfoController extends API_BaseController
             }
         }
 
-        echo "<pre>";
-        var_dump($proList);
-        
         return $proList;
     }
 
