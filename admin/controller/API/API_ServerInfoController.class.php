@@ -13,10 +13,11 @@ class API_ServerInfoController extends API_BaseController
         $cmd = "free";
         $res = ShellManager::exec($cmd);
         if ($res["success"]){
-//            $res = (string)trim($res["result"]);
             $patt = '/\s{1,}/';
             $res = $res["result"];
+            // 内存信息
             $memory = preg_replace($patt,' ',$res[1]);
+            // 虚拟内存信息
             $swap = preg_replace($patt,' ',$res[2]);
 
             echo "<pre>";
