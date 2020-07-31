@@ -14,8 +14,10 @@ class API_ServerInfoController extends API_BaseController
         $res = ShellManager::exec($cmd);
         if ($res["success"]){
 //            $res = (string)trim($res["result"]);
+            $res = $res["result"];
+
             echo "<pre>";
-            var_dump($res["result"]);
+            var_dump(explode(" ", $res[1]));
 //            echo $this->success($res);
         }else {
             echo $this->failed("获取内存信息失败");
