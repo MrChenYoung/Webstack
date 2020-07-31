@@ -79,7 +79,10 @@ class API_ServerInfoController extends API_BaseController
                     $patt = '/\s{1,}/';
                     $re = preg_replace($patt,' ',$re);
                     $re = explode(" ",$re);
-                    $proList[] = $re[count($re) - 1];
+                    $pro = $re[count($re) - 1];
+                    if (!in_array($pro,$proList)){
+                        $proList[] = $pro;
+                    }
                 }
                 $index++;
             }
