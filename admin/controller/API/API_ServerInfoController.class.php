@@ -68,7 +68,7 @@ class API_ServerInfoController extends API_BaseController
 
     // 重启服务器
     public function rebootServer(){
-        $cmd = "reboot";
+        $cmd = "systemctl reboot -i";
         $res = ShellManager::exec($cmd);
         if ($res["success"]){
             echo $this->success("服务器重启中");
