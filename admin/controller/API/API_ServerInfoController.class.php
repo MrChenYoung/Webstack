@@ -77,6 +77,7 @@ class API_ServerInfoController extends API_BaseController
 //            echo $this->failed("服务器重启失败");
 //        }
 
+
         system("/www/wwwroot/webstack.yycode.ml/admin/controller/RebootServer.sh");
 //        shell_exec("/usr/sbin/reboot");
 //        exec("/usr/sbin/reboot");
