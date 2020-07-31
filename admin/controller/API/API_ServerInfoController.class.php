@@ -22,7 +22,7 @@ class API_ServerInfoController extends API_BaseController
             $memory = explode(" ", $memory);
             $memoryTotal = (int)$memory[1] * 1024;
             $memoryUsed = $memoryTotal - (int)$memory[3] * 1024;
-            $memoryPersent = round($memoryUsed/$memoryTotal,0) * 100;
+            $memoryPersent = round($memoryUsed/$memoryTotal,2) * 100;
             $memoryTotal = FileManager::formatBytes((string)$memoryTotal);
             $memoryUsed = FileManager::formatBytes((string)$memoryUsed);
 
@@ -31,7 +31,7 @@ class API_ServerInfoController extends API_BaseController
             $swap = explode(" ", $swap);
             $swapTotal = (int)$swap[1] * 1024;
             $swapUsed = $swapTotal - (int)$swap[3] * 1024;
-            $swapPersent = round($swapUsed/$swapTotal,0) * 100;
+            $swapPersent = round($swapUsed/$swapTotal,2) * 100;
             $swapTotal = FileManager::formatBytes((string)$swapTotal);
             $swapUsed = FileManager::formatBytes((string)$swapUsed);
             $memoryArray = [
