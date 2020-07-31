@@ -49,6 +49,19 @@ class API_ServerInfoController extends API_BaseController
 
     // 获取cpu使用详情
     public function getServerCpuUseage(){
+        $cmd = 'top -b -n 2 | grep -E "(Cpu\(s\))|(KiB Mem)"';
+        $res = ShellManager::exec($cmd);
+        if ($res["success"]){
+            $res = $res["result"];
+            echo "<pre>";
+            var_dump($res);
+//            $sys_info = explode("\n", $fp);
+//            $cpu_info = explode(",", $sys_info[2]);
+//            $cpu_usage = trim(trim($cpu_info[0], '%Cpu(s): '), 'us'); //百分比
+        }else {
+            echo $this->failed("获取cpu使用详情失败");
+        }
+
         $load = sys_getloadavg();
         echo "<pre>";
         var_dump($load);
