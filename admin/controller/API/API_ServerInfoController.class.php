@@ -61,7 +61,7 @@ class API_ServerInfoController extends API_BaseController
         }
 
         // 排序
-        array_multisort($mem, SORT_ASC, $data);
+        array_multisort($mem, SORT_DESC, $data);
         echo $this->success($data);
     }
 
