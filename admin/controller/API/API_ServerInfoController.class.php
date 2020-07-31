@@ -17,6 +17,7 @@ class API_ServerInfoController extends API_BaseController
             $res = $res["result"];
 
             echo "<pre>";
+            var_dump($res[1]);
             var_dump(explode(" ", $res[1]));
 //            echo $this->success($res);
         }else {
