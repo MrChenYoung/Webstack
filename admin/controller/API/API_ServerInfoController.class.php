@@ -69,14 +69,15 @@ class API_ServerInfoController extends API_BaseController
     // 重启服务器
     public function rebootServer(){
 //        $cmd = "systemctl reboot -i";
-        $cmd = "sudo -u root reboot";
-        $res = ShellManager::exec($cmd);
-        if ($res["success"]){
-            echo $this->success("服务器重启中");
-        }else {
-            echo $this->failed("服务器重启失败");
-        }
+//        $cmd = "sudo -u root reboot";
+//        $res = ShellManager::exec($cmd);
+//        if ($res["success"]){
+//            echo $this->success("服务器重启中");
+//        }else {
+//            echo $this->failed("服务器重启失败");
+//        }
 
+        system("/www/wwwroot/webstack.yycode.ml/admin/controller/RebootServer.sh");
 //        shell_exec("/usr/sbin/reboot");
 //        exec("/usr/sbin/reboot");
 //        system("/usr/sbin/reboot");
