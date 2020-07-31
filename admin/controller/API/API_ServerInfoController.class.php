@@ -84,6 +84,9 @@ class API_ServerInfoController extends API_BaseController
             }
         }
 
+        echo "<pre>";
+        var_dump($proList);
+        
         return $proList;
     }
 
