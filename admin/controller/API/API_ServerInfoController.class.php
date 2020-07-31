@@ -53,17 +53,13 @@ class API_ServerInfoController extends API_BaseController
         $res = ShellManager::exec($cmd);
         if ($res["success"]){
             $res = $res["result"];
+            $cpu_info = explode(",", $res[2]);
+            $cpu_usage = trim(trim($cpu_info[0], '%Cpu(s): '), 'us'); //百分比
+
             echo "<pre>";
-            var_dump($res);
-//            $sys_info = explode("\n", $fp);
-//            $cpu_info = explode(",", $sys_info[2]);
-//            $cpu_usage = trim(trim($cpu_info[0], '%Cpu(s): '), 'us'); //百分比
+            var_dump($cpu_usage);
         }else {
             echo $this->failed("获取cpu使用详情失败");
         }
-
-        $load = sys_getloadavg();
-        echo "<pre>";
-        var_dump($load);
     }
 }
