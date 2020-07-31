@@ -4,7 +4,9 @@
 namespace admin\controller\API;
 
 
+use framework\tools\FileManager;
 use framework\tools\ShellManager;
+use framework\tools\StringTool;
 
 class API_ServerInfoController extends API_BaseController
 {
@@ -17,14 +19,29 @@ class API_ServerInfoController extends API_BaseController
             $res = $res["result"];
             // 内存信息
             $memory = preg_replace($patt,' ',$res[1]);
+            $memory = explode(" ", $memory);
+            $memoryTotal = (int)$memory[1];
+            $memoryUsed = $memoryTotal - (int)$memory[3];
+            $memoryPersent = round($memoryUsed/$memoryTotal,2) * 100;
+            $memoryTotal = FileManager::formatBytes((string)$memoryTotal);
+            $memoryUsed = FileManager::formatBytes((string)$memoryUsed);
+
             // 虚拟内存信息
             $swap = preg_replace($patt,' ',$res[2]);
+            $swap = explode(" ", $swap);
+            $swapTotal = (int)$swap[1];
+            $swapUsed = $swapTotal - (int)$swap[3];
+            $swapPersent = round($swapUsed/$swapTotal,2) * 100;
+            $swapTotal = FileManager::formatBytes((string)$swapTotal);
+            $swapUsed = FileManager::formatBytes((string)$swapUsed);
+            $memoryArray = [
+                "memoryUsed"    => $memoryUsed."/".$memoryTotal,
+                "memoryPersent" => $memoryPersent."%",
+                "swapUsed"      => $swapUsed."/".$swapTotal,
+                "swapPersent"   => $swapPersent."%"
+            ];
 
-            $memory = explode(" ", $memory);
-            $memory = array_filter($memory);
-            echo "<pre>";
-            var_dump($memory);
-//            echo $this->success($res);
+            echo $this->success($memoryArray);
         }else {
             echo $this->failed("获取内存信息失败");
         }
