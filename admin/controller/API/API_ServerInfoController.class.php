@@ -47,9 +47,13 @@ class API_ServerInfoController extends API_BaseController
         }
     }
 
-    // 获取cpu使用详情
+    // 获取进程占用cpu和内存详情
     public function getServerCpuUseage(){
-        $cmd = 'top';
+        // 进程列表
+        $proList = ["rclone","BT-Panel","kcptun","sshd","ffmpeg","python","BT-Task"];
+
+
+        $cmd = 'ps -aux | grep rclone';
         $res = ShellManager::exec($cmd);
         if ($res["success"]){
             $res = $res["result"];
@@ -59,7 +63,7 @@ class API_ServerInfoController extends API_BaseController
             echo "<pre>";
             var_dump($res);
         }else {
-            echo $this->failed("获取cpu使用详情失败：".json_encode($res["result"]));
+            echo $this->failed("获取进程详情失败");
         }
     }
 }
