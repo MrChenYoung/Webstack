@@ -46,4 +46,11 @@ class API_ServerInfoController extends API_BaseController
             echo $this->failed("获取内存信息失败");
         }
     }
+
+    // 获取cpu使用详情
+    public function getServerCpuUseage(){
+        $load = sys_getloadavg();
+        echo "<pre>";
+        var_dump($load);
+    }
 }
