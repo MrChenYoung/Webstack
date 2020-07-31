@@ -62,6 +62,12 @@ class API_ServerInfoController extends API_BaseController
 
             echo "<pre>";
             var_dump($res);
+
+            $pro = $res[0];
+            $patt = '/\s{1,}/';
+            $pro = preg_replace($patt,' ',$pro);
+            $pro = explode(" ",$pro);
+            var_dump($pro);
         }else {
             echo $this->failed("获取进程详情失败");
         }
