@@ -14,11 +14,14 @@ class API_ServerInfoController extends API_BaseController
         $res = ShellManager::exec($cmd);
         if ($res["success"]){
 //            $res = (string)trim($res["result"]);
+            $patt = '/\s{1,}/';
             $res = $res["result"];
+            $memory = preg_replace($patt,' ',$res[1]);
+            $swap = preg_replace($patt,' ',$res[2]);
 
             echo "<pre>";
-            var_dump($res[1]);
-            var_dump(explode(" ", $res[1]));
+            var_dump($memory);
+            var_dump(explode(" ", $memory));
 //            echo $this->success($res);
         }else {
             echo $this->failed("获取内存信息失败");
