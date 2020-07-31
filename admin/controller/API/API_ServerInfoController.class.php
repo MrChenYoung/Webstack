@@ -59,7 +59,7 @@ class API_ServerInfoController extends API_BaseController
             echo "<pre>";
             var_dump($res);
         }else {
-            echo $this->failed("获取cpu使用详情失败");
+            echo $this->failed("获取cpu使用详情失败：".json_encode($res["result"]));
         }
     }
 }
