@@ -66,7 +66,7 @@ class API_ServerInfoController extends API_BaseController
     }
 
     // 获取所有进程
-    private function getAllProgress(){
+    public function getAllProgress(){
         $cmd = "ps -A";
         $res = ShellManager::exec($cmd);
         echo "<pre>";
