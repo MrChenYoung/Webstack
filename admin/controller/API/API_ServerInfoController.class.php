@@ -66,6 +66,17 @@ class API_ServerInfoController extends API_BaseController
         echo $this->success($data);
     }
 
+    // 重启服务器
+    public function rebootServer(){
+        $cmd = "reboot";
+        $res = ShellManager::exec($cmd);
+        if ($res["success"]){
+            echo $this->success("服务器重启中");
+        }else {
+            echo $this->failed("服务器重启失败");
+        }
+    }
+
     // 获取所有进程
     private function getAllProgress(){
         $cmd = "ps -A";
