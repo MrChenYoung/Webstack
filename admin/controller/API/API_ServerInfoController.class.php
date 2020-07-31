@@ -48,28 +48,56 @@ class API_ServerInfoController extends API_BaseController
     }
 
     // 获取进程占用cpu和内存详情
-    public function getServerCpuUseage(){
+    public function getProgressInfo(){
         // 进程列表
         $proList = ["rclone","BT-Panel","kcptun","sshd","ffmpeg","python","BT-Task"];
 
-
-        $cmd = 'ps -aux | grep rclone';
-        $res = ShellManager::exec($cmd);
-        if ($res["success"]){
-            $res = $res["result"];
-//            $cpu_info = explode(",", $res[2]);
-//            $cpu_usage = trim(trim($cpu_info[0], '%Cpu(s): '), 'us'); //百分比
-
-            echo "<pre>";
-            var_dump($res);
-
-            $pro = $res[0];
-            $patt = '/\s{1,}/';
-            $pro = preg_replace($patt,' ',$pro);
-            $pro = explode(" ",$pro);
-            var_dump($pro);
-        }else {
-            echo $this->failed("获取进程详情失败");
+        $data = [];
+        $mem = [];
+        foreach ($proList as $item) {
+            $res = $this->getProInfo($item);
+            $data[] = $res;
+            $mem[] = $res["memorySpace"];
         }
+
+        // 排序
+        array_multisort($mem, SORT_ASC, $data);
+        echo $this->success($data);
+    }
+
+    // 获取指定进程占用cpu和内存详情
+    public function getProInfo($proName){
+        $cmd = 'ps -aux | grep '.$proName;
+        $res = ShellManager::exec($cmd);
+
+        $cpuUsed = 0.0;
+        $memoryUsed = 0.0;
+        $memorySpace = 0;
+        $data = [];
+        if ($res["success"]){
+            $proList = $res["result"];
+            foreach ($proList as $pro) {
+                $patt = '/\s{1,}/';
+                $pro = preg_replace($patt,' ',$pro);
+                $pro = explode(" ",$pro);
+                $cpuUsed += (float)$pro[2];
+                $memoryUsed += (float)$pro[3];
+                $memorySpace += (int)$pro[5];
+            }
+        }
+
+        $cpuUsed = $cpuUsed."%";
+        $memoryUsed = $memoryUsed."%";
+        $memorySpaceFormate = FileManager::formatBytes($memorySpace * 1024);
+
+        $data = [
+            "proName"               =>  $proName,
+            "cpuUsed"               =>  $cpuUsed,
+            "memoryUsed"            =>  $memoryUsed,
+            "memorySpace"           =>  $memorySpace,
+            "memorySpaceFormate"    =>  $memorySpaceFormate
+        ];
+
+        return $data;
     }
 }
