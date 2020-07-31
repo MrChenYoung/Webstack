@@ -65,8 +65,16 @@ class API_ServerInfoController extends API_BaseController
         echo $this->success($data);
     }
 
+    // 获取所有进程
+    private function getAllProgress(){
+        $cmd = "ps -A";
+        $res = ShellManager::exec($cmd);
+        echo "<pre>";
+        var_dump($res);
+    }
+
     // 获取指定进程占用cpu和内存详情
-    public function getProInfo($proName){
+    private function getProInfo($proName){
         $cmd = 'ps -aux | grep '.$proName;
         $res = ShellManager::exec($cmd);
 
