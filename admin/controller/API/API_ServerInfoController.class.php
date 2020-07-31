@@ -69,8 +69,22 @@ class API_ServerInfoController extends API_BaseController
     public function getAllProgress(){
         $cmd = "ps -A";
         $res = ShellManager::exec($cmd);
-        echo "<pre>";
-        var_dump($res);
+        $proList = [];
+        if ($res["success"]){
+            $res = $res["result"];
+            $index = 0;
+            foreach ($res as $re) {
+                if ($index != 0){
+                    $patt = '/\s{1,}/';
+                    $re = preg_replace($patt,' ',$re);
+                    $re = explode(" ",$re);
+                    $proList[] = $re[count($re) - 1];
+                }
+                $index++;
+            }
+        }
+
+        return $proList;
     }
 
     // 获取指定进程占用cpu和内存详情
