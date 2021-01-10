@@ -19,8 +19,7 @@
     // 请求平台数据
     function loadPlatformLists() {
         var catId  = $("#cat_id").val();
-        // var url = baseUrl + "?m=home&c=API_Common&a=loadHomeAccountLists&API=&id=" + catId;
-        var url = "http://192.168.1.110:8081?m=home&c=API_Common&a=loadHomeAccountLists&API=&id=" + catId;
+        var url = baseUrl + "?m=home&c=API_Common&a=loadHomeAccountLists&API=&id=" + catId;
         console.log("获取平台列表:" + url);
         $(".loading-cover").css("display","block");
         get(url,function (data) {
