@@ -63,7 +63,7 @@ function post(url, data=null, complete=null,withHud=true,showToast=false,timeOut
 }
 
 // 发送请求
-function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=20000,failFunc=null,type='json') {
+function request(url, data=null, complete=null, withHud=true, showToast=false, timeOut=20000, failFunc=null,type='json') {
     if (withHud){
         showHud();
     }
@@ -71,6 +71,7 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
     var method = data == null ? "get" : "post";
     console.log("方法:" + method);
     console.log("请求地址: " + url);
+    console.log("参数: " + data);
 
     $.ajax({
         type : method,
