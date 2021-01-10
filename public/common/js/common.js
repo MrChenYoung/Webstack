@@ -111,8 +111,8 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
             }
             $errorText = "请求失败，地址:" + xhr.requestURL + ",错误码:" + textStatus + ",错误信息:" + errorMessage;
             toast();
-            console.log(errorMessage);
-            
+            console.log($errorText);
+
             if (failFunc){
                 failFunc();
             }
