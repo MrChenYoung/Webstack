@@ -103,7 +103,7 @@ class Framework
             $controllerName = 'framework\\'.'core\\'.CONTROLLER.'Controller';
         }
 
-        echo $controllerName;
+        echo ACTION;
         return;
 
         $controller = new $controllerName;
