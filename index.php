@@ -9,7 +9,7 @@ require_once "init.php";
 
 // 如果是请求API 直接进入主页终止后续代码执行
 if (isset($_REQUEST["API"])){
-    echo "测试进入index";
+    echo '<script>console.log("测试进入index")</script>';
 return;
 
     $modoule = isset($_REQUEST["m"]) ? $_REQUEST["m"] : "";
