@@ -100,14 +100,10 @@ class Framework
 
 
         }else {
-            $controllerName = 'framework\\'.'core\\'.CONTROLLER.'Controller';
+            $controllerName = 'framework\\' . 'core\\' . CONTROLLER . 'Controller';
         }
 
-        echo ACTION;
-        return;
-
         $controller = new $controllerName;
-
 
         //调用控制器的方法
         $a = ACTION;
