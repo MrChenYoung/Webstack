@@ -109,9 +109,7 @@ function request(url, data=null, complete=null,withHud=true,showToast=false,time
             if (withHud) {
                 hideHud();
             }
-            toast("请求失败:" + errorMessage);
-
-            console.log("请求失败了偶尔Lee:" + errorMessage);
+            toast("请求失败，地址:" + xhr.requestURL + ",错误码:" + textStatus + ",错误信息:" + errorMessage);
             if (failFunc){
                 failFunc();
             }
