@@ -84,8 +84,8 @@ function request(url, data=null, complete=null, withHud=true, showToast=false, t
         beforeSend:function (jqxhr,settings) {
             jqxhr.requestURL = url;
         }
-        ,complete: function () {
-            console.log("加载完成");
+        ,complete: function (XMLHttpRequest,status) {
+            console.log("加载完成,状态码:" + status);
             if (withHud) {
                 hideHud();
             }
