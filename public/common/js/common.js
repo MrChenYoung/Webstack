@@ -63,7 +63,7 @@ function post(url, data=null, complete=null,withHud=true,showToast=false,timeOut
 }
 
 // 发送请求
-function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=10000,failFunc=null,type='json') {
+function request(url, data=null, complete=null,withHud=true,showToast=false,timeOut=20000,failFunc=null,type='json') {
     if (withHud){
         showHud();
     }
