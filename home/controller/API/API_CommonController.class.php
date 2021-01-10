@@ -10,9 +10,6 @@ class API_CommonController extends API_BaseController
 {
     // 获取前台账号列表
     public function loadHomeAccountLists(){
-        echo "结果测试";
-
-        
         // 分类id
         // id
         if (!isset($_GET["id"])){
