@@ -7,6 +7,9 @@
 // 初始化
 require_once "init.php";
 
+echo "测试进入index";
+return;
+
 // 如果是请求API 直接进入主页终止后续代码执行
 if (isset($_REQUEST["API"])){
     $modoule = isset($_REQUEST["m"]) ? $_REQUEST["m"] : "";
