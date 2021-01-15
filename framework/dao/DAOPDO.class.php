@@ -38,6 +38,7 @@ class DAOPDO implements i_DAOPDO
         return self::$instance;
     }
 
+    
     /**
      * 登录并连接到数据库
      */

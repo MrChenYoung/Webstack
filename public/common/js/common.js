@@ -71,7 +71,6 @@ function request(url, data=null, complete=null, withHud=true, showToast=false, t
     var method = data == null ? "get" : "post";
     console.log("方法:" + method);
     console.log("请求地址: " + url);
-    console.log("参数: " + data);
 
     $.ajax({
         type : method,
