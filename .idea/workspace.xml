@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/framework/dao/DAOPDO.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/framework/dao/DAOPDO.class.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/common/js/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/common/js/common.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +114,7 @@
       <workItem from="1610110286561" duration="842000" />
       <workItem from="1610208141393" duration="5504000" />
       <workItem from="1610706759457" duration="36000" />
+      <workItem from="1610707233402" duration="11000" />
     </task>
     <servers />
   </component>
