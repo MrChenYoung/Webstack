@@ -81,7 +81,7 @@ function checkLoginStatus(){
             toHome("admin","CategoryManager","index");
         }else {
             // 账号密码不正确 重新进入登录页
-            toLogin(true,"账号或密码错误",$m);
+            toLogin(true,"账号或密码错误","admin");
         }
     } else {
         // session已经记录登录状态
