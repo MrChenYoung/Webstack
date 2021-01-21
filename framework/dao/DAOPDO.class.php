@@ -109,7 +109,6 @@ class DAOPDO implements i_DAOPDO
                         // 数据库创建成功 导入备份
                         // $driveDbPath = "/www/wwwroot/cloudmount.yycode.ml/GDSuite/我的数据/备份数据/db/";
                          $driveDbPath = "/www/resource/db/";
-                        // $driveDbPath = "/Users/mrchen/Desktop/db/";
                         $path = $driveDbPath.$dbName."/all/";
                         $fileName = $this->getLastBackDb($path);
                         $path .= $fileName;
