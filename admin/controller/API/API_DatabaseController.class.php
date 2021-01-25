@@ -111,7 +111,7 @@ class API_DatabaseController extends API_BaseController
             "dbList"    =>  json_encode($this->dbList)
         ];
 
-        MultiThreadTool::addTask($this->website."/index.php","backupDb",$params);
+//        MultiThreadTool::addTask($this->website."/index.php","backupDb",$params);
         // 提示正在后台移动
         echo $this->success("数据库后台备份中");
     }
