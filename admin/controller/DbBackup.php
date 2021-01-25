@@ -96,7 +96,7 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
 
     // 移动备份文件
 //    $cmd = "rclone moveto ".$localTbPath." GDSuite:我的数据/备份数据/db/".$dataBase."/".$tableDirName;
-    $cmd = "move ".$localTbPath."/* ".$dbBackPathOnServer;
+    $cmd = "move ".$localTbPath."* ".$dbBackPathOnServer;
     addLog($logP,"备份:".$cmd);
     return;
 
