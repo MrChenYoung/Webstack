@@ -91,6 +91,7 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
     // 删除旧的备份目录以及下面所有的文件
     $dbBackPathOnServer = $dbBackPathOnServer."/".$tableDirName;
     if (is_dir($dbBackPathOnServer)){
+        addLog($logP,"备份:".$dbBackPathOnServer);
         \framework\tools\FileManager::clearDir($dbBackPathOnServer);
     }
 
