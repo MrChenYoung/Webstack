@@ -46,10 +46,10 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
         chmod($localTbPath,0700);
     }
 
-//    $res = (new \framework\tools\DatabaseBackupManager($option))->backup($table,$localTbPath);
-//    if (!$res){
-//        addLog($logP,"备份失败");
-//    }
+    $res = (new \framework\tools\DatabaseBackupManager($option))->backup($table,$localTbPath);
+    if (!$res){
+        addLog($logP,"备份失败");
+    }
 
     // 移动本地备份文件到谷歌云盘
 //    $cmd = "rclone lsjson GDSuite:我的数据/备份数据/db/";
@@ -83,13 +83,10 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
 //        ShellManager::exec($cmd);
 
     $dbBackPathOnServer = "/www/wwwroot/res.yycode.ml/db/".$dataBase."/".$tableDirName;
-    addLog($logP,"备份111:".$dbBackPathOnServer);
     if (!is_dir($dbBackPathOnServer)){
         // 数据库备份目录不存在 创建
         mkdir($dbBackPathOnServer,0700,true);
-        addLog($logP,"备份:".$dbBackPathOnServer);
     }
-    return;
 
     // 删除旧的备份目录以及下面所有的文件
     if (is_dir($dbBackPathOnServer)){
