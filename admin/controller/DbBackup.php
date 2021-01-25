@@ -87,7 +87,7 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
         mkdir($dbBackPathOnServer,0777,true);
     }
 
-    addLog($logP,"备份失败:".$dbBackPathOnServer.$tableDirName);
+    addLog($logP,"备份失败:".$dbBackPathOnServer."/".$tableDirName);
     return;
 
     // 移动备份文件
