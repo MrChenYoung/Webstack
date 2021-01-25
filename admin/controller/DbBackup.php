@@ -1,6 +1,7 @@
 <?php
 
 require_once "framework/tools/DatabaseBackupManager.class.php";
+require_once "framework/tools/FileManager.class.php";
 
 // 日志文件路径
 $logPath = $argv[1];
@@ -87,12 +88,18 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
         mkdir($dbBackPathOnServer,0777,true);
     }
 
-    addLog($logP,"备份失败:".$dbBackPathOnServer."/".$tableDirName);
-    return;
+    // 删除旧的备份目录以及下面所有的文件
+    $dbBackPathOnServer = $dbBackPathOnServer."/".$tableDirName;
+    if (is_dir($dbBackPathOnServer)){
+        \framework\tools\FileManager::deleteDir($dbBackPathOnServer);
+    }
 
     // 移动备份文件
 //    $cmd = "rclone moveto ".$localTbPath." GDSuite:我的数据/备份数据/db/".$dataBase."/".$tableDirName;
-    $cmd = "move ".$localTbPath." GDSuite:我的数据/备份数据/db/".$dataBase."/".$tableDirName;
+    $cmd = "move ".$localTbPath." ".$dbBackPathOnServer;
+    addLog($logP,"备份:".$cmd);
+    return;
+
     $moveRes = myshellExec($cmd);
     if (!$moveRes["success"]){
         addLog($logP,"备份".$tableDirName."表失败");
