@@ -83,6 +83,7 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
 //        ShellManager::exec($cmd);
 
     $dbBackPathOnServer = "/www/wwwroot/res.yycode.ml/db/".$dataBase."/";
+    addLog($logP,"备份111:".$dbBackPathOnServer);
     if (!is_dir($dbBackPathOnServer)){
         // 数据库备份目录不存在 创建
         mkdir($dbBackPathOnServer,0700,true);
