@@ -33,6 +33,29 @@ class FileManager
     }
 
     /**
+     * 清空文件夹(递归删除,先删除内部所有文件和文件夹，并保留指定目录)
+     * @param $dirPath
+     */
+    public static function clearDir($dirPath){
+        $handler = file_exists($dirPath) ? opendir($dirPath) : null;
+        if ($handler){
+            while (($filename = readdir($handler)) !== false) {//务必使用!==，防止目录下出现类似文件名“0”等情况
+                if ($filename != "." && $filename != "..") {
+                    $movieFullPath = $dirPath."/$filename";
+                    if (is_file($movieFullPath)){
+                        // 如果是文件 删除
+                        unlink($movieFullPath);
+                    }else {
+                        // 如果是文件夹 递归删除
+                        self::deleteDir($movieFullPath);
+                    }
+                }
+            }
+            closedir($handler);
+        }
+    }
+
+    /**
      * 获取一个文件夹下所有文件名 (包括文件和文件夹)
      * @param $dir
      * @return array
