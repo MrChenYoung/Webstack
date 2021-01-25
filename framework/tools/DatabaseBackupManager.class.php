@@ -34,6 +34,7 @@ class DatabaseBackupManager
     var $db; // 数据库连接
     var $database; // 所用数据库
     var $sqldir; // 数据库备份文件夹
+    var $host;
 
     // 换行符
     private $ds = "\n";
@@ -52,7 +53,7 @@ class DatabaseBackupManager
      * @param string $charset
      */
     function __construct($option) {
-        $host = $option['host'];
+        $this->host = $option['host'];
         $username = $option['user'];
         $password = $option['pass'];
         $database = $option['dbname'];
@@ -63,7 +64,7 @@ class DatabaseBackupManager
         set_time_limit(0);//无时间限制
         @ob_end_flush();
         // 连接数据库
-        $this->db = new \mysqli($host, $username, $password,$database,$port);
+        $this->db = new \mysqli($this->host, $username, $password,$database,$port);
         if ($this->db -> connect_error){
             echo "数据库连接失败：".$this->db -> connect_error;
         }else {
