@@ -86,6 +86,7 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
     if (!is_dir($dbBackPathOnServer)){
         // 数据库备份目录不存在 创建
         mkdir($dbBackPathOnServer,0700,true);
+        addLog($logP,"备份:".$dbBackPathOnServer);
     }
     return;
 
