@@ -45,7 +45,7 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
         chmod($localTbPath,0700);
     }
 
-    addLog($logP,"备份失败:".$localTbPath);
+    addLog($logP,"备份失败:".$table);
     return;
     $res = (new \framework\tools\DatabaseBackupManager($option))->backup($table,$localTbPath);
     if (!$res){
