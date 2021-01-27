@@ -308,7 +308,7 @@ class API_DatabaseController extends API_BaseController
 //                $this->uploadResultHandle($tbName,"上传备份失败");
 //            }
 
-            $dbBackPathOnServer = $this->driveDbPath.$this->dbName."/".$tbDirName."/".$name;
+            $dbBackPathOnServer = $this->driveDbPath.$this->dbName."/".$tbDirName;
             if (!is_dir($dbBackPathOnServer)){
                 // 数据库备份目录不存在 创建
                 mkdir($dbBackPathOnServer,0700,true);
@@ -319,10 +319,10 @@ class API_DatabaseController extends API_BaseController
 
             $target_dir = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/";
             $target_path = $target_dir.$name;
-            if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
+            if(move_uploaded_file($fileInfo['tmp_name'], $dbBackPathOnServer."/".$name)) {
                 // 移动备份文件
-                $cmd = "mv ".$target_path." ".$dbBackPathOnServer;
-                $this->uploadResultHandle($tbName,$cmd);
+//                $cmd = "mv ".$target_path." ".$dbBackPathOnServer;
+//                $this->uploadResultHandle($tbName,$cmd);
 
 //                $moveRes = ShellManager::exec($cmd);
 //                if (!$moveRes["success"]){
@@ -330,7 +330,7 @@ class API_DatabaseController extends API_BaseController
 //                    unlink($target_path);
 //                    die;
 //                }
-//                $this->uploadResultHandle($tbName,"上传成功");
+                $this->uploadResultHandle($tbName,"上传成功");
             }else {
                 // 上传失败
                 $this->uploadResultHandle($tbName, "上传备份失败");
@@ -342,11 +342,9 @@ class API_DatabaseController extends API_BaseController
 
     // 上传备份结果处理
     private function uploadResultHandle($tbName,$msg){
-//        $msg = base64_encode($msg);
-
-        echo $msg;
-        $url = "?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=";
-        header("Refresh:20000;url=$url");
+        $msg = base64_encode($msg);
+        $url = "?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=".$msg;
+        header("Refresh:0;url=$url");
     }
 
     // 清空日志
