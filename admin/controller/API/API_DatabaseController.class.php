@@ -186,7 +186,6 @@ class API_DatabaseController extends API_BaseController
         echo $this->success($data);
     }
 
-
     // 删除备份
     public function deleteBackup(){
         // 文件名
@@ -317,19 +316,7 @@ class API_DatabaseController extends API_BaseController
                 FileManager::clearDir($dbBackPathOnServer);
             }
 
-            $target_dir = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/";
-            $target_path = $target_dir.$name;
             if(move_uploaded_file($fileInfo['tmp_name'], $dbBackPathOnServer."/".$name)) {
-                // 移动备份文件
-//                $cmd = "mv ".$target_path." ".$dbBackPathOnServer;
-//                $this->uploadResultHandle($tbName,$cmd);
-
-//                $moveRes = ShellManager::exec($cmd);
-//                if (!$moveRes["success"]){
-//                    $this->uploadResultHandle($tbName,"上传备份失败111");
-//                    unlink($target_path);
-//                    die;
-//                }
                 $this->uploadResultHandle($tbName,"上传成功");
             }else {
                 // 上传失败
