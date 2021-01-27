@@ -25,10 +25,6 @@ class DbManagerController extends Controller
         $this->data["msg"] = base64_decode($msg);
         $this->data["tbName"] = $tbName;
 
-        echo "<pre>";
-        var_dump($this->data);
-
-
-//        $this -> loadTemplate(["data"=>$this -> data],"db/index.html");
+        $this -> loadTemplate(["data"=>$this -> data],"db/index.html");
     }
 }
