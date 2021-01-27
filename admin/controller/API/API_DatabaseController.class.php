@@ -321,7 +321,11 @@ class API_DatabaseController extends API_BaseController
             $target_path = $target_dir.$name;
             if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
                 // 移动备份文件
-//                $cmd = "mv ".$target_path." ".$dbBackPathOnServer;
+                $cmd = "mv ".$target_path." ".$dbBackPathOnServer;
+                echo $cmd;
+                $url = "?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=成功";
+                header("Refresh:2000000;url=$url");
+
 //                $moveRes = ShellManager::exec($cmd);
 //                if (!$moveRes["success"]){
 //                    $this->uploadResultHandle($tbName,"上传备份失败111");
