@@ -322,9 +322,7 @@ class API_DatabaseController extends API_BaseController
             if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
                 // 移动备份文件
                 $cmd = "mv ".$target_path." ".$dbBackPathOnServer;
-                echo $cmd;
-                $url = "?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=成功";
-                header("Refresh:2000000;url=$url");
+                $this->uploadResultHandle($tbName,$cmd);
 
 //                $moveRes = ShellManager::exec($cmd);
 //                if (!$moveRes["success"]){
@@ -332,7 +330,7 @@ class API_DatabaseController extends API_BaseController
 //                    unlink($target_path);
 //                    die;
 //                }
-                $this->uploadResultHandle($tbName,"上传成功");
+//                $this->uploadResultHandle($tbName,"上传成功");
             }else {
                 // 上传失败
                 $this->uploadResultHandle($tbName, "上传备份失败");
@@ -344,9 +342,11 @@ class API_DatabaseController extends API_BaseController
 
     // 上传备份结果处理
     private function uploadResultHandle($tbName,$msg){
-        $msg = base64_encode($msg);
-        $url = "?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=".$msg;
-        header("Refresh:0;url=$url");
+//        $msg = base64_encode($msg);
+
+        echo $msg;
+        $url = "?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=";
+        header("Refresh:20000;url=$url");
     }
 
     // 清空日志
