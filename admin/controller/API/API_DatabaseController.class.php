@@ -308,7 +308,7 @@ class API_DatabaseController extends API_BaseController
 //                $this->uploadResultHandle($tbName,"上传备份失败");
 //            }
 
-            $dbBackPathOnServer = $this->driveDbPath.$this->dbName."/".$tbDirName;
+            $dbBackPathOnServer = $this->driveDbPath.$this->dbName."/".$tbDirName."/".$name;
             if (!is_dir($dbBackPathOnServer)){
                 // 数据库备份目录不存在 创建
                 mkdir($dbBackPathOnServer,0700,true);
