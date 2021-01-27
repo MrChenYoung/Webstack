@@ -332,7 +332,7 @@ class API_DatabaseController extends API_BaseController
     private function uploadResultHandle($tbName,$msg){
         $msg = base64_encode($msg);
         $url = "?m=admin&c=DbManager&a=index&tbName=".$tbName."&msg=".$msg;
-        header("Refresh:20;url=$url");
+        header("Refresh:20000;url=$url");
     }
 
     // 清空日志
