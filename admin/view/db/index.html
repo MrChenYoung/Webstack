@@ -273,6 +273,7 @@
         var backName = $this.attr("backName");
         var dirName = selectedTableName.length > 0 ? selectedTableName : "all";
         var url = "http://res.yycode.ml/db/" + $("#db_name").val() + "/" + dirName + "/" + backName;
+        console.log("下载备份:" + url);
         var $eleForm = $("<form method='get'></form>");
         $eleForm.attr("action",url);
         $(document.body).append($eleForm);
