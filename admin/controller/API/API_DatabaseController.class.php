@@ -263,49 +263,65 @@ class API_DatabaseController extends API_BaseController
             }
 
             // 目标文件目录
-            $target_dir = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/";
-            $target_path = $target_dir.$name;
+//            $target_dir = ADMIN."resource/dbBackup/".$this->dbName."/".$tbDirName."/";
+//            $target_path = $target_dir.$name;
+//
+//            //将文件从临时目录拷贝到指定目录
+//            if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
+//                //上传成功,移动文件到谷歌云盘
+//                $cmd = "rclone lsjson GDSuite:我的数据/备份数据/db/";
+//                $checkDbDirRes = ShellManager::exec($cmd);
+//                if ($checkDbDirRes["success"]){
+//                    $fileList = $checkDbDirRes["result"];
+//                    $fileList = implode("",$fileList);
+//                    $fileList = json_decode($fileList,true);
+//                    $exist = false;
+//                    foreach ($fileList as $item) {
+//                        if ($item["name"] == $this->dbName){
+//                            $exist = true;
+//                            break;
+//                        }
+//                    }
+//                    if (!$exist){
+//                        $cmd = "rclone mkdir GDSuite:我的数据/备份数据/db/".$this->dbName;
+//                        $execRes = ShellManager::exec($cmd);
+//                        if (!$execRes["success"]){
+//                            $cmd = "rm -f ".$target_path;
+//                            ShellManager::exec($cmd);
+//                            $this->uploadResultHandle($tbName,"上传备份失败");
+//                            die;
+//                        }
+//                    }
+//                }
+//
+//                // 移动备份文件
+//                $cmd = "rclone moveto ".$target_dir." GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName;
+//                $moveRes = ShellManager::exec($cmd);
+//                if (!$moveRes["success"]){
+//                    $this->uploadResultHandle($tbName,"上传备份失败");
+//                    die;
+//                }
+//
+//                $this->uploadResultHandle($tbName,"上传成功");
+//            }  else {
+//                // 上传失败
+//                $this->uploadResultHandle($tbName,"上传备份失败");
+//            }
 
-            //将文件从临时目录拷贝到指定目录
-            if(move_uploaded_file($fileInfo['tmp_name'], $target_path)) {
-                //上传成功,移动文件到谷歌云盘
-                $cmd = "rclone lsjson GDSuite:我的数据/备份数据/db/";
-                $checkDbDirRes = ShellManager::exec($cmd);
-                if ($checkDbDirRes["success"]){
-                    $fileList = $checkDbDirRes["result"];
-                    $fileList = implode("",$fileList);
-                    $fileList = json_decode($fileList,true);
-                    $exist = false;
-                    foreach ($fileList as $item) {
-                        if ($item["name"] == $this->dbName){
-                            $exist = true;
-                            break;
-                        }
-                    }
-                    if (!$exist){
-                        $cmd = "rclone mkdir GDSuite:我的数据/备份数据/db/".$this->dbName;
-                        $execRes = ShellManager::exec($cmd);
-                        if (!$execRes["success"]){
-                            $cmd = "rm -f ".$target_path;
-                            ShellManager::exec($cmd);
-                            $this->uploadResultHandle($tbName,"上传备份失败");
-                            die;
-                        }
-                    }
-                }
+            $dbBackPathOnServer = $this->driveDbPath.$this->dbName."/".$tbDirName;
+            if (!is_dir($dbBackPathOnServer)){
+                // 数据库备份目录不存在 创建
+                mkdir($dbBackPathOnServer,0700,true);
+            }else {
+                // 删除旧的备份目录以及下面所有的文件
+                FileManager::clearDir($dbBackPathOnServer);
+            }
 
-                // 移动备份文件
-                $cmd = "rclone moveto ".$target_dir." GDSuite:我的数据/备份数据/db/".$this->dbName."/".$tbDirName;
-                $moveRes = ShellManager::exec($cmd);
-                if (!$moveRes["success"]){
-                    $this->uploadResultHandle($tbName,"上传备份失败");
-                    die;
-                }
-
+            if(move_uploaded_file($fileInfo['tmp_name'], $dbBackPathOnServer)) {
                 $this->uploadResultHandle($tbName,"上传成功");
-            }  else {
+            }else {
                 // 上传失败
-                $this->uploadResultHandle($tbName,"上传备份失败");
+                $this->uploadResultHandle($tbName, "上传备份失败");
             }
         }else {
             $this->uploadResultHandle("","上传发生错误");

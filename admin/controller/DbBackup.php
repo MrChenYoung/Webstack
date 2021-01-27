@@ -86,10 +86,8 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
     if (!is_dir($dbBackPathOnServer)){
         // 数据库备份目录不存在 创建
         mkdir($dbBackPathOnServer,0700,true);
-    }
-
-    // 删除旧的备份目录以及下面所有的文件
-    if (is_dir($dbBackPathOnServer)){
+    }else {
+        // 删除旧的备份目录以及下面所有的文件
         \framework\tools\FileManager::clearDir($dbBackPathOnServer);
     }
 
