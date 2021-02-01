@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
+      <change afterPath="$PROJECT_DIR$/admin/controller/googleDriveSync.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/view/db/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/db/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/controller/API/API_DatabaseController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/API/API_DatabaseController.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/controller/AsynTaskController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/AsynTaskController.class.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,19 +50,19 @@
     <option name="SHOW_DIALOG" value="false" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/admin/controller" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/framework/tools" />
+      <recent name="$PROJECT_DIR$/public/admin/js" />
+      <recent name="$PROJECT_DIR$/admin/controller/API" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/admin/view/phpneedle" />
       <recent name="$PROJECT_DIR$/admin/controller" />
       <recent name="$PROJECT_DIR$/admin/view/attachment" />
       <recent name="$PROJECT_DIR$/admin/view/general" />
       <recent name="$PROJECT_DIR$/home/view/account" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/framework/tools" />
-      <recent name="$PROJECT_DIR$/public/admin/js" />
-      <recent name="$PROJECT_DIR$/admin/controller/API" />
-      <recent name="$PROJECT_DIR$/admin" />
     </key>
   </component>
   <component name="SvnConfiguration">
@@ -124,6 +126,7 @@
       <workItem from="1611732628082" duration="5073000" />
       <workItem from="1612180960983" duration="45000" />
       <workItem from="1612181085118" duration="15000" />
+      <workItem from="1612185316309" duration="1332000" />
     </task>
     <servers />
   </component>

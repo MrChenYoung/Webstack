@@ -61,4 +61,17 @@ class AsynTaskController extends Controller
             LogManager::getSingleton()->addLog("执行测试php脚本成功:".json_encode($res));
         }
     }
+
+    // 备份数据到谷歌云盘
+    public function backupGD(){
+        LogManager::getSingleton()->addLog("测试备份到谷歌云盘失败:");
+
+//        $cmd = "/www/wwwroot/webstack.yycode.ml/admin/controller/googleDriveSync.sh";
+//        $res = ShellManager::exec($cmd);
+//        if (!$res["success"]){
+//            LogManager::getSingleton()->addLog("备份到谷歌云盘失败:".json_encode($res));
+//        }else {
+//            LogManager::getSingleton()->addLog("备份到谷歌云盘成功:".json_encode($res));
+//        }
+    }
 }

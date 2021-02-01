@@ -116,6 +116,18 @@ class API_DatabaseController extends API_BaseController
         echo $this->success("数据库后台备份中");
     }
 
+    // 备份本地文件到谷歌云盘
+    public function backupToGoogleDrive(){
+        // 后台移动
+        $params = [
+            "m"=>"admin",
+            "c"=>"AsynTask",
+            "a"=>"index"
+        ];
+
+        MultiThreadTool::addTask($this->website."/index.php","backupGD",$params);
+    }
+
     // 获取数据库备份历史
     public function loadDbBackupHistory(){
         // 表名
