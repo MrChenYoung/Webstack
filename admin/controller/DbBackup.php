@@ -82,7 +82,7 @@ function backupDb($dataBase,$table="",$localTbPath,$logP,$tableDirName,$backupFi
 //        $cmd = "rclone delete GDSuite:我的数据/备份数据/db/".$dbName."/".$tbDirName;
 //        ShellManager::exec($cmd);
 
-    $dbBackPathOnServer = "/www/wwwroot/res.yycode.ml/db/".$dataBase."/".$tableDirName;
+    $dbBackPathOnServer = "/www/wwwroot/res.yycode.ml/backup/db/".$dataBase."/".$tableDirName;
     if (!is_dir($dbBackPathOnServer)){
         // 数据库备份目录不存在 创建
         mkdir($dbBackPathOnServer,0700,true);

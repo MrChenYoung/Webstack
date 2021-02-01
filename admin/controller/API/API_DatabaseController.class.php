@@ -26,7 +26,7 @@ class API_DatabaseController extends API_BaseController
     {
         parent::__construct();
         $this->backupPath = ADMIN."resource/dbBackup/";
-        $this->driveDbPath = "/www/wwwroot/res.yycode.ml/db/";
+        $this->driveDbPath = "/www/wwwroot/res.yycode.ml/backup/db/";
         $this->dbName = $GLOBALS["db_info"]["dbname"];
         $this->dbList = ["account_db","cloud_manager_db","web_stack_db","movie_theater_db"];
     }
