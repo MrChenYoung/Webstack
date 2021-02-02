@@ -118,14 +118,16 @@ class API_DatabaseController extends API_BaseController
 
     // 备份本地文件到谷歌云盘
     public function backupToGoogleDrive(){
-        // 后台移动
-        $params = [
-            "m"=>"admin",
-            "c"=>"AsynTask",
-            "a"=>"index"
-        ];
+        LogManager::getSingleton()->addLog("测试备份到谷歌云盘失败:");
 
-        MultiThreadTool::addTask($this->website."/index.php","backupGD",$params);
+        // 后台移动
+//        $params = [
+//            "m"=>"admin",
+//            "c"=>"AsynTask",
+//            "a"=>"index"
+//        ];
+//
+//        MultiThreadTool::addTask($this->website."/index.php","backupGD",$params);
     }
 
     // 获取数据库备份历史
