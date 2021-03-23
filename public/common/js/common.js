@@ -204,7 +204,6 @@ function RSADecryptPass(pass) {
     return privateDecrypt(rsaPrivateContent,pass);
 }
 
-
 // 确认提示 操作前提示确认，防止误操作
 function confirmAlert(confirmFunction,message="确定删除？") {
     var btns = [
