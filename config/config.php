@@ -7,7 +7,7 @@ return [
     // vps数据库信息
     'host'              =>      'localhost',
     'user'              =>      'root',
-    'pass'              =>      '199156',
+    'pass'              =>      'chenhuiyi199156',
     'dbname'            =>      'web_stack_db',
     'port'              =>      3306,
     'charset'           =>      'utf8',
