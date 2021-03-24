@@ -91,7 +91,7 @@ class DAOPDO implements i_DAOPDO
     private function createDatabase(){
         $dbName = $this->dbname;
         $sql = "SELECT * FROM information_schema.SCHEMATA where SCHEMA_NAME='".$dbName."'";
-        $link = new \mysqli("localhost","root","199156");
+        $link = new \mysqli("localhost","root","chenhuiyi199156");
         if (!$link->connect_error){
             // 链接数据库成功
             $result = $link -> query($sql);
