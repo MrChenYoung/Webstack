@@ -92,20 +92,25 @@ class DAOPDO implements i_DAOPDO
         $dbName = $this->dbname;
         $sql = "SELECT * FROM information_schema.SCHEMATA where SCHEMA_NAME='".$dbName."'";
         $link = new \mysqli("localhost","root","chenhuiyi199156");
+        echo "开始了<br>";
         if (!$link->connect_error){
+            echo "进入了<br>";
             // 链接数据库成功
             $result = $link -> query($sql);
             if ($result){
+                echo "链接成功<br>";
                 // 获取所有行数据 只要关联数组
                 $res = $result -> fetch_all(MYSQLI_ASSOC);
                 // 释放资源
                 $result -> free();
                 if (!$res){
+                    echo "数据库不存在<br>";
                     // 数据库不存在 创建
                     $result = $this->pdo->exec("CREATE DATABASE IF NOT EXISTS {$dbName} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;");
                     if (!$result) {
                         die('数据库创建失败');
                     }else {
+                        echo "开始导入数据库<br>";
                         // 数据库创建成功 导入备份
                         // $driveDbPath = "/www/wwwroot/cloudmount.yycode.ml/GDSuite/我的数据/备份数据/db/";
                          $driveDbPath = "/www/wwwroot/res.yycode.top/backup/db/";
@@ -117,6 +122,8 @@ class DAOPDO implements i_DAOPDO
                 }
             }
         }
+
+        die;
     }
 
     // 获取最后一次数据库备份
