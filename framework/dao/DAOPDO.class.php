@@ -117,9 +117,6 @@ class DAOPDO implements i_DAOPDO
                 }
             }
         }
-
-
-        die;
     }
 
     // 获取最后一次数据库备份
