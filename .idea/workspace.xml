@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/controller/API/API_IconManagerController.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/API/API_IconManagerController.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/view/login/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/login/login.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +136,7 @@
       <workItem from="1616507259561" duration="357000" />
       <workItem from="1616508933235" duration="1913000" />
       <workItem from="1618320097004" duration="272000" />
-      <workItem from="1618325177879" duration="151000" />
+      <workItem from="1618325177879" duration="349000" />
     </task>
     <servers />
   </component>
@@ -142,11 +144,11 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="503" y="259" width="675" height="473" key="find.popup" timestamp="1618320226172">
+    <state x="132" y="303" width="1207" height="528" key="find.popup" timestamp="1618325527173">
       <screen x="0" y="23" width="1680" height="975" />
     </state>
     <state x="503" y="259" width="675" height="472" key="find.popup/0.23.1680.973@0.23.1680.973" timestamp="1613656769736" />
-    <state x="503" y="259" width="675" height="473" key="find.popup/0.23.1680.975@0.23.1680.975" timestamp="1618320226172" />
+    <state x="132" y="303" width="1207" height="528" key="find.popup/0.23.1680.975@0.23.1680.975" timestamp="1618325527173" />
     <state x="503" y="260" width="675" height="475" key="find.popup/0.23.1680.978@0.23.1680.978" timestamp="1616587059572" />
   </component>
 </project>

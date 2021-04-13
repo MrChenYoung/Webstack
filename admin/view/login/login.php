@@ -14,7 +14,7 @@
     <link href="<?php echo $pubP?>/common/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $pubP?>/common/css/icon.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $pubP?>/common/css/login.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1877015_jkq7dca58si.css">
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1877015_4aj02q2orql.css">
 </head>
 
 <body>
