@@ -29,7 +29,8 @@ class API_IconManagerController extends API_BaseController
             "hostingyunxunizhuji",
             "changyong2",
             "ziyuan",
-            "wangshangzhifu-01"
+            "wangshangzhifu-01",
+            "gongzuo"
         ];
         echo $this->success($icons);
     }
