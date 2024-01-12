@@ -10,7 +10,7 @@
     <meta content="telephone=no" name="format-detection">
     <title>网址导航</title>
 
-    <?php $webSite = "http://".$_SERVER['HTTP_HOST'];  $pubP = $webSite."/public"?>
+    <?php $webSite = "https://".$_SERVER['HTTP_HOST'];  $pubP = $webSite."/public"?>
     <link href="<?php echo $pubP?>/common/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $pubP?>/common/css/icon.css" rel="stylesheet" type="text/css">
     <link href="<?php echo $pubP?>/common/css/login.css" rel="stylesheet" type="text/css">

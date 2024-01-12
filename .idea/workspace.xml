@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e8364487-db93-4c3b-b603-3e47a54a1d93" name="默认更改列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/framework/dao/DAOPDO.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/framework/dao/DAOPDO.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addRsaKey.php" beforeDir="false" afterPath="$PROJECT_DIR$/addRsaKey.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/controller/UploadAttachment.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/controller/UploadAttachment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/view/db/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/db/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/view/login/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/view/login/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/core/Controller.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/framework/core/Controller.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/framework/tools/LogManager.class.php" beforeDir="false" afterPath="$PROJECT_DIR$/framework/tools/LogManager.class.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,9 +20,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ComposerSettings">
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -27,23 +34,31 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="1cvk4esBII4lbrmvBgY2rJJ9RJF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="添加" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/admin/view/phpneedle" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/PHPProjects/Webstack&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
   </component>
@@ -63,6 +78,14 @@
       <recent name="$PROJECT_DIR$/home/view/account" />
     </key>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-php-predefined-ba97393d7c68-b4dcf6bb9de9-com.jetbrains.php.sharedIndexes-PS-233.13135.108" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -138,18 +161,12 @@
       <workItem from="1618325177879" duration="1995000" />
       <workItem from="1625147802989" duration="445000" />
       <workItem from="1625148920853" duration="13000" />
+      <workItem from="1705025165333" duration="1684000" />
+      <workItem from="1705027204758" duration="476000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="132" y="303" width="1207" height="528" key="find.popup" timestamp="1618406666375">
-      <screen x="0" y="23" width="1680" height="975" />
-    </state>
-    <state x="503" y="259" width="675" height="472" key="find.popup/0.23.1680.973@0.23.1680.973" timestamp="1613656769736" />
-    <state x="132" y="303" width="1207" height="528" key="find.popup/0.23.1680.975@0.23.1680.975" timestamp="1618406666375" />
-    <state x="503" y="260" width="675" height="475" key="find.popup/0.23.1680.978@0.23.1680.978" timestamp="1616587059572" />
+    <option name="version" value="3" />
   </component>
 </project>

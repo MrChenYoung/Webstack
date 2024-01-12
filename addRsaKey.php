@@ -1,4 +1,4 @@
-<?php $webSite = "http://".$_SERVER['HTTP_HOST'];  $pubP = $webSite."/public"?>
+<?php $webSite = "https://".$_SERVER['HTTP_HOST'];  $pubP = $webSite."/public"?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

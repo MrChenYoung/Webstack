@@ -32,7 +32,7 @@ class Controller
         $this -> smarty -> setCompileDir($tplsDir);
 
         // 本站站点
-        $this -> website = "http://".$_SERVER['HTTP_HOST'];
+        $this -> website = "https://".$_SERVER['HTTP_HOST'];
         // 图片路径
         $imageUrl = $this->website."/public/common/img/";
 

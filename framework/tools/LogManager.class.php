@@ -68,7 +68,7 @@ class LogManager
      * @return false|string
      */
     public function getLogContents(){
-        $logUrl = "http://".$_SERVER['HTTP_HOST']."/LoveMovie/Logs/log.txt";
+        $logUrl = "https://".$_SERVER['HTTP_HOST']."/LoveMovie/Logs/log.txt";
 
         // 请求Log信息
         $request = new HttpRequest();

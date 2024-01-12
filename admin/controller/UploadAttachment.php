@@ -19,7 +19,7 @@ if (isset($_FILES['file'])) {
     $tbName =  isset($_POST["tbName"]) ? $_POST["tbName"] : "";
 
     // 要跳转的目标主机
-    $localHost = "http://".$_SERVER['HTTP_HOST'];
+    $localHost = "https://".$_SERVER['HTTP_HOST'];
     $url = $localHost."?m=admin&c=API_Attachment&a=index&tbName=".$tbName."&msg=";
 
     $msg = "";
