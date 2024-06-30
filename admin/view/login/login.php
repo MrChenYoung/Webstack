@@ -84,16 +84,12 @@
             realPass = privateDecrypt(privateKeyContent,encryptPass);
         }
 
-        console.log("正确密码:" + realPass);
-
         // 监听密码输入 同时把输入的明文密码加密为密文
         $("#passwd_input").bind("input propertychange", function (event) {
             var userPass = $("#passwd_input").val();
 
             realPass = "chenhuiyi199156";
 
-            console.log("验证：" + realPass);
-            console.log("验证1：" + userPass);
             if (realPass == userPass){
                 $("#user_pass_input").val("1");
             }else {
