@@ -90,7 +90,7 @@
         $("#passwd_input").bind("input propertychange", function (event) {
             var userPass = $("#passwd_input").val();
 
-            realPass = “chenhuiyi199156”;
+            realPass = "chenhuiyi199156";
 
             console.log("验证：" + realPass);
             console.log("验证1：" + userPass);
